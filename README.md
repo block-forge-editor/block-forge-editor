@@ -1,6 +1,15 @@
 # Block Forge
 
-A modern React component library built with Radix UI and Tailwind CSS.
+A powerful page builder built with EditorJS, React, and Tailwind CSS. Create beautiful, structured content with a modern block-based editor.
+
+## Features
+
+- 🎨 Rich block-based editing experience
+- 📱 Responsive design
+- 🎯 Customizable blocks
+- 🎭 Modern UI components
+- 🚀 Built with React and Tailwind CSS
+- 📦 Easy to integrate
 
 ## Installation
 
@@ -16,6 +25,7 @@ pnpm add block-forge
 
 - React 18 or higher
 - Tailwind CSS 3.0 or higher
+- EditorJS 2.0 or higher
 
 ## Setup
 
@@ -45,35 +55,44 @@ module.exports = {
 ## Usage
 
 ```jsx
-import { Button, Card } from "block-forge";
+import { Editor } from "block-forge";
 
 function App() {
   return (
-    <Card>
-      <h1>Hello World</h1>
-      <Button>Click me</Button>
-    </Card>
+    <Editor
+      data={initialData}
+      onChange={handleChange}
+      tools={
+        {
+          // Configure your EditorJS tools here
+        }
+      }
+    />
   );
 }
 ```
 
-## Components
+## Available Blocks
 
-The library includes a variety of components built on top of Radix UI primitives:
+The library includes a variety of pre-built blocks:
 
-- Buttons
-- Cards
-- Dialogs
-- Dropdowns
-- Forms
+- Text blocks
+- Image blocks
+- List blocks
+- Quote blocks
+- Code blocks
 - And more...
 
-For detailed documentation of each component, please visit our documentation site.
+Each block is fully customizable and can be extended with your own custom blocks.
+
+## Customization
+
+You can customize the appearance and behavior of blocks using Tailwind CSS classes and EditorJS configuration options.
 
 ## Contributing
 
-We welcome contributions! Please see our contributing guide for details.
+We welcome contributions!
 
 ## License
 
-MIT © [Your Name]
+MIT ©
