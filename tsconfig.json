@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    /* Project settings */
+    "target": "ESNext",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "incremental": true,
+    "strict": true,
+
+    /* Bundler mode */
+    "esModuleInterop": true,
+    "module": "esnext",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "moduleResolution": "bundler",
+
+    /* Paths */
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@app": ["./src/app"],
+      "@app/*": ["./src/app/*"],
+      "@shared": ["./src/shared"],
+      "@shared/*": ["./src/shared/*"]
+    }
+  },
+  "references": [{ "path": "./tsconfig.node.json" }],
+  "include": ["src"]
+}

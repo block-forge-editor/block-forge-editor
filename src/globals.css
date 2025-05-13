@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.app-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.app-scroll::-webkit-scrollbar-track {
+  background: #d3d3d3;
+}
+
+.app-scroll::-webkit-scrollbar-thumb {
+  background: #7b14db;
+}
+
+.app-scroll::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+@layer components {
+  /*
+  Our base class for icons inherits the current text color and applies common styles.
+  We're using a specific component class to prevent potential style conflicts and utilize the [data-axis] attribute.
+  */
+  .icon {
+    @apply select-none fill-current inline-block text-inherit box-content;
+  }
+}

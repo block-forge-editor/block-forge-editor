@@ -1,0 +1,36 @@
+stages:
+  - build-dev
+  - deploy-dev
+
+build-dev:
+  stage: build-dev
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker build --build-arg API_URL_ARG=${API_URL_DEV} --build-arg
+      HTACCESS_USER_ARG=${HTACCESS_USER_ARG} --build-arg
+      HTACCESS_PASS_ARG=${HTACCESS_PASS_ARG} --pull -t
+      $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID .
+    - docker push $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+  only:
+    - dev
+  tags:
+    - production-infra
+
+deploy-dev:
+  stage: deploy-dev
+  script:
+    - echo "Deploying the application..."
+    - export Namespace=site-dev
+    - kubectl get namespace | grep -q "^$Namespace " || kubectl create namespace $Namespace
+    - export NEW_IMAGE_NAME=$CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+    - sed -i "s|{IMAGE_NAME}|$NEW_IMAGE_NAME|g" charts/resources/Deployment-dev.yaml
+    - kubectl apply -f charts/resources/Deployment-dev.yaml -n $Namespace
+    - kubectl apply -f charts/resources/Service-dev.yaml -n $Namespace
+    - sleep 5
+    - echo "Deployment succeeded with IMAGE_NAME:$NEW_IMAGE_NAME"
+    - sleep 5
+  tags:
+    - master-front-k3s
+  only:
+    - dev
+  needs: ["build-dev"]

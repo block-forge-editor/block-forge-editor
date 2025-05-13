@@ -1,0 +1,7 @@
+**/node_modules/
+local.eslint.config.js
+*.d.ts
+.eslintrc.js
+dist/
+build/
+vite.config.ts
