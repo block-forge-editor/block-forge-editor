@@ -1,3 +1,3 @@
 export { formatDates } from "./dates";
-export { formatKZT } from "./currency";
+export { formatUSD } from "./currency";
 export { formatSeconds } from "./seconds";

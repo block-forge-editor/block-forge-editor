@@ -1,30 +1,79 @@
-# React + TypeScript + Vite
+# Block Forge
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React component library built with Radix UI and Tailwind CSS.
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+```bash
+npm install block-forge
+# or
+yarn add block-forge
+# or
+pnpm add block-forge
+```
 
-## Expanding the ESLint configuration
+## Requirements
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- React 18 or higher
+- Tailwind CSS 3.0 or higher
 
-- Configure the top-level `parserOptions` property like this:
+## Setup
+
+1. Add the following to your `tailwind.config.js`:
 
 ```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
+module.exports = {
+  content: [
+    // ... your other content paths
+    "./node_modules/block-forge/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      // ... your theme extensions
+    },
   },
+  plugins: [require("tailwindcss-animate")],
 };
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+2. Import the styles in your main CSS file:
+
+```css
+@import "block-forge/dist/style.css";
+```
+
+## Usage
+
+```jsx
+import { Button, Card } from "block-forge";
+
+function App() {
+  return (
+    <Card>
+      <h1>Hello World</h1>
+      <Button>Click me</Button>
+    </Card>
+  );
+}
+```
+
+## Components
+
+The library includes a variety of components built on top of Radix UI primitives:
+
+- Buttons
+- Cards
+- Dialogs
+- Dropdowns
+- Forms
+- And more...
+
+For detailed documentation of each component, please visit our documentation site.
+
+## Contributing
+
+We welcome contributions! Please see our contributing guide for details.
+
+## License
+
+MIT © [Your Name]

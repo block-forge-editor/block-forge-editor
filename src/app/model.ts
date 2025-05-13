@@ -2,12 +2,11 @@ import { initReactI18next } from "react-i18next";
 
 import { createI18nextIntegration } from "@withease/i18next";
 import { ru, kk } from "date-fns/locale";
-import { sample, createEvent, createStore } from "effector";
+import { createEvent, createStore } from "effector";
 import i18n from "i18next";
 
-import kzLocale from "@/shared/lib/locales/kz.json";
+import enLocale from "@/shared/lib/locales/en.json";
 import ruLocale from "@/shared/lib/locales/ru.json";
-import { router, history } from "@/shared/routing/shared";
 
 export const appStarted = createEvent();
 
@@ -15,8 +14,8 @@ const resources = {
   ru: {
     translation: ruLocale,
   },
-  kz: {
-    translation: kzLocale,
+  en: {
+    translation: enLocale,
   },
 };
 
@@ -50,10 +49,4 @@ export const $dateFnsLocale = $language.map((language) => {
     default:
       return ru;
   }
-});
-
-sample({
-  source: $isReady,
-  fn: () => history,
-  target: router.setHistory,
 });

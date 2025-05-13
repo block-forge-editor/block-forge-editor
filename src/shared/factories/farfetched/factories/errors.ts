@@ -5,8 +5,7 @@ import { sample, createEvent, createEffect } from "effector";
 import { condition } from "patronum";
 
 import { NetworkException } from "@/shared/api";
-import { $user } from "@/shared/store/user";
-import { NetworkExceptionType } from "@/shared/types/exceptions";
+import { NetworkExceptionType } from "@/shared/types/common/entities/exceptions";
 import { openFailureToast } from "@/shared/ui/atoms";
 
 export type ErrorHandlers = {
@@ -26,10 +25,11 @@ const sendErrorToAnalyticsFx = createEffect(
 );
 
 const DEFAULT_HANDLERS: Required<ErrorHandlers> = {
-  Unknown: "Произошла неизвестная ошибка, свяжитесь с поддержкой",
-  NotFound: "Данные не найдены на сервере, свяжитесь с поддержкой",
-  Unauthorized: "Вы не авторизованы, пожалуйста, войдите в систему",
-  TooManyRequests: "Вы делаете запросы слишком часто, повторите попытку позже",
+  Unknown: "An unknown error occurred, please contact support",
+  NotFound: "Data not found on server, please contact support",
+  Unauthorized: "You are not authorized, please log in",
+  TooManyRequests:
+    "You are making requests too frequently, please try again later",
 };
 
 export type ErrorsHandleAllParams = {
@@ -70,14 +70,9 @@ export const handleAll = createFactory((params: ErrorsHandleAllParams) => {
 
   sample({
     clock: networkExceptionOccured,
-    filter: (exception) => exception.type === "Unauthorized",
-    fn: () => null,
-    target: $user,
-  });
-
-  sample({
-    clock: networkExceptionOccured,
-    fn: (exception) => finalHandlers[exception.type] ?? exception.type,
+    fn: (exception) =>
+      finalHandlers[exception.type as keyof typeof finalHandlers] ??
+      DEFAULT_HANDLERS.Unknown,
     target: openFailureToast,
   });
 

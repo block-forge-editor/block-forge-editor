@@ -4,7 +4,7 @@ import { TCurrencies } from "@/shared/types/common";
 
 export const priceFormatter = new Intl.NumberFormat("ru-KZ", {
   style: "currency",
-  currency: "KZT",
+  currency: "USD",
   maximumSignificantDigits: 10,
 });
 
@@ -13,7 +13,6 @@ export const getPriceWithCurrency = (
   currency: TCurrencies,
 ): string => {
   const currencies: Record<TCurrencies, string> = {
-    KZT: "₸",
     USD: "$",
     EUR: "€",
     AED: "AED",

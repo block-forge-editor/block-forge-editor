@@ -1,7 +1,5 @@
 import { Component, ReactNode } from "react";
 
-import { Error } from "@/widgets/error";
-
 type Props = {
   children: ReactNode;
 };
@@ -27,6 +25,6 @@ export class ErrorBoundary extends Component<Props, State> {
       return children;
     }
 
-    return <Error />;
+    return <div>Error</div>;
   }
 }

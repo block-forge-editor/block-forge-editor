@@ -1,7 +1,7 @@
-import * as React from "react";
-import * as SliderPrimitive from "@radix-ui/react-slider";
+import * as React from "react"
+import * as SliderPrimitive from "@radix-ui/react-slider"
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/lib/utils"
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,
@@ -11,17 +11,16 @@ const Slider = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex w-full touch-none select-none items-center",
-      className,
+      className
     )}
     {...props}
   >
-    <SliderPrimitive.Track className="relative h-2 w-full grow overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">
-      <SliderPrimitive.Range className="absolute h-full bg-brand dark:bg-slate-50" />
+    <SliderPrimitive.Track className="relative h-1.5 w-full grow overflow-hidden rounded-full bg-neutral-900/20 dark:bg-neutral-50/20">
+      <SliderPrimitive.Range className="absolute h-full bg-neutral-900 dark:bg-neutral-50" />
     </SliderPrimitive.Track>
-    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-brand bg-white ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-slate-50 dark:bg-slate-950 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300" />
-    <SliderPrimitive.Thumb className="block h-5 w-5 rounded-full border-2 border-brand bg-white ring-offset-white transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-slate-950 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:border-slate-50 dark:bg-slate-950 dark:ring-offset-slate-950 dark:focus-visible:ring-slate-300" />
+    <SliderPrimitive.Thumb className="block h-4 w-4 rounded-full border border-neutral-200 border-neutral-900/50 bg-white shadow transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-neutral-950 disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-800 dark:border-neutral-50/50 dark:bg-neutral-950 dark:focus-visible:ring-neutral-300" />
   </SliderPrimitive.Root>
-));
-Slider.displayName = SliderPrimitive.Root.displayName;
+))
+Slider.displayName = SliderPrimitive.Root.displayName
 
-export { Slider };
+export { Slider }

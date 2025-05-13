@@ -20,6 +20,22 @@ const config = defineConfig(({ mode }) => {
     },
     build: {
       sourcemap: true,
+      lib: {
+        entry: path.resolve(__dirname, "src/index.ts"),
+        name: "BlockForge",
+        fileName: (format) => `index.${format === "es" ? "mjs" : "js"}`,
+        formats: ["es", "cjs"],
+      },
+      rollupOptions: {
+        external: ["react", "react-dom"],
+        output: {
+          globals: {
+            react: "React",
+            "react-dom": "ReactDOM",
+          },
+        },
+      },
+      minify: true,
     },
     resolve: {
       alias: {

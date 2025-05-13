@@ -1,10 +1,10 @@
 const formatter = new Intl.NumberFormat("ru-RU", {
-  currency: "KZT",
+  currency: "USD",
   style: "currency",
   maximumFractionDigits: 0,
 });
 
-export function formatKZT(number?: null | number) {
+export function formatUSD(number?: null | number) {
   if (number === undefined || number === null) {
     return number;
   }

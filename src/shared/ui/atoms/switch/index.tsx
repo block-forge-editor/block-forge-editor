@@ -12,7 +12,7 @@ type TProps = {
 export const Switch: FC<TProps> = ({ isLoading, ...props }) => {
   if (isLoading) {
     return (
-      <div className="min-w-[44px] h-6 rounded-3xl bg-slate-200 flex items-center justify-center">
+      <div className="min-w-[44px] h-6 rounded-3xl bg-neutral-200 flex items-center justify-center">
         <Loader className="size-4 animate-spin" />
       </div>
     );

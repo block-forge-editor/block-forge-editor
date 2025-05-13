@@ -57,7 +57,7 @@ export type TPageParams = {
   params: Record<string, string | number>;
 };
 
-export type TCurrencies = "KZT" | "USD" | "EUR" | "AED";
+export type TCurrencies = "USD" | "EUR" | "AED";
 export type TLangOptions = "ru" | "kz";
 export type TLangSelector = {
   label: string;

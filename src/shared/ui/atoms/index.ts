@@ -12,7 +12,6 @@ export * from "./divider";
 export * from "./skeleton";
 export * from "./capacity";
 export * from "./otp-input";
-export * from "./amenities";
 export * from "./auth-error";
 export * from "./pagination";
 export * from "./data-table";

@@ -1,4 +1,4 @@
-import { NetworkExceptionType } from "@/shared/types/exceptions";
+import { NetworkExceptionType } from "@/shared/types/common/entities/exceptions";
 
 export class NetworkException extends Error {
   type: NetworkExceptionType;

@@ -1,19 +1,14 @@
-import { Toaster } from "react-hot-toast";
-
-import { RouterProvider } from "atomic-router-react";
+// import { Toaster } from "react-hot-toast";
 
 import { ErrorBoundary } from "./error-boundary";
 
-import { Pages } from "@/shared/routing";
-import { router } from "@/shared/routing/shared";
+import { Renderer } from "@/widgets/editor";
 
 export function App() {
   return (
-    <RouterProvider router={router}>
-      <ErrorBoundary>
-        <Pages />
-        <Toaster />
-      </ErrorBoundary>
-    </RouterProvider>
+    <ErrorBoundary>
+      {/* <Toaster /> */}
+      <Renderer />
+    </ErrorBoundary>
   );
 }

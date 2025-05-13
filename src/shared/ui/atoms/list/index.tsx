@@ -28,7 +28,7 @@ export const List: FC<TProps> = ({
         {items.map((item, index) => (
           <li key={index}>
             {item.label && (
-              <span className="text-slate-500 mr-2">{item.label}</span>
+              <span className="text-neutral-500 mr-2">{item.label}</span>
             )}
             {item.value && <span className="font-medium">{item.value}</span>}
           </li>
@@ -42,7 +42,7 @@ export const List: FC<TProps> = ({
       {items.map((item, index) => (
         <li key={index} className={itemClassname}>
           {item.label && (
-            <span className={cn("text-slate-500 mr-2", labelClassName)}>
+            <span className={cn("text-neutral-500 mr-2", labelClassName)}>
               {item.label}
             </span>
           )}
