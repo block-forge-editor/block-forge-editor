@@ -3,6 +3,7 @@ import { FC } from "react";
 import { createComponentsList } from "@/shared/lib/helpers/components-list";
 import { getFontSizeClass } from "@/shared/lib/paragraph";
 import { cn } from "@/shared/lib/utils";
+import { ComponentHeader } from "@/shared/ui/molecules/component-header";
 import { Skeleton } from "@/shared/ui/shadcn";
 import {
   Accordion,
@@ -10,8 +11,6 @@ import {
   AccordionContent,
   AccordionTrigger,
 } from "@/shared/ui/shadcn/ui/accordion";
-
-import { ComponentHeader } from "@/shared/ui/molecules/component-header";
 
 type TAccordionComponentProps = {
   title: string;
@@ -56,8 +55,8 @@ export const AccordionComponent: FC<TAccordionComponentProps> = ({
     <div className="relative group w-full">
       <ComponentHeader
         title="Аккордеон"
-        tooltipText="Компонент для создания аккордеона"
         variant={variant}
+        tooltipText="Компонент для создания аккордеона"
       />
 
       <Accordion collapsible type="single" className="w-full">
