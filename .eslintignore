@@ -1,0 +1,7 @@
+**/node_modules/
+custom.eslint.config.js
+*.d.ts
+.eslintrc.js
+dist/
+build/
+vite.config.ts
