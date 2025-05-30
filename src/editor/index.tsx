@@ -54,7 +54,7 @@ export const BlockForgeEditor: FC<TProps> = ({
   tools,
 }) => {
   const id = useId();
-  const [showPetuch, setShowPetuch] = useState(false);
+  const [showAbout, setShowAbout] = useState(false);
 
   const ejInstance = useEditor({
     tools: {
@@ -72,8 +72,8 @@ export const BlockForgeEditor: FC<TProps> = ({
     onSave?.(content);
   }, [ejInstance, onSave]);
 
-  const togglePetuch = useCallback(() => {
-    setShowPetuch((prev) => !prev);
+  const toggleAbout = useCallback(() => {
+    setShowAbout((prev) => !prev);
   }, []);
 
   return (
@@ -95,7 +95,7 @@ export const BlockForgeEditor: FC<TProps> = ({
         <MenubarMenu>
           <MenubarTrigger>Help</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={togglePetuch}>
+            <MenubarItem onClick={toggleAbout}>
               <HelpCircle className="bf-mr-2 bf-h-4 bf-w-4" />
               About Editor
             </MenubarItem>
@@ -103,16 +103,20 @@ export const BlockForgeEditor: FC<TProps> = ({
         </MenubarMenu>
       </Menubar>
 
-      <Dialog open={showPetuch} onOpenChange={setShowPetuch}>
+      <Dialog open={showAbout} onOpenChange={setShowAbout}>
         <DialogContent className="bf-fixed bf-top-[50%] bf-left-[50%] bf-translate-x-[-50%] bf-translate-y-[-50%]">
           <DialogHeader>
             <DialogTitle className="bf-text-center">
-              Petuch Easter Egg!
+              About Block Forge
             </DialogTitle>
           </DialogHeader>
           <div className="bf-text-center bf-py-4">
-            <div className="bf-animate-bounce bf-text-6xl bf-mb-4">🐓</div>
-            <p className="bf-text-gray-600">You found me! 🎉</p>
+            <p className="bf-text-gray-600 bf-mb-2">
+              A powerful article builder based on EditorJS
+            </p>
+            <p className="bf-text-sm bf-text-gray-500">
+              Built with React, Tailwind CSS, and shadcn/ui
+            </p>
           </div>
         </DialogContent>
       </Dialog>
