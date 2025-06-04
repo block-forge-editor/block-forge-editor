@@ -84,6 +84,10 @@ The library includes a comprehensive set of pre-built blocks:
 
 We welcome contributions!
 
+## Releases
+
+Semantic-release automatically publishes a new version to npm whenever changes are merged into `main`. Make sure your commits follow the Conventional Commits specification.
+
 ## Acknowledgments
 
 Special thanks to the all amazing open-source projects that made this library possible!
