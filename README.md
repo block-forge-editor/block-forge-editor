@@ -38,7 +38,7 @@ function App() {
     <BlockForgeEditor
       data={initialData}
       onChange={handleChange}
-      onSave={handeSave}
+      onSave={handleSave}
       onCancel={handleCancel}
       tools={[...array of your editor js tools]}
     />
