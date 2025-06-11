@@ -17,7 +17,6 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
-      "@editor": ["./src/editor"],
       "@editor/*": ["./src/editor/*"]
     }
   },

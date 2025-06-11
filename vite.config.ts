@@ -8,9 +8,9 @@ import dts from "vite-plugin-dts";
 // https://vitejs.dev/config/
 const config = defineConfig(() => {
   return {
-    cors: false,
     build: {
-      sourcemap: true,
+      cssMinify: true,
+      sourcemap: false,
       cssCodeSplit: false,
       lib: {
         entry: path.resolve(__dirname, "src/index.ts"),
@@ -27,10 +27,6 @@ const config = defineConfig(() => {
           "react-dom/server",
         ],
         output: {
-          globals: {
-            react: "React",
-            "react-dom": "ReactDOM",
-          },
           assetFileNames: (assetInfo) => {
             if (assetInfo.name === "style.css") return "index.css";
             return assetInfo.name || "unknown";
@@ -42,6 +38,7 @@ const config = defineConfig(() => {
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
+        "@editor": path.resolve(__dirname, "./src/editor"),
       },
     },
     server: {
@@ -50,6 +47,7 @@ const config = defineConfig(() => {
     plugins: [
       react({
         babel: { babelrc: true },
+        jsxRuntime: "automatic",
       }),
       tsconfigPaths(),
       dts({
