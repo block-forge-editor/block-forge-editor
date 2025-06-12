@@ -18,7 +18,7 @@ export class Embed extends BaseBlockTool {
   private _url: string = "";
   private _platform: TEmbedData["platform"] = "youtube";
   private _variant: TEmbedData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

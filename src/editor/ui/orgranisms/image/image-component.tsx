@@ -7,38 +7,70 @@ import { Button } from "@/editor/ui/shadcn/ui/button";
 import { Input } from "@/editor/ui/shadcn/ui/input";
 
 type TImageComponentProps = {
+  id: string;
   url: string;
   caption?: string;
   variant: "primary" | "secondary";
-  onUpdate: (data: { url: string; caption?: string }) => void;
+  alt: string;
+  onUpdate: (data: { url: string; caption?: string; alt: string }) => void;
 };
 
 export const ImageComponent: FC<TImageComponentProps> = ({
+  id,
   url,
   caption,
   variant,
+  alt,
   onUpdate,
 }) => {
   const [localUrl, setLocalUrl] = useState(url);
   const [localCaption, setLocalCaption] = useState(caption || "");
+  const [localAlt, setLocalAlt] = useState(alt || "");
+  const [previewUrl, setPreviewUrl] = useState(url);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleUrlChange = (value: string) => {
     setLocalUrl(value);
-    onUpdate({ url: value, caption: localCaption });
+    setPreviewUrl(value);
+    onUpdate({
+      url: value,
+      caption: localCaption,
+      alt: localAlt,
+    });
   };
 
   const handleCaptionChange = (value: string) => {
     setLocalCaption(value);
-    onUpdate({ url: localUrl, caption: value });
+    onUpdate({
+      url: previewUrl,
+      caption: value,
+      alt: localAlt,
+    });
+  };
+
+  const handleAltChange = (value: string) => {
+    setLocalAlt(value);
+    onUpdate({
+      url: previewUrl,
+      caption: localCaption,
+      alt: value,
+    });
   };
 
   const handleFileUpload = (file: File) => {
     const reader = new FileReader();
     reader.onloadend = () => {
       const base64String = reader.result as string;
-      setLocalUrl(base64String);
-      onUpdate({ url: base64String, caption: localCaption });
+      const img = new window.Image();
+      img.onload = () => {
+        setPreviewUrl(base64String);
+        onUpdate({
+          url: base64String,
+          caption: localCaption,
+          alt: localAlt,
+        });
+      };
+      img.src = base64String;
     };
     reader.readAsDataURL(file);
   };
@@ -81,15 +113,22 @@ export const ImageComponent: FC<TImageComponentProps> = ({
               <Upload className="bf-size-4" />
             </Button>
           </div>
-          {localUrl ? (
+          {previewUrl ? (
             <div className="bf-flex bf-flex-col bf-gap-4">
               <div className="bf-relative bf-aspect-video bf-w-full bf-overflow-hidden bf-rounded-lg">
                 <img
-                  src={localUrl}
-                  alt={localCaption || "Image"}
+                  src={previewUrl}
+                  alt={localAlt}
                   className="bf-object-cover bf-w-full bf-h-full"
                 />
               </div>
+              <Input
+                type="text"
+                className="bf-text-sm"
+                value={localAlt}
+                placeholder="Add alt text..."
+                onChange={(e) => handleAltChange(e.target.value)}
+              />
               <Input
                 type="text"
                 className="bf-text-sm"
@@ -101,7 +140,7 @@ export const ImageComponent: FC<TImageComponentProps> = ({
           ) : (
             <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
               <ImageIcon className="bf-size-8 bf-mb-2" />
-              <span>No image URL entered</span>
+              <span>No image added</span>
             </div>
           )}
         </div>

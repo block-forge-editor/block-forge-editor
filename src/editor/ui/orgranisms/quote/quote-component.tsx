@@ -50,19 +50,7 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
         title="Quote"
         variant={variant}
         tooltipText="Add a quote with author and source"
-      >
-        <EditorButton
-          variant="icon"
-          onClick={() => {
-            setLocalText("");
-            setLocalAuthor("");
-            setLocalSource("");
-            onUpdate({ text: "", author: "", source: "" });
-          }}
-        >
-          <Plus className="size-4 text-gray-600" />
-        </EditorButton>
-      </ComponentHeader>
+      />
 
       <div className="bf-min-h-[200px]">
         <div className="bf-grid bf-grid-cols-1 bf-gap-4">

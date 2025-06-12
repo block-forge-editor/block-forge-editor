@@ -1,32 +1,14 @@
-import { FC, useState } from "react";
-
-import { Plus, Image, Trash2, Pencil } from "lucide-react";
-
+import { FC, useCallback, useRef, useState } from "react";
+import { Upload, Link, ImageIcon } from "lucide-react";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
-import { AspectRatio } from "@/editor/ui/shadcn/ui/aspect-ratio";
-import {
-  Carousel,
-  CarouselItem,
-  CarouselNext,
-  CarouselContent,
-  CarouselPrevious,
-} from "@/editor/ui/shadcn/ui/carousel";
-import {
-  ContextMenu,
-  ContextMenuItem,
-  ContextMenuTrigger,
-  ContextMenuContent,
-} from "@/editor/ui/shadcn/ui/context-menu";
-import {
-  Dialog,
-  DialogContent,
-  DialogTrigger,
-} from "@/editor/ui/shadcn/ui/dialog";
+import { Input } from "@/editor/ui/shadcn/ui/input";
+import { Button } from "@/editor/ui/shadcn/ui/button";
+import { GridGallery, CarouselGallery } from "./gallery-variants";
 
 type TImageGalleryComponentProps = {
-  onImageAdd: () => void;
+  onImageAdd: (data: { url: string; alt: string; caption?: string }) => void;
   onImageDelete: (id: string) => void;
-  variant: "grid" | "masonry" | "carousel";
+  variant: "primary" | "secondary";
   images: Array<{
     id: string;
     url: string;
@@ -35,8 +17,19 @@ type TImageGalleryComponentProps = {
   }>;
   onImageUpdate: (
     id: string,
-    data: { url: string; alt: string; caption?: string },
+    data: {
+      url: string;
+      alt?: string;
+      caption?: string;
+    },
   ) => void;
+  onMetaDataChange: (data: {
+    id: string;
+    data: {
+      alt?: string;
+      caption?: string;
+    };
+  }) => void;
 };
 
 export const ImageGalleryComponent: FC<TImageGalleryComponentProps> = ({
@@ -45,170 +38,109 @@ export const ImageGalleryComponent: FC<TImageGalleryComponentProps> = ({
   onImageAdd,
   onImageDelete,
   onImageUpdate,
+  onMetaDataChange,
 }) => {
-  const [selectedImage, setSelectedImage] = useState<null | string>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [urlInput, setUrlInput] = useState("");
 
-  const renderGrid = () => (
-    <div className="bf-grid bf-grid-cols-2 bf-md:bf-grid-cols-3 bf-lg:bf-grid-cols-4 bf-gap-4">
-      {images.map((image) => (
-        <ContextMenu key={image.id}>
-          <ContextMenuTrigger>
-            <div className="bf-relative bf-group">
-              <AspectRatio ratio={1}>
-                <img
-                  src={image.url}
-                  alt={image.alt}
-                  className="bf-object-cover bf-w-full bf-h-full bf-rounded-lg"
-                />
-              </AspectRatio>
-              {image.caption && (
-                <p className="bf-mt-2 bf-text-sm bf-text-gray-600">
-                  {image.caption}
-                </p>
-              )}
-              <div className="bf-absolute bf-inset-0 bf-bg-black/40 bf-opacity-0 group-hover:bf-opacity-100 bf-transition-opacity bf-rounded-lg bf-flex bf-items-center bf-justify-center">
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <button className="bf-p-2 bf-bg-white/20 bf-rounded-full hover:bf-bg-white/30 bf-transition-colors">
-                      <Image className="bf-size-6 bf-text-white" />
-                    </button>
-                  </DialogTrigger>
-                  <DialogContent className="bf-max-w-4xl">
-                    <img
-                      src={image.url}
-                      alt={image.alt}
-                      className="bf-w-full bf-h-auto bf-rounded-lg"
-                    />
-                    {image.caption && (
-                      <p className="bf-mt-4 bf-text-lg bf-text-center">
-                        {image.caption}
-                      </p>
-                    )}
-                  </DialogContent>
-                </Dialog>
-              </div>
-            </div>
-          </ContextMenuTrigger>
-          <ContextMenuContent>
-            <ContextMenuItem>
-              <Pencil className="bf-mr-2 bf-size-4" />
-              <span>Edit image</span>
-            </ContextMenuItem>
-            <ContextMenuItem
-              className="bf-text-red-600"
-              onClick={() => onImageDelete(image.id)}
-            >
-              <Trash2 className="bf-mr-2 bf-size-4" />
-              <span>Delete image</span>
-            </ContextMenuItem>
-          </ContextMenuContent>
-        </ContextMenu>
-      ))}
-    </div>
-  );
+  const handleFileUpload = (file: File) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const base64String = reader.result as string;
+      onImageAdd({
+        url: base64String,
+        alt: file.name,
+      });
+    };
+    reader.readAsDataURL(file);
+  };
 
-  const renderCarousel = () => (
-    <Carousel className="bf-w-full">
-      <CarouselContent>
-        {images.map((image) => (
-          <CarouselItem key={image.id}>
-            <div className="bf-relative">
-              <AspectRatio ratio={16 / 9}>
-                <img
-                  src={image.url}
-                  alt={image.alt}
-                  className="bf-object-cover bf-w-full bf-h-full bf-rounded-lg"
-                />
-              </AspectRatio>
-              {image.caption && (
-                <p className="bf-mt-2 bf-text-sm bf-text-gray-600">
-                  {image.caption}
-                </p>
-              )}
-            </div>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
-  );
+  const handleUrlAdd = () => {
+    if (urlInput.trim()) {
+      onImageAdd({
+        url: urlInput.trim(),
+        alt: "",
+      });
+      setUrlInput("");
+    }
+  };
 
-  const renderMasonry = () => (
-    <div className="bf-columns-2 bf-md:bf-columns-3 bf-lg:bf-columns-4 bf-gap-4">
-      {images.map((image) => (
-        <div key={image.id} className="bf-mb-4 bf-break-inside-avoid">
-          <ContextMenu>
-            <ContextMenuTrigger>
-              <div className="bf-relative bf-group">
-                <img
-                  src={image.url}
-                  alt={image.alt}
-                  className="bf-w-full bf-rounded-lg"
-                />
-                {image.caption && (
-                  <p className="bf-mt-2 bf-text-sm bf-text-gray-600">
-                    {image.caption}
-                  </p>
-                )}
-                <div className="bf-absolute bf-inset-0 bf-bg-black/40 bf-opacity-0 group-hover:bf-opacity-100 bf-transition-opacity bf-rounded-lg bf-flex bf-items-center bf-justify-center">
-                  <Dialog>
-                    <DialogTrigger asChild>
-                      <button className="bf-p-2 bf-bg-white/20 bf-rounded-full hover:bf-bg-white/30 bf-transition-colors">
-                        <Image className="bf-size-6 bf-text-white" />
-                      </button>
-                    </DialogTrigger>
-                    <DialogContent className="bf-max-w-4xl">
-                      <img
-                        src={image.url}
-                        alt={image.alt}
-                        className="bf-w-full bf-h-auto bf-rounded-lg"
-                      />
-                      {image.caption && (
-                        <p className="bf-mt-4 bf-text-lg bf-text-center">
-                          {image.caption}
-                        </p>
-                      )}
-                    </DialogContent>
-                  </Dialog>
-                </div>
-              </div>
-            </ContextMenuTrigger>
-            <ContextMenuContent>
-              <ContextMenuItem>
-                <Pencil className="bf-mr-2 bf-size-4" />
-                <span>Edit image</span>
-              </ContextMenuItem>
-              <ContextMenuItem
-                className="bf-text-red-600"
-                onClick={() => onImageDelete(image.id)}
-              >
-                <Trash2 className="bf-mr-2 bf-size-4" />
-                <span>Delete image</span>
-              </ContextMenuItem>
-            </ContextMenuContent>
-          </ContextMenu>
-        </div>
-      ))}
-    </div>
-  );
+  const handleEditUrl = (url: string) => {
+    setUrlInput(url);
+  };
+
+  const renderGallery = useCallback(() => {
+    const commonProps = {
+      images,
+      onImageDelete,
+      onImageUpdate,
+      onMetaDataChange,
+      onEditUrl: handleEditUrl,
+    };
+
+    switch (variant) {
+      case "primary":
+        return <GridGallery {...commonProps} />;
+      case "secondary":
+        return <CarouselGallery {...commonProps} />;
+    }
+  }, [images, variant, onImageDelete, onImageUpdate, handleEditUrl]);
 
   return (
-    <div className="bf-relative bf-group bf-w-full">
+    <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        variant="primary"
+        variant={variant}
         title="Image Gallery"
         tooltipText="Component for displaying image galleries"
-      >
-        <button onClick={onImageAdd}>
-          <Plus className="bf-size-4 bf-text-gray-600" />
-        </button>
-      </ComponentHeader>
+      />
 
-      <div className="bf-mt-4">
-        {variant === "grid" && renderGrid()}
-        {variant === "carousel" && renderCarousel()}
-        {variant === "masonry" && renderMasonry()}
+      <div className="bf-mt-4 bf-flex bf-flex-col bf-gap-4">
+        <div className="bf-flex bf-items-center bf-gap-2 bf-group/item">
+          <Input
+            type="text"
+            value={urlInput}
+            className="bf-flex-1"
+            placeholder="Enter image URL"
+            onChange={(e) => setUrlInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleUrlAdd();
+              }
+            }}
+          />
+          <Button size="icon" variant="outline" onClick={handleUrlAdd}>
+            <Link className="bf-size-4" />
+          </Button>
+
+          <input
+            type="file"
+            accept="image/*"
+            className="bf-hidden"
+            ref={fileInputRef}
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                handleFileUpload(file);
+              }
+            }}
+          />
+          <Button
+            size="icon"
+            variant="outline"
+            onClick={() => fileInputRef.current?.click()}
+          >
+            <Upload className="bf-size-4" />
+          </Button>
+        </div>
+
+        {!!images?.length ? (
+          renderGallery()
+        ) : (
+          <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <ImageIcon className="bf-size-8 bf-mb-2" />
+            <span>No image added</span>
+          </div>
+        )}
       </div>
     </div>
   );

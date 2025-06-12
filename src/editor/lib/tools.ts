@@ -18,6 +18,7 @@ import {
   Quote,
   Stats,
   Table,
+  Image,
 } from "../ui/orgranisms";
 
 export const CONSTRUCTOR_EDITOR_TOOLS = {
@@ -57,14 +58,14 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
   imageGallery: {
     class: ImageGallery,
   },
+  imageSingle: {
+    class: Image,
+  },
   quote: {
     class: Quote,
   },
   code: {
     class: Code,
-  },
-  image: {
-    class: Image,
   },
   embed: {
     class: Embed,
@@ -106,4 +107,18 @@ export const COLUMNS_EDITOR_TOOLS = {
   list: CONSTRUCTOR_EDITOR_TOOLS.list,
   divider: CONSTRUCTOR_EDITOR_TOOLS.divider,
   table: CONSTRUCTOR_EDITOR_TOOLS.table,
+};
+
+export const DEFAULT_INITIAL_DATA = {
+  time: new Date().getTime(),
+  blocks: [
+    {
+      id: "0",
+      type: "header",
+      data: {
+        level: 1,
+        text: "Start adding your content here...",
+      },
+    },
+  ],
 };

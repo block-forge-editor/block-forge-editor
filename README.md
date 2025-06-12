@@ -48,37 +48,151 @@ function App() {
 
 ## Available Blocks
 
-The library includes a comprehensive set of pre-built blocks:
+This document provides a comprehensive overview of the saved data structure for each component.
 
-### Text & Content
+### AccordionEditor
 
-- Header
-- Paragraph
-- List
-- Quote
-- Code
-- Divider
+```typescript
+type TAccordionData = {
+  title: string;
+  data: OutputData | null;
+};
+```
 
-### Media & Visual
+### ColumnEditor
 
-- Image Gallery
-- Image
-- Embed
-- Table
+```typescript
+type TColumnData = {
+  data: OutputData;
+};
+```
 
-### Layout & Structure
+### Paragraph
 
-- Columns
-- Card
-- Accordion
+```typescript
+type TParagraphData = {
+  text: string;
+  fontSize?: number;
+};
+```
 
-### Interactive & Dynamic
+### Header
 
-- Progress
-- Timeline
-- Stats
-- Testimonials
-- Social Media Components
+```typescript
+type THeaderData = {
+  text: string;
+  level: number;
+  fontSize: number;
+};
+```
+
+### Embed
+
+```typescript
+type TEmbedData = {
+  url: string;
+  variant: "primary" | "secondary";
+  platform: "vimeo" | "other" | "youtube";
+};
+```
+
+### Divider
+
+```typescript
+type TDividerData = {
+  color?: string;
+};
+```
+
+### Timeline
+
+```typescript
+type TTimelineData = {
+  variant: "primary" | "secondary";
+  events: Array<{
+    date: string;
+    title: string;
+    description: string;
+  }>;
+};
+```
+
+### Testimonials
+
+```typescript
+type TTestimonialsData = {
+  variant: "primary" | "secondary";
+  items: Array<{
+    name: string;
+    role: string;
+    text: string;
+    photo: string;
+  }>;
+};
+```
+
+### Stats
+
+```typescript
+type TStatsData = {
+  variant: "primary" | "secondary";
+  items: Array<{
+    value: string;
+    label: string;
+    icon?: string;
+  }>;
+};
+```
+
+### Social
+
+```typescript
+type TSocialData = {
+  variant: "primary" | "secondary";
+  links: Array<{
+    url: string;
+    platform: string;
+  }>;
+};
+```
+
+### Quote
+
+```typescript
+type TQuoteData = {
+  text: string;
+  author?: string;
+  source?: string;
+  variant: "primary" | "secondary";
+};
+```
+
+### Progress
+
+```typescript
+type TProgressData = {
+  variant: "primary" | "secondary";
+  items: Array<{
+    label: string;
+    value: number;
+  }>;
+};
+```
+
+### Table
+
+The Table component extends [EditorJsTable](https://www.npmjs.com/package/@editorjs/table) and includes the following sanitization rules:
+
+```typescript
+{
+  br: true,
+  div: true,
+  a: true,
+  i: true,
+  p: true,
+  b: true
+}
+```
 
 ## Contributing
 

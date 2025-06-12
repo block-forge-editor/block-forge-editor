@@ -19,7 +19,7 @@ export type TSocialData = {
 export class Social extends BaseBlockTool {
   private _links: TSocialData["links"] = [];
   private _variant: TSocialData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

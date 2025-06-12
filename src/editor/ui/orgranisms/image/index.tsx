@@ -9,22 +9,28 @@ import { getIcon } from "@/editor/lib/icons";
 const TOOLBOX_TITLE = "Image";
 
 export type TImageData = {
+  id: string;
   url: string;
   caption?: string;
   variant: "primary" | "secondary";
+  alt: string;
 };
 
 export class Image extends BaseBlockTool {
+  private _id: string;
   private _url: string = "";
   private _caption?: string;
   private _variant: TImageData["variant"] = "primary";
-  private _root: Root | null = null;
+  private _alt: string = "";
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
+    this._id = config.data?.id || crypto.randomUUID();
     this._url = config.data?.url || "";
     this._caption = config.data?.caption;
     this._variant = config.data?.variant || "primary";
+    this._alt = config.data?.alt || "";
   }
 
   static get toolbox() {
@@ -39,12 +45,15 @@ export class Image extends BaseBlockTool {
     this._root = createRoot(reactContainer);
     this._root.render(
       <ImageComponent
+        id={this._id}
         url={this._url}
         caption={this._caption}
         variant={this._variant}
+        alt={this._alt}
         onUpdate={(data) => {
           this._url = data.url;
           this._caption = data.caption;
+          this._alt = data.alt;
           this.save();
         }}
       />,
@@ -126,9 +135,11 @@ export class Image extends BaseBlockTool {
 
   save(): TImageData {
     return {
+      id: this._id,
       url: this._url,
       caption: this._caption,
       variant: this._variant,
+      alt: this._alt,
     };
   }
 

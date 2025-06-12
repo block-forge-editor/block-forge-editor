@@ -18,7 +18,7 @@ export class Code extends BaseBlockTool {
   private _code: string = "";
   private _language: string = "plaintext";
   private _variant: TCodeData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

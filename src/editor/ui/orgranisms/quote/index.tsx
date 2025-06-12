@@ -20,7 +20,7 @@ export class Quote extends BaseBlockTool {
   private _author?: string;
   private _source?: string;
   private _variant: TQuoteData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

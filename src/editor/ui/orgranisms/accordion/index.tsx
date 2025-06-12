@@ -13,7 +13,7 @@ const TOOLBOX_TITLE = "Accordion";
 export class Accordion extends BaseBlockTool {
   private _item: TAccordionData;
   private _reactContainer: null | HTMLDivElement = null;
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
   private _variant: "primary" | "secondary" = "primary";
   private _blockID: string = "";
 

@@ -1,4 +1,5 @@
 import { FC, useState } from "react";
+import React from "react";
 
 import { OutputData } from "@editorjs/editorjs";
 import { Plus, Pencil, Trash2 } from "lucide-react";
@@ -52,11 +53,8 @@ export const ColumnsComponent: FC<TColumnsComponentProps> = ({
       }}
     >
       {rowColumns.map((column, index) => (
-        <>
-          <ResizablePanel
-            key={column.id}
-            defaultSize={column.size || 100 / rowColumns.length}
-          >
+        <React.Fragment key={column.id}>
+          <ResizablePanel defaultSize={column.size || 100 / rowColumns.length}>
             <div className="bf-relative bf-h-full bf-group/item bf-p-2 bf-flex bf-flex-col bf-items-center bf-border-b bf-border-gray-200">
               <div className="bf-self-end bf-flex bf-gap-4">
                 <div className="bf-flex bf-gap-2">
@@ -85,8 +83,10 @@ export const ColumnsComponent: FC<TColumnsComponentProps> = ({
               </div>
             </div>
           </ResizablePanel>
-          {index < rowColumns.length - 1 && <ResizableHandle />}
-        </>
+          {index < rowColumns.length - 1 && (
+            <ResizableHandle key={`handle-${column.id}`} />
+          )}
+        </React.Fragment>
       ))}
     </ResizablePanelGroup>
   );

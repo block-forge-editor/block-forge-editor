@@ -19,7 +19,7 @@ export type TProgressData = {
 export class Progress extends BaseBlockTool {
   private _items: TProgressData["items"] = [];
   private _variant: TProgressData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

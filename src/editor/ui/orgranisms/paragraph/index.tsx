@@ -17,7 +17,7 @@ export type TParagraphData = {
 export class Paragraph extends BaseBlockTool {
   private _text: string = "";
   private _fontSize?: number;
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

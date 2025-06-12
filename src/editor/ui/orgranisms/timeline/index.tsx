@@ -20,7 +20,7 @@ export type TTimelineData = {
 export class Timeline extends BaseBlockTool {
   private _events: TTimelineData["events"] = [];
   private _variant: TTimelineData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

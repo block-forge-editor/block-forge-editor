@@ -20,7 +20,7 @@ export class Card extends BaseBlockTool {
   private _description: string = "";
   private _variant: TCardData["variant"] = "primary";
   private _icon: string = "IdCard";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

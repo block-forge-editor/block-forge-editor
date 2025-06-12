@@ -14,7 +14,7 @@ const TOOLBOX_TITLE = "Columns";
 export class Columns extends BaseBlockTool {
   private _columns: TColumnData[] = [];
   private _reactContainer: null | HTMLDivElement = null;
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
   private _variant: "primary" | "secondary" = "primary";
   private _blockID: string = "";
 

@@ -20,7 +20,7 @@ export type TStatsData = {
 export class Stats extends BaseBlockTool {
   private _items: TStatsData["items"] = [];
   private _variant: TStatsData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

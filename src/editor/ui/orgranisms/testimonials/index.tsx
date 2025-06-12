@@ -21,7 +21,7 @@ export type TTestimonialsData = {
 export class Testimonials extends BaseBlockTool {
   private _items: TTestimonialsData["items"] = [];
   private _variant: TTestimonialsData["variant"] = "primary";
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

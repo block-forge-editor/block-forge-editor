@@ -1,10 +1,10 @@
 import type { FC } from "react";
-import { useId, useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 
 import { EditorConfig, OutputData } from "@editorjs/editorjs";
 import { Save, HelpCircle } from "lucide-react";
 
-import { CONSTRUCTOR_EDITOR_TOOLS } from "./lib/tools";
+import { CONSTRUCTOR_EDITOR_TOOLS, DEFAULT_INITIAL_DATA } from "./lib/tools";
 import { useEditor } from "./lib/use-editor";
 
 import {
@@ -23,20 +23,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/editor/ui/shadcn/ui/dialog";
-
-const DEFAULT_INITIAL_DATA = {
-  time: new Date().getTime(),
-  blocks: [
-    {
-      id: "0",
-      type: "header",
-      data: {
-        level: 1,
-        text: "Start adding your content here...",
-      },
-    },
-  ],
-};
+import "../globals.css";
 
 type TProps = {
   onCancel?: VoidFunction;
@@ -44,6 +31,7 @@ type TProps = {
   onSave?: (data?: OutputData) => void;
   onChange?: (data?: OutputData) => void;
   tools?: EditorConfig["tools"];
+  id: string;
 };
 
 export const BlockForgeEditor: FC<TProps> = ({
@@ -52,8 +40,8 @@ export const BlockForgeEditor: FC<TProps> = ({
   onSave,
   onChange,
   tools,
+  id,
 }) => {
-  const id = useId();
   const [showAbout, setShowAbout] = useState(false);
 
   const ejInstance = useEditor({
@@ -63,12 +51,13 @@ export const BlockForgeEditor: FC<TProps> = ({
     },
     id: `editorjs-${id}`,
     initialData: initialData ?? DEFAULT_INITIAL_DATA,
-    onChange,
+    onChange: (data) => {
+      onChange?.(data);
+    },
   });
 
   const handleSubmit = useCallback(async () => {
     const content = await ejInstance.current?.save();
-
     onSave?.(content);
   }, [ejInstance, onSave]);
 
@@ -76,19 +65,23 @@ export const BlockForgeEditor: FC<TProps> = ({
     setShowAbout((prev) => !prev);
   }, []);
 
+  const handleCancel = useCallback(() => {
+    onCancel?.();
+  }, [onCancel]);
+
   return (
     <div className="bf-flex bf-flex-col bf-space-y-4 bf-my-6 bf-px-1">
       <Menubar className="bf-rounded-lg bf-border-none bf-mx-auto bf-shadow-sm bf-w-[70%]">
         <MenubarMenu>
           <MenubarTrigger>File</MenubarTrigger>
           <MenubarContent>
-            <MenubarItem onClick={() => void handleSubmit()}>
+            <MenubarItem onClick={handleSubmit}>
               <Save className="bf-mr-2 bf-h-4 bf-w-4" />
               Save
               {/* <MenubarShortcut>⌘S</MenubarShortcut> */}
             </MenubarItem>
             <MenubarSeparator />
-            <MenubarItem onClick={onCancel}>Exit</MenubarItem>
+            <MenubarItem onClick={handleCancel}>Exit</MenubarItem>
           </MenubarContent>
         </MenubarMenu>
 

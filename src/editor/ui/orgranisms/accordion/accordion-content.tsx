@@ -18,7 +18,7 @@ export const AccordionContent: FC<TAccordionContentProps> = ({ item }) => {
   return (
     <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-full bf-text-gray-400">
       <LayoutGrid className="bf-size-8 bf-mb-2" />
-      <span className="bf-text-center">Empty Column</span>
+      <span className="bf-text-center">Empty Accordion</span>
     </div>
   );
 };

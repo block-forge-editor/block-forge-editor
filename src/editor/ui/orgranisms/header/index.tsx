@@ -20,7 +20,7 @@ export class Header extends BaseBlockTool {
   private _text: string = "";
   private _fontSize: number = 16;
   private _level: number = 3;
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

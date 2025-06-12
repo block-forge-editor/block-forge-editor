@@ -44,9 +44,6 @@ export const AccordionComponent: FC<TAccordionComponentProps> = ({
                   <h3 className="bf-text-lg bf-font-medium">
                     {item.title || "Untitled Section"}
                   </h3>
-                  <EditorButton variant="secondary">
-                    <ChevronDown className="bf-size-4 bf-transition-transform" />
-                  </EditorButton>
                 </div>
                 <div className="bf-p-4 bf-pb-6">
                   <AccordionContent item={item} />

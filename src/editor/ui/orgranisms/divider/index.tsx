@@ -15,7 +15,7 @@ export type TDividerData = {
 
 export class Divider extends BaseBlockTool {
   private _color: EColors = EColors.GRAY;
-  private _root: Root | null = null;
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);

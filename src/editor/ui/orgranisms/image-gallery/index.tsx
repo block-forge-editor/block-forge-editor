@@ -9,7 +9,7 @@ import { getIcon } from "@/editor/lib/icons";
 const TOOLBOX_TITLE = "Image Gallery";
 
 export type TImageGalleryData = {
-  variant: "grid" | "masonry" | "carousel";
+  variant: "primary" | "secondary";
   images: Array<{
     id: string;
     url: string;
@@ -20,13 +20,13 @@ export type TImageGalleryData = {
 
 export class ImageGallery extends BaseBlockTool {
   private _images: TImageGalleryData["images"] = [];
-  private _variant: TImageGalleryData["variant"] = "grid";
-  private _root: Root | null = null;
+  private _variant: "primary" | "secondary" = "primary";
+  protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._images = config.data?.images || [];
-    this._variant = config.data?.variant || "grid";
+    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -48,14 +48,25 @@ export class ImageGallery extends BaseBlockTool {
           this.save();
           this._rerender();
         }}
-        onImageAdd={() => {
+        onImageAdd={(data) => {
           this._images.push({
             id: crypto.randomUUID(),
-            url: "",
-            alt: "",
+            ...data,
           });
           this.save();
           this._rerender();
+        }}
+        onMetaDataChange={(data) => {
+          const imageIndex = this._images.findIndex(
+            (image) => image.id === data.id,
+          );
+          if (imageIndex !== -1) {
+            this._images[imageIndex] = {
+              ...this._images[imageIndex],
+              ...data.data,
+            };
+          }
+          this.save();
         }}
         onImageUpdate={(id, data) => {
           const imageIndex = this._images.findIndex((image) => image.id === id);
@@ -103,9 +114,9 @@ export class ImageGallery extends BaseBlockTool {
               icon: getIcon("grid"),
               title: "Grid",
               toggle: "variant",
-              isActive: () => this._variant === "grid",
+              isActive: () => this._variant === "primary",
               onActivate: () => {
-                this._variant = "grid";
+                this._variant = "primary";
                 this.save();
                 this._rerender();
               },
@@ -114,20 +125,9 @@ export class ImageGallery extends BaseBlockTool {
               icon: getIcon("image"),
               title: "Carousel",
               toggle: "variant",
-              isActive: () => this._variant === "carousel",
+              isActive: () => this._variant === "secondary",
               onActivate: () => {
-                this._variant = "carousel";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("columns"),
-              title: "Masonry",
-              toggle: "variant",
-              isActive: () => this._variant === "masonry",
-              onActivate: () => {
-                this._variant = "masonry";
+                this._variant = "secondary";
                 this.save();
                 this._rerender();
               },
