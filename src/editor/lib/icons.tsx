@@ -35,6 +35,7 @@ import {
   ClipboardType,
   TvMinimalPlay,
   MessageSquare,
+  Brush,
 } from "lucide-react";
 import { renderToString } from "react-dom/server";
 import { EColors } from "./utils";
@@ -81,10 +82,13 @@ export type TIconName =
   | "formatSize"
   | "messageSquare"
   | "airplaneDepart"
-  | "airplaneArrival";
+  | "airplaneArrival"
+  | "drawing";
 
 export const getIcon = (iconName: TIconName) => {
   switch (iconName) {
+    case "drawing":
+      return renderToString(<Brush className={ICON_CLASSES} />);
     case "accordion":
       return renderToString(<AlignCenter className={ICON_CLASSES} />);
     case "messageSquare":

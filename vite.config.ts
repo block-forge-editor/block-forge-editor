@@ -6,11 +6,11 @@ import { configDefaults } from "vitest/config";
 import dts from "vite-plugin-dts";
 
 // https://vitejs.dev/config/
-const config = defineConfig(() => {
+const config = defineConfig((env) => {
   return {
     build: {
       cssMinify: true,
-      sourcemap: false,
+      sourcemap: env.mode === "development",
       cssCodeSplit: false,
       lib: {
         entry: path.resolve(__dirname, "src/index.ts"),
@@ -33,7 +33,7 @@ const config = defineConfig(() => {
           },
         },
       },
-      minify: true,
+      minify: env.mode === "production",
     },
     resolve: {
       alias: {
@@ -46,7 +46,6 @@ const config = defineConfig(() => {
     },
     plugins: [
       react({
-        babel: { babelrc: true },
         jsxRuntime: "automatic",
       }),
       tsconfigPaths(),

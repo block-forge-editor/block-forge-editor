@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Open+Sans:wght@400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,6 +24,22 @@
 @layer components {
   .icon {
     @apply bf-select-none bf-fill-current bf-inline-block bf-text-inherit bf-box-content;
+  }
+
+  .bf-font-arial {
+    font-family: Arial, sans-serif;
+  }
+
+  .bf-font-times {
+    font-family: "Times New Roman", serif;
+  }
+
+  .bf-font-roboto {
+    font-family: "Roboto", Arial, sans-serif;
+  }
+
+  .bf-font-opensans {
+    font-family: "Open Sans", Arial, sans-serif;
   }
 }
 
@@ -156,4 +174,8 @@ html body {
   body {
     @apply bf-bg-background bf-text-foreground;
   }
+}
+
+.ce-popover__items {
+  @apply custom-scroll;
 }

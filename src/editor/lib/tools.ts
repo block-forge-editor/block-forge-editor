@@ -20,6 +20,7 @@ import {
   Table,
   Image,
 } from "../ui/orgranisms";
+import { Excalidraw } from "../ui/orgranisms/excalidraw";
 
 export const CONSTRUCTOR_EDITOR_TOOLS = {
   header: {
@@ -51,6 +52,9 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
   },
   divider: {
     class: Divider,
+  },
+  excalidraw: {
+    class: Excalidraw,
   },
   columns: {
     class: Columns,

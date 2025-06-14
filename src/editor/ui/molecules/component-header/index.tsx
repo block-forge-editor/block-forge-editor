@@ -16,11 +16,9 @@ type TComponentHeaderProps = {
   title: string;
   tooltipText: string;
   children?: React.ReactNode;
-  variant: "primary" | "secondary";
 };
 
 export const ComponentHeader: FC<TComponentHeaderProps> = ({
-  variant,
   tooltipText,
   title,
   children,
@@ -41,27 +39,6 @@ export const ComponentHeader: FC<TComponentHeaderProps> = ({
               </TooltipTrigger>
               <TooltipContent>
                 <p>Component name</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Badge
-                  variant="outline"
-                  className={cn(
-                    "cursor-help",
-                    variant === "primary"
-                      ? "bf-bg-indigo-100 bf-text-indigo-700 bf-border bf-border-indigo-200"
-                      : "bf-bg-violet-100 bf-text-violet-700 bf-border bf-border-violet-200",
-                  )}
-                >
-                  {variant === "primary" ? "Primary" : "Secondary"}
-                </Badge>
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Variant of component</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
