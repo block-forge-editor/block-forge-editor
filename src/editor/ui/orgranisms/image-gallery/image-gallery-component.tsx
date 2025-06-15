@@ -89,7 +89,6 @@ export const ImageGalleryComponent: FC<TImageGalleryComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        variant={variant}
         title="Image Gallery"
         tooltipText="Component for displaying image galleries"
       />

@@ -42,6 +42,7 @@
   "dependencies": {
     "@editorjs/editorjs": "^2.30.8",
     "@editorjs/list": "^2.0.8",
+    "@editorjs/paragraph": "2.10.0",
     "@editorjs/table": "^2.4.4",
     "@excalidraw/excalidraw": "^0.18.0",
     "@fontsource/nunito": "^5.0.3",
@@ -104,6 +105,7 @@
     "eslint-plugin-perfectionist": "^2.11.0",
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.6.2",
+    "jsdom": "^26.1.0",
     "npm-check-updates": "^16.14.20",
     "prettier": "3.1.1",
     "react": "^19.1.0",

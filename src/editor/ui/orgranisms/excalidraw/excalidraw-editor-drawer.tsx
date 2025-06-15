@@ -1,8 +1,5 @@
 import { FC } from "react";
 
-import { ExcalidrawEditor } from "./excalidraw-editor";
-import { TExcalidrawData } from "./types";
-
 import {
   Drawer,
   DrawerTitle,
@@ -14,21 +11,17 @@ import {
 import { Button, DrawerClose } from "@/editor/ui/shadcn";
 
 type TExcalidrawEditorDrawerProps = {
-  blockId: string;
   isOpen: boolean;
   onClose: VoidFunction;
-  initialData?: TExcalidrawData;
   onSave: VoidFunction;
-  onUpdate: (data: TExcalidrawData) => void;
+  children: React.ReactNode;
 };
 
 export const ExcalidrawEditorDrawer: FC<TExcalidrawEditorDrawerProps> = ({
-  blockId,
   isOpen,
-  initialData,
   onClose,
   onSave,
-  onUpdate,
+  children,
 }) => {
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
@@ -42,11 +35,7 @@ export const ExcalidrawEditorDrawer: FC<TExcalidrawEditorDrawerProps> = ({
           </div>
         </DrawerHeader>
 
-        <ExcalidrawEditor
-          blockId={blockId}
-          initialData={initialData}
-          onUpdate={onUpdate}
-        />
+        {children}
 
         <DrawerFooter>
           <div className="bf-flex bf-mx-auto bf-w-[70%] bf-justify-end bf-gap-2">

@@ -36,6 +36,13 @@ import {
   TvMinimalPlay,
   MessageSquare,
   Brush,
+  Figma,
+  Heading1,
+  Heading2,
+  Heading3,
+  Heading4,
+  Heading5,
+  Heading6,
 } from "lucide-react";
 import { renderToString } from "react-dom/server";
 import { EColors } from "./utils";
@@ -71,6 +78,12 @@ export type TIconName =
   | "layout"
   | "loading"
   | "heading"
+  | "heading1"
+  | "heading2"
+  | "heading3"
+  | "heading4"
+  | "heading5"
+  | "heading6"
   | "columns"
   | "youtube"
   | "palette"
@@ -83,7 +96,8 @@ export type TIconName =
   | "messageSquare"
   | "airplaneDepart"
   | "airplaneArrival"
-  | "drawing";
+  | "drawing"
+  | "figma";
 
 export const getIcon = (iconName: TIconName) => {
   switch (iconName) {
@@ -129,6 +143,18 @@ export const getIcon = (iconName: TIconName) => {
       return renderToString(<ClipboardType className={ICON_CLASSES} />);
     case "heading":
       return renderToString(<Heading className={ICON_CLASSES} />);
+    case "heading1":
+      return renderToString(<Heading1 className={ICON_CLASSES} />);
+    case "heading2":
+      return renderToString(<Heading2 className={ICON_CLASSES} />);
+    case "heading3":
+      return renderToString(<Heading3 className={ICON_CLASSES} />);
+    case "heading4":
+      return renderToString(<Heading4 className={ICON_CLASSES} />);
+    case "heading5":
+      return renderToString(<Heading5 className={ICON_CLASSES} />);
+    case "heading6":
+      return renderToString(<Heading6 className={ICON_CLASSES} />);
     case "edit":
       return renderToString(<Pencil className={ICON_CLASSES} />);
     case "right":
@@ -221,6 +247,8 @@ export const getIcon = (iconName: TIconName) => {
       return renderToString(<List className={ICON_CLASSES} />);
     case "delimiter":
       return renderToString(<Minus className={ICON_CLASSES} />);
+    case "figma":
+      return renderToString(<Figma className={ICON_CLASSES} />);
     default:
       return renderToString(<Calendar className={ICON_CLASSES} />);
   }

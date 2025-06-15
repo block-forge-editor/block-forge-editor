@@ -10,7 +10,6 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "../../shadcn/ui/tooltip";
-import { cn } from "@/editor/lib/utils";
 
 type TComponentHeaderProps = {
   title: string;

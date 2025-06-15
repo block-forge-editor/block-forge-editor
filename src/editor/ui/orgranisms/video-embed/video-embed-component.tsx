@@ -12,6 +12,7 @@ import {
   SelectContent,
   SelectTrigger,
 } from "@/editor/ui/shadcn/ui/select";
+import { TOOLBOX_TITLE } from "./constants";
 
 type TEmbedComponentProps = {
   url: string;
@@ -79,7 +80,7 @@ export const EmbedComponent: FC<TEmbedComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        title="Embed"
+        title={TOOLBOX_TITLE}
         variant={variant}
         tooltipText="Component for embedding videos from various platforms"
       />

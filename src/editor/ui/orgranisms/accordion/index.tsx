@@ -7,8 +7,7 @@ import { AccordionComponent } from "./accordion-component";
 import { TAccordionData } from "./types";
 
 import { getIcon } from "@/editor/lib/icons";
-
-const TOOLBOX_TITLE = "Accordion";
+import { TOOLBOX_TITLE } from "./constants";
 
 export class Accordion extends BaseBlockTool {
   private _item: TAccordionData;

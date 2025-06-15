@@ -13,21 +13,15 @@ import {
 } from "@/editor/ui/shadcn/ui/drawer";
 
 type TAccordionEditorDrawerProps = {
-  blockId: string;
   isOpen: boolean;
-  initialTitle?: string;
   onClose: VoidFunction;
-  initialData?: null | OutputData;
-  onSave: (data?: null | OutputData, title?: string) => void;
+  children: React.ReactNode;
 };
 
 export const AccordionEditorDrawer: FC<TAccordionEditorDrawerProps> = ({
-  blockId,
   isOpen,
-  initialData,
-  initialTitle = "",
   onClose,
-  onSave,
+  children,
 }) => {
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
@@ -42,13 +36,7 @@ export const AccordionEditorDrawer: FC<TAccordionEditorDrawerProps> = ({
           </div>
         </DrawerHeader>
 
-        <AccordionEditor
-          onSave={onSave}
-          blockId={blockId}
-          onClose={onClose}
-          initialData={initialData}
-          initialTitle={initialTitle}
-        />
+        {children}
       </DrawerContent>
     </Drawer>
   );

@@ -2,11 +2,10 @@ import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
 import { type Root, createRoot } from "react-dom/client";
 
 import { BaseBlockTool } from "../base-block-tool";
-import { EmbedComponent } from "./embed-component";
+import { EmbedComponent } from "./video-embed-component";
 
 import { getIcon } from "@/editor/lib/icons";
-
-const TOOLBOX_TITLE = "Embed";
+import { TOOLBOX_TITLE } from "./constants";
 
 export type TEmbedData = {
   url: string;
@@ -14,7 +13,7 @@ export type TEmbedData = {
   platform: "vimeo" | "other" | "youtube";
 };
 
-export class Embed extends BaseBlockTool {
+export class VideoEmbed extends BaseBlockTool {
   private _url: string = "";
   private _platform: TEmbedData["platform"] = "youtube";
   private _variant: TEmbedData["variant"] = "primary";

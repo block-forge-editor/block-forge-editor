@@ -5,4 +5,5 @@ export type TExcalidrawData = {
   elements: ExcalidrawElement[];
   appState: AppState;
   files?: Record<string, any>;
+  imageUrl?: string;
 };

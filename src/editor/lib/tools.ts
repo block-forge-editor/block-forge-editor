@@ -1,16 +1,13 @@
-import { ToolConstructable } from "@editorjs/editorjs";
 import List from "@editorjs/list";
 
 import {
-  Paragraph,
   ImageGallery,
-  Embed,
+  VideoEmbed,
   Social,
   Card,
   Timeline,
   Progress,
   Testimonials,
-  Header,
   Accordion,
   Code,
   Columns,
@@ -19,15 +16,17 @@ import {
   Stats,
   Table,
   Image,
+  BlockForgeParagraph,
 } from "../ui/orgranisms";
 import { Excalidraw } from "../ui/orgranisms/excalidraw";
+import { Figma } from "../ui/orgranisms/figma";
 
 export const CONSTRUCTOR_EDITOR_TOOLS = {
-  header: {
-    class: Header,
-  },
   paragraph: {
-    class: Paragraph,
+    class: BlockForgeParagraph,
+    config: {
+      preserveBlank: false,
+    },
   },
   list: {
     class: List,
@@ -65,14 +64,17 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
   imageSingle: {
     class: Image,
   },
+  figma: {
+    class: Figma,
+  },
   quote: {
     class: Quote,
   },
   code: {
     class: Code,
   },
-  embed: {
-    class: Embed,
+  videoEmbed: {
+    class: VideoEmbed,
   },
   social: {
     class: Social,
@@ -98,7 +100,6 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
 };
 
 export const ACCORDION_EDITOR_TOOLS = {
-  header: CONSTRUCTOR_EDITOR_TOOLS.header,
   paragraph: CONSTRUCTOR_EDITOR_TOOLS.paragraph,
   list: CONSTRUCTOR_EDITOR_TOOLS.list,
   divider: CONSTRUCTOR_EDITOR_TOOLS.divider,
@@ -106,7 +107,6 @@ export const ACCORDION_EDITOR_TOOLS = {
 };
 
 export const COLUMNS_EDITOR_TOOLS = {
-  header: CONSTRUCTOR_EDITOR_TOOLS.header,
   paragraph: CONSTRUCTOR_EDITOR_TOOLS.paragraph,
   list: CONSTRUCTOR_EDITOR_TOOLS.list,
   divider: CONSTRUCTOR_EDITOR_TOOLS.divider,

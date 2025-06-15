@@ -1,28 +1,64 @@
 import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
-import { type Root, createRoot } from "react-dom/client";
-
-import { BaseBlockTool } from "../base-block-tool";
-import { ParagraphComponent } from "./paragraph-component";
-
 import { getIcon } from "@/editor/lib/icons";
+import Paragraph from "@editorjs/paragraph";
+import { API } from "@editorjs/editorjs";
+import {
+  TAGS,
+  MIN_FONT_SIZE,
+  MAX_FONT_SIZE,
+  DEFAULT_FONT_SIZE,
+  TOOLBOX_TITLE,
+} from "./constants";
+import { TParagraphData, ParagraphCSS } from "./types";
 
-const TOOLBOX_TITLE = "Paragraph";
-const FONT_SIZES = [12, 14, 16, 18, 20, 24, 30, 36];
+export class BlockForgeParagraph extends Paragraph {
+  public _data: TParagraphData = {
+    text: "",
+    fontSize: 16,
+    tag: "p",
+  };
+  public _CSS: ParagraphCSS;
+  public api: API;
+  public _placeholder: string;
+  public _preserveBlank: boolean;
+  public _element: HTMLDivElement | null;
+  public readOnly: boolean;
+  public onKeyUp: (event: KeyboardEvent) => void;
 
-export type TParagraphData = {
-  text: string;
-  fontSize?: number;
-};
+  constructor({ data, config, api, readOnly }: BlockToolConstructorOptions) {
+    super({
+      data: {
+        text: data?.text || "",
+        fontSize: data?.fontSize || 16,
+        tag: data?.tag || "p",
+      },
+      config: {
+        placeholder: "",
+        preserveBlank: config?.preserveBlank ?? true,
+      },
+      api,
+      readOnly,
+    });
 
-export class Paragraph extends BaseBlockTool {
-  private _text: string = "";
-  private _fontSize?: number;
-  protected _root: Root | null = null;
+    this.api = api;
+    this._CSS = {
+      block: this.api.styles.block,
+      wrapper: "ce-paragraph",
+    };
+    this._placeholder = "";
+    this._preserveBlank = config?.preserveBlank ?? true;
+    this._element = null;
+    this.readOnly = readOnly || false;
 
-  constructor(config: BlockToolConstructorOptions) {
-    super(config);
-    this._text = config.data?.text || "";
-    this._fontSize = config.data?.fontSize;
+    this.onKeyUp = (event: KeyboardEvent) => {
+      super.onKeyUp(event);
+    };
+
+    this._data = {
+      text: data?.text || "",
+      fontSize: data?.fontSize || 16,
+      tag: data?.tag || "p",
+    };
   }
 
   static get toolbox() {
@@ -32,96 +68,133 @@ export class Paragraph extends BaseBlockTool {
     };
   }
 
-  private _createReactContainer(): HTMLElement {
-    const reactContainer = document.createElement("div");
-    this._root = createRoot(reactContainer);
-    this._root.render(
-      <ParagraphComponent
-        text={this._text}
-        fontSize={this._fontSize}
-        onUpdate={(data) => {
-          this._text = data.text;
-          this._fontSize = data.fontSize;
-          this.save();
-        }}
-      />,
-    );
-
-    return reactContainer;
+  static get conversionConfig() {
+    return {
+      export: "text",
+      import: "text",
+    };
   }
 
-  render() {
-    const rootDiv = document.createElement("div");
-    rootDiv.className = "bf-flex bf-flex-col bf-gap-4";
-
-    const contentWrapper = document.createElement("div");
-    contentWrapper.className = "bf-relative bf-group";
-
-    contentWrapper.appendChild(this._createReactContainer());
-
-    rootDiv.appendChild(contentWrapper);
-
-    this._node = rootDiv;
-    return rootDiv;
+  private getTagMenu() {
+    return {
+      label: this.api.i18n.t("Tag"),
+      icon: getIcon("heading"),
+      children: {
+        items: TAGS.map(({ tag, title, icon }) => ({
+          title: this.api.i18n.t(title),
+          icon: getIcon(icon),
+          isActive: this._data.tag === tag,
+          closeOnActivate: true,
+          onActivate: () => {
+            this._data.tag = tag;
+            this.save();
+            this._rerender();
+          },
+        })),
+      },
+    };
   }
 
   renderSettings() {
+    const fontSizeInput = document.createElement("input");
+    fontSizeInput.className = "cdx-list-start-with-field__input";
+    fontSizeInput.value = (this._data.fontSize || 16).toString();
+    fontSizeInput.required = true;
+    fontSizeInput.tabIndex = -1;
+
+    fontSizeInput.addEventListener("input", () => {
+      const newSize = Math.max(
+        MIN_FONT_SIZE,
+        Math.min(
+          MAX_FONT_SIZE,
+          parseInt(fontSizeInput.value) || DEFAULT_FONT_SIZE,
+        ),
+      );
+      this._data.fontSize = newSize;
+      this.save();
+      this._rerender();
+    });
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "cdx-list-start-with-field";
+    wrapper.appendChild(fontSizeInput);
+
     return [
+      {
+        label: this.api.i18n.t("Font size"),
+        icon: getIcon("formatSize"),
+        children: {
+          items: [
+            {
+              element: wrapper,
+              type: "html",
+            },
+          ],
+        },
+      },
       {
         type: "separator",
       },
-      {
-        icon: getIcon("formatSize"),
-        title: "Font size",
-        children: {
-          items: FONT_SIZES.map((size) => ({
-            icon: getIcon("formatSize"),
-            title: `${size}px`,
-            toggle: "font-size",
-            isActive: () => this._fontSize === size,
-            onActivate: () => {
-              this._fontSize = size;
-              this.save();
-              this._rerender();
-            },
-          })),
-        },
-      },
+      this.getTagMenu(),
     ];
   }
 
+  drawView(): HTMLDivElement {
+    const div = document.createElement("DIV");
+
+    div.classList.add(this._CSS.wrapper, this._CSS.block);
+    div.contentEditable = "false";
+    div.dataset.placeholderActive = this.api.i18n.t(this._placeholder);
+
+    if (this._data.text) {
+      div.innerHTML = this._data.text;
+    }
+
+    if (!this.readOnly) {
+      div.contentEditable = "true";
+      div.addEventListener("keyup", this.onKeyUp);
+      div.addEventListener("input", () => {
+        this._data.text = div.innerHTML;
+      });
+    }
+
+    if (this._data.fontSize) {
+      div.style.fontSize = `${this._data.fontSize}px`;
+    }
+
+    return div as HTMLDivElement;
+  }
+
+  render(): HTMLDivElement {
+    this._element = this.drawView();
+    return this._element;
+  }
+
   private _rerender(): void {
-    if (!this._node) return;
+    if (!this._element) return;
 
-    const contentWrapper = this._node.querySelector("div");
+    const newElement = document.createElement(this._data.tag) as HTMLDivElement;
+    newElement.innerHTML = this._element.innerHTML;
+    newElement.contentEditable = this._element.contentEditable;
+    newElement.classList.add(...Array.from(this._element.classList));
 
-    if (!contentWrapper) {
-      return;
+    if (this._data.fontSize) {
+      newElement.style.fontSize = `${this._data.fontSize}px`;
     }
 
-    const oldContainer = contentWrapper.firstElementChild;
+    this._element.parentNode?.replaceChild(newElement, this._element);
+    this._element = newElement;
 
-    if (oldContainer) {
-      contentWrapper.removeChild(oldContainer);
+    if (this._element) {
+      this._data.text = this._element.innerHTML;
     }
-
-    contentWrapper.appendChild(this._createReactContainer());
   }
 
   save(): TParagraphData {
     return {
-      text: this._text,
-      fontSize: this._fontSize,
+      text: this._data.text,
+      fontSize: this._data.fontSize,
+      tag: this._data.tag,
     };
-  }
-
-  validate(savedData: { text: string }): boolean {
-    return savedData.text.trim() !== "";
-  }
-
-  destroy() {
-    if (this._root) {
-      this._root.unmount();
-    }
   }
 }

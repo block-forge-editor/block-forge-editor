@@ -42,6 +42,7 @@ export const useEditor = ({ tools, initialData, id, onChange }: TUseEditor) => {
         tools: {
           ...tools,
         },
+        inlineToolbar: true,
       });
 
       isReady.current = true;

@@ -1,24 +1,23 @@
 import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
 import { type Root, createRoot } from "react-dom/client";
-import { exportToSvg } from "@excalidraw/excalidraw";
 
 import { BaseBlockTool } from "../base-block-tool";
-import { ExcalidrawComponent } from "./excalidraw-component";
-import { TExcalidrawData } from "./types";
+import { FigmaComponent } from "./figma-component";
+import { TFigmaData } from "./types";
 
 import { getIcon } from "@/editor/lib/icons";
-import { TOOLBOX_TITLE } from "./constants";
 
-export class Excalidraw extends BaseBlockTool {
-  private _data: TExcalidrawData;
+export const TOOLBOX_TITLE = "Figma Embed";
+
+export class Figma extends BaseBlockTool {
+  private _data: TFigmaData;
   private _reactContainer: null | HTMLDivElement = null;
   protected _root: Root | null = null;
-  private _blockID: string = "";
 
   static get toolbox() {
     return {
       title: TOOLBOX_TITLE,
-      icon: getIcon("drawing"),
+      icon: getIcon("figma"),
     };
   }
 
@@ -26,11 +25,8 @@ export class Excalidraw extends BaseBlockTool {
     super(config);
 
     this._data = config.data?.data || {
-      elements: [],
-      appState: {},
-      files: {},
+      figmaUrl: "",
     };
-    this._blockID = config.block.id;
   }
 
   private _createReactContainer(): HTMLDivElement {
@@ -39,29 +35,12 @@ export class Excalidraw extends BaseBlockTool {
     return reactContainer;
   }
 
-  private _updateContent = (data: TExcalidrawData): void => {
+  private _updateContent = (data: TFigmaData): void => {
     this._data = data;
     this.save();
   };
 
-  private async _generateImage(): Promise<void> {
-    if (this._data.elements.length > 0) {
-      const svg = await exportToSvg({
-        elements: this._data.elements,
-        appState: this._data.appState,
-        files: this._data.files,
-        exportPadding: 10,
-      });
-      const svgString = new XMLSerializer().serializeToString(svg);
-      const base64 = btoa(svgString);
-      this._data.imageUrl = `data:image/svg+xml;base64,${base64}`;
-    } else {
-      this._data.imageUrl = undefined;
-    }
-  }
-
   private _handleSave = async (): Promise<void> => {
-    await this._generateImage();
     this._rerender();
   };
 
@@ -74,9 +53,8 @@ export class Excalidraw extends BaseBlockTool {
 
     this._root = createRoot(this._reactContainer);
     this._root.render(
-      <ExcalidrawComponent
+      <FigmaComponent
         data={this._data}
-        blockId={this._blockID}
         onUpdate={this._updateContent}
         onSave={this._handleSave}
       />,
