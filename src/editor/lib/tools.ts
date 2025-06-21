@@ -17,8 +17,8 @@ import {
   Table,
   Image,
   BlockForgeParagraph,
+  BlockForgeExcalidraw,
 } from "../ui/orgranisms";
-import { Excalidraw } from "../ui/orgranisms/excalidraw";
 import { Figma } from "../ui/orgranisms/figma";
 
 export const CONSTRUCTOR_EDITOR_TOOLS = {
@@ -53,7 +53,7 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
     class: Divider,
   },
   excalidraw: {
-    class: Excalidraw,
+    class: BlockForgeExcalidraw,
   },
   columns: {
     class: Columns,

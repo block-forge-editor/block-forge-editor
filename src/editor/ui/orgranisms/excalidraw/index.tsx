@@ -9,7 +9,7 @@ import { TExcalidrawData } from "./types";
 import { getIcon } from "@/editor/lib/icons";
 import { TOOLBOX_TITLE } from "./constants";
 
-export class Excalidraw extends BaseBlockTool {
+export class BlockForgeExcalidraw extends BaseBlockTool {
   private _data: TExcalidrawData;
   private _reactContainer: null | HTMLDivElement = null;
   protected _root: Root | null = null;

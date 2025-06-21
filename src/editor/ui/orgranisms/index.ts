@@ -14,3 +14,4 @@ export { Social } from "./social";
 export { Stats } from "./stats";
 export { Testimonials } from "./testimonials";
 export { Timeline } from "./timeline";
+export { BlockForgeExcalidraw } from "./excalidraw";

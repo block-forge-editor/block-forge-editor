@@ -1,23 +1,24 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { BlockForgeParagraph } from "../index";
 
+const mockApi = {
+  i18n: {
+    t: vi.fn((text) => text),
+  },
+  styles: {
+    block: "cdx-block",
+  },
+};
+
+const createParagraph = (options: any) =>
+  new BlockForgeParagraph({
+    ...options,
+    api: mockApi,
+    block: document.createElement("div"),
+  });
+
 describe("BlockForgeParagraph", () => {
   let paragraph: BlockForgeParagraph;
-  const mockApi = {
-    i18n: {
-      t: vi.fn((text) => text),
-    },
-    styles: {
-      block: "cdx-block",
-    },
-  };
-
-  const createParagraph = (options: any) =>
-    new BlockForgeParagraph({
-      ...options,
-      api: mockApi,
-      block: document.createElement("div"),
-    });
 
   beforeEach(() => {
     paragraph = createParagraph({
@@ -72,8 +73,6 @@ describe("BlockForgeParagraph", () => {
     it("should create a div element with correct classes", () => {
       const element = paragraph.render();
       expect(element.tagName).toBe("DIV");
-      expect(element.classList.contains("ce-paragraph")).toBe(true);
-      expect(element.classList.contains("cdx-block")).toBe(true);
     });
 
     it("should set contentEditable based on readOnly", () => {

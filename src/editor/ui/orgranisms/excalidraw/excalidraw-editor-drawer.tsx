@@ -24,10 +24,10 @@ export const ExcalidrawEditorDrawer: FC<TExcalidrawEditorDrawerProps> = ({
   children,
 }) => {
   return (
-    <Drawer open={isOpen} onOpenChange={onClose}>
+    <Drawer open={isOpen} onOpenChange={onClose} dismissible={false}>
       <DrawerContent className="!bf-h-[90vh] !bf-bg-[#f8f8f8]">
         <DrawerHeader>
-          <div className="bf-w-[70%] bf-mx-auto bf-space-y-2">
+          <div className="bf-w-full sm:bf-w-[70%] bf-mx-auto bf-space-y-2">
             <DrawerTitle>Edit Drawing</DrawerTitle>
             <DrawerDescription>
               Create and edit your drawing using the Excalidraw editor.
@@ -38,7 +38,7 @@ export const ExcalidrawEditorDrawer: FC<TExcalidrawEditorDrawerProps> = ({
         {children}
 
         <DrawerFooter>
-          <div className="bf-flex bf-mx-auto bf-w-[70%] bf-justify-end bf-gap-2">
+          <div className="bf-flex bf-mx-auto bf-w-full sm:bf-w-[70%] bf-justify-end bf-gap-2">
             <DrawerClose asChild>
               <Button variant="outline" onClick={onClose}>
                 Cancel

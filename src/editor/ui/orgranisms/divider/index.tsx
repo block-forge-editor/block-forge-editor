@@ -5,21 +5,14 @@ import { BaseBlockTool } from "../base-block-tool";
 import { DividerComponent } from "./divider-component";
 
 import { getIcon } from "@/editor/lib/icons";
-import { EColors } from "@/editor/lib/utils";
 
 const TOOLBOX_TITLE = "Divider";
 
-export type TDividerData = {
-  color?: string;
-};
-
 export class Divider extends BaseBlockTool {
-  private _color: EColors = EColors.GRAY;
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
-    this._color = config.data?.color || EColors.GRAY;
   }
 
   static get toolbox() {
@@ -32,7 +25,7 @@ export class Divider extends BaseBlockTool {
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
-    this._root.render(<DividerComponent color={this._color} />);
+    this._root.render(<DividerComponent />);
 
     return reactContainer;
   }
@@ -50,54 +43,6 @@ export class Divider extends BaseBlockTool {
 
     this._node = rootDiv;
     return rootDiv;
-  }
-
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        title: "Color",
-        children: {
-          items: Object.values(EColors).map((color) => ({
-            icon: getIcon(color),
-            title: color.charAt(0).toUpperCase() + color.slice(1),
-            toggle: "color",
-            isActive: () => this._color === color,
-            onActivate: () => {
-              this._color = color;
-              this.save();
-              this._rerender();
-            },
-          })),
-        },
-      },
-    ];
-  }
-
-  private _rerender(): void {
-    if (!this._node) return;
-
-    const contentWrapper = this._node.querySelector("div");
-
-    if (!contentWrapper) {
-      return;
-    }
-
-    const oldContainer = contentWrapper.firstElementChild;
-
-    if (oldContainer) {
-      contentWrapper.removeChild(oldContainer);
-    }
-
-    contentWrapper.appendChild(this._createReactContainer());
-  }
-
-  save(): TDividerData {
-    return {
-      color: this._color,
-    };
   }
 
   destroy() {
