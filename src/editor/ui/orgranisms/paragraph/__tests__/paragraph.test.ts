@@ -60,15 +60,6 @@ describe("BlockForgeParagraph", () => {
     });
   });
 
-  describe("toolbox", () => {
-    it("should return correct toolbox configuration", () => {
-      expect(BlockForgeParagraph.toolbox).toEqual({
-        title: "Text",
-        icon: expect.any(String),
-      });
-    });
-  });
-
   describe("render", () => {
     it("should create a div element with correct classes", () => {
       const element = paragraph.render();

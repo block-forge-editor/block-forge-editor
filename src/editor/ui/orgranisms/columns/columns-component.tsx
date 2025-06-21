@@ -21,7 +21,6 @@ type TColumnsComponentProps = {
   blockId: string;
   columns: TColumnData[];
   onColumnAdd: () => void;
-  variant: "primary" | "secondary";
   onColumnDelete: (id: string) => void;
   onColumnContentChange: (id: string, content: OutputData) => void;
   onColumnSizeChange: (rowIndex: number, newSizes: number[]) => void;
@@ -29,7 +28,6 @@ type TColumnsComponentProps = {
 
 export const ColumnsComponent: FC<TColumnsComponentProps> = ({
   columns,
-  variant,
   onColumnDelete,
   onColumnAdd,
   onColumnSizeChange,
@@ -97,7 +95,6 @@ export const ColumnsComponent: FC<TColumnsComponentProps> = ({
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
         title="Columns"
-        variant={variant}
         tooltipText="Component for creating columns with content"
       >
         <button onClick={onColumnAdd}>

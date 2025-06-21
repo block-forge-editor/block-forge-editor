@@ -63,7 +63,13 @@ html body {
 } */
 
 .ce-block__content {
-  padding: 16px 28px 16px 28px;
+  padding: 16px 28px;
+}
+
+@media (max-width: 768px) {
+  .ce-block__content {
+    padding: 12px 16px;
+  }
 }
 
 .ce-block--selected .ce-block__content {

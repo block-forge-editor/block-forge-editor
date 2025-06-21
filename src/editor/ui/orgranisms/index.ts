@@ -1,7 +1,7 @@
 export { Accordion } from "./accordion";
 export { Card } from "./card";
 export { Code } from "./code";
-export { Columns } from "./columns";
+export { BlockForgeColumns } from "./columns";
 export { Divider } from "./divider/index";
 export { BlockForgeParagraph } from "./paragraph";
 export { Table } from "./table";

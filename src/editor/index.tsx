@@ -126,7 +126,7 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
 
   return (
     <div className="bf-flex bf-flex-col bf-space-y-4 bf-my-6 bf-px-1">
-      <Menubar className="bf-rounded-lg bf-border-none bf-mx-auto bf-shadow-sm bf-w-[70%]">
+      <Menubar className="bf-rounded-lg bf-border-none bf-mx-auto bf-shadow-sm bf-w-full sm:bf-w-[70%]">
         <MenubarMenu>
           <MenubarTrigger>File</MenubarTrigger>
           <MenubarContent>
@@ -233,7 +233,7 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
       </Dialog>
 
       <div
-        className={`bf-mx-auto bf-m-8 bf-min-h-screen bf-overflow-auto bf-shadow-md bf-rounded-lg bf-w-[70%] ${editorStyle.bgClass} ${editorStyle.fontClass}`}
+        className={`bf-mx-auto bf-m-8 bf-min-h-screen bf-overflow-auto bf-shadow-md bf-rounded-lg bf-w-full sm:bf-w-[70%] ${editorStyle.bgClass} ${editorStyle.fontClass}`}
       >
         <div id={`editorjs-${id}`} />
       </div>

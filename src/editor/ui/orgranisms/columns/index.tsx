@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
 import { type Root, createRoot } from "react-dom/client";
 import { v4 as uuidv4 } from "uuid";
@@ -11,11 +10,10 @@ import { getIcon } from "@/editor/lib/icons";
 
 const TOOLBOX_TITLE = "Columns";
 
-export class Columns extends BaseBlockTool {
+export class BlockForgeColumns extends BaseBlockTool {
   private _columns: TColumnData[] = [];
   private _reactContainer: null | HTMLDivElement = null;
   protected _root: Root | null = null;
-  private _variant: "primary" | "secondary" = "primary";
   private _blockID: string = "";
 
   static get toolbox() {
@@ -42,7 +40,6 @@ export class Columns extends BaseBlockTool {
             },
           },
         ];
-    this._variant = config.data?.variant || "primary";
     this._blockID = config.block.id;
   }
 
@@ -106,7 +103,6 @@ export class Columns extends BaseBlockTool {
       <ColumnsComponent
         blockId={this._blockID}
         columns={this._columns}
-        variant={this._variant}
         onColumnSizeChange={this._updateColumnSizes}
         onColumnContentChange={this._updateColumnContent}
         onColumnDelete={(id) => {
@@ -147,48 +143,9 @@ export class Columns extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("edit"),
-        title: "Columns Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
   save() {
     return {
       columns: this._columns,
-      variant: this._variant,
     };
   }
 

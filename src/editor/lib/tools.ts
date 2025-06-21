@@ -10,7 +10,7 @@ import {
   Testimonials,
   Accordion,
   Code,
-  Columns,
+  BlockForgeColumns,
   Divider,
   Quote,
   Stats,
@@ -56,7 +56,7 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
     class: BlockForgeExcalidraw,
   },
   columns: {
-    class: Columns,
+    class: BlockForgeColumns,
   },
   imageGallery: {
     class: ImageGallery,

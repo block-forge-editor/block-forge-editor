@@ -31,7 +31,7 @@ export const ColumnEditorDrawer: FC<TColumnEditorDrawerProps> = ({
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="!bf-h-[90vh] !bf-bg-[#f8f8f8]">
         <DrawerHeader>
-          <div className="bf-w-[70%] bf-mx-auto bf-space-y-2">
+          <div className="bf-w-full sm:bf-w-[70%] bf-mx-auto bf-space-y-2">
             <DrawerTitle>Edit Column Content</DrawerTitle>
             <DrawerDescription>
               Edit the content of this column. You can add text, lists, and

@@ -39,12 +39,12 @@ export const ColumnEditor: FC<TColumnEditorProps> = ({
       <div className="bf-flex-1 bf-overflow-auto custom-scroll bf-p-4">
         <div
           id={`column-editor-${blockId}`}
-          className="bf-min-h-screen bf-mx-auto bf-w-[70%] bf-bg-white bf-shadow-md bf-rounded-lg"
+          className="bf-min-h-screen bf-mx-auto bf-w-full sm:bf-w-[70%] bf-bg-white bf-shadow-md bf-rounded-lg"
         />
       </div>
 
       <DrawerFooter>
-        <div className="bf-flex bf-mx-auto bf-w-[70%] bf-justify-end bf-gap-2">
+        <div className="bf-flex bf-mx-auto bf-w-full sm:bf-w-[70%] bf-justify-end bf-gap-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>
