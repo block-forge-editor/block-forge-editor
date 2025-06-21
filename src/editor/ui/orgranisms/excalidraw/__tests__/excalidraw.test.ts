@@ -2,41 +2,41 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { BlockForgeExcalidraw } from "../index";
 import { TExcalidrawData } from "../types";
 
-// TODO: problem with render
-vi.mock("@excalidraw/excalidraw", () => ({
-  exportToSvg: vi.fn().mockResolvedValue({
-    outerHTML: "<svg>test</svg>",
-  }),
-}));
-
-const mockApi = {
-  i18n: {
-    t: vi.fn((text) => text),
-  },
-  styles: {
-    block: "cdx-block",
-  },
-};
-
-const mockBlock = {
-  id: "test-excalidraw-id",
-};
-
-const mockInitialData: TExcalidrawData = {
-  elements: [],
-  appState: {} as any,
-  files: {},
-};
-
-const createExcalidraw = (options: any) =>
-  new BlockForgeExcalidraw({
-    ...options,
-    api: mockApi,
-    block: mockBlock,
-  });
-
 describe("BlockForgeExcalidraw", () => {
   let excalidraw: BlockForgeExcalidraw;
+
+  // TODO: problem with render
+  vi.mock("@excalidraw/excalidraw", () => ({
+    exportToSvg: vi.fn().mockResolvedValue({
+      outerHTML: "<svg>test</svg>",
+    }),
+  }));
+
+  const mockApi = {
+    i18n: {
+      t: vi.fn((text) => text),
+    },
+    styles: {
+      block: "cdx-block",
+    },
+  };
+
+  const mockBlock = {
+    id: "test-excalidraw-id",
+  };
+
+  const mockInitialData: TExcalidrawData = {
+    elements: [],
+    appState: {} as any,
+    files: {},
+  };
+
+  const createExcalidraw = (options: any) =>
+    new BlockForgeExcalidraw({
+      ...options,
+      api: mockApi,
+      block: mockBlock,
+    });
 
   beforeEach(() => {
     excalidraw = createExcalidraw({
@@ -45,7 +45,6 @@ describe("BlockForgeExcalidraw", () => {
       },
       config: {},
       api: mockApi,
-      readOnly: false,
     });
   });
 
@@ -55,7 +54,6 @@ describe("BlockForgeExcalidraw", () => {
         data: {},
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       expect(emptyExcalidraw["_data"]).toEqual({
@@ -78,7 +76,6 @@ describe("BlockForgeExcalidraw", () => {
         },
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       expect(customExcalidraw["_data"]).toEqual(customData);

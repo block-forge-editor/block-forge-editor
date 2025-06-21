@@ -1,24 +1,24 @@
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { BlockForgeParagraph } from "../index";
 
-const mockApi = {
-  i18n: {
-    t: vi.fn((text) => text),
-  },
-  styles: {
-    block: "cdx-block",
-  },
-};
-
-const createParagraph = (options: any) =>
-  new BlockForgeParagraph({
-    ...options,
-    api: mockApi,
-    block: document.createElement("div"),
-  });
-
 describe("BlockForgeParagraph", () => {
   let paragraph: BlockForgeParagraph;
+
+  const mockApi = {
+    i18n: {
+      t: vi.fn((text) => text),
+    },
+    styles: {
+      block: "cdx-block",
+    },
+  };
+
+  const createParagraph = (options: any) =>
+    new BlockForgeParagraph({
+      ...options,
+      api: mockApi,
+      block: document.createElement("div"),
+    });
 
   beforeEach(() => {
     paragraph = createParagraph({

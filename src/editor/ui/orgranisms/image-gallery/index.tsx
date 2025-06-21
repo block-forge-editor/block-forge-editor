@@ -22,11 +22,13 @@ export class ImageGallery extends BaseBlockTool {
   private _images: TImageGalleryData["images"] = [];
   private _variant: "primary" | "secondary" = "primary";
   protected _root: Root | null = null;
+  private _blockId: string = "";
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._images = config.data?.images || [];
     this._variant = config.data?.variant || "primary";
+    this._blockId = config.block.id;
   }
 
   static get toolbox() {
@@ -36,6 +38,7 @@ export class ImageGallery extends BaseBlockTool {
     };
   }
 
+  // TODO: make different methods for update, delete, add, etc.
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);

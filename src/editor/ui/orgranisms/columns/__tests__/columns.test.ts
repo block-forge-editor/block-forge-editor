@@ -2,48 +2,48 @@ import { describe, it, expect, beforeEach, vi } from "vitest";
 import { BlockForgeColumns } from "../index";
 import { TColumnData } from "../types";
 
-vi.mock("uuid", () => ({
-  v4: vi.fn(() => "test-uuid"),
-}));
-
-// TODO: wtf
-vi.mock("@excalidraw/excalidraw", () => ({
-  exportToSvg: vi.fn().mockResolvedValue({
-    outerHTML: "<svg>test</svg>",
-  }),
-}));
-
-const mockApi = {
-  i18n: {
-    t: vi.fn((text) => text),
-  },
-  styles: {
-    block: "cdx-block",
-  },
-};
-
-const mockBlock = {
-  id: "test-columns-id",
-};
-
-const mockColumnData: TColumnData = {
-  id: "test-column-id",
-  size: 50,
-  content: {
-    blocks: [],
-    time: 0,
-  },
-};
-
-const createColumns = (options: any) =>
-  new BlockForgeColumns({
-    ...options,
-    api: mockApi,
-    block: mockBlock,
-  });
-
 describe("BlockForgeColumns", () => {
   let columns: BlockForgeColumns;
+
+  vi.mock("uuid", () => ({
+    v4: vi.fn(() => "test-uuid"),
+  }));
+
+  // TODO: wtf
+  vi.mock("@excalidraw/excalidraw", () => ({
+    exportToSvg: vi.fn().mockResolvedValue({
+      outerHTML: "<svg>test</svg>",
+    }),
+  }));
+
+  const mockApi = {
+    i18n: {
+      t: vi.fn((text) => text),
+    },
+    styles: {
+      block: "cdx-block",
+    },
+  };
+
+  const mockBlock = {
+    id: "test-columns-id",
+  };
+
+  const mockColumnData: TColumnData = {
+    id: "test-column-id",
+    size: 50,
+    content: {
+      blocks: [],
+      time: 0,
+    },
+  };
+
+  const createColumns = (options: any) =>
+    new BlockForgeColumns({
+      ...options,
+      api: mockApi,
+      block: mockBlock,
+    });
 
   beforeEach(() => {
     columns = createColumns({
@@ -52,7 +52,6 @@ describe("BlockForgeColumns", () => {
       },
       config: {},
       api: mockApi,
-      readOnly: false,
     });
   });
 
@@ -62,7 +61,6 @@ describe("BlockForgeColumns", () => {
         data: {},
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       expect(emptyColumns["_columns"]).toHaveLength(1);
@@ -79,7 +77,6 @@ describe("BlockForgeColumns", () => {
         data: customData,
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       expect(customColumns["_columns"]).toEqual([mockColumnData]);
@@ -97,7 +94,6 @@ describe("BlockForgeColumns", () => {
         },
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       expect(columnsWithDefaultSize["_columns"][0].size).toBe(25);
@@ -146,7 +142,6 @@ describe("BlockForgeColumns", () => {
         },
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       (columns as any)._updateColumnSizes(0, [30, 70]);
@@ -168,7 +163,6 @@ describe("BlockForgeColumns", () => {
         },
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       (columns as any)._updateColumnSizes(1, [100]);
@@ -185,7 +179,6 @@ describe("BlockForgeColumns", () => {
         },
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       const saveSpy = vi.spyOn(columns, "save");
@@ -209,7 +202,6 @@ describe("BlockForgeColumns", () => {
         },
         config: {},
         api: mockApi,
-        readOnly: false,
       });
 
       (columns as any)._recalculateColumnSizes();
