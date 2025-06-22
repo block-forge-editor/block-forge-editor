@@ -48,7 +48,6 @@
     "@editorjs/list": "^2.0.8",
     "@editorjs/paragraph": "2.10.0",
     "@editorjs/table": "^2.4.4",
-    "@excalidraw/excalidraw": "^0.18.0",
     "@fontsource/nunito": "^5.0.3",
     "@radix-ui/react-accordion": "^1.2.11",
     "@radix-ui/react-aspect-ratio": "^1.1.7",

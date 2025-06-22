@@ -118,7 +118,7 @@ export const DEFAULT_INITIAL_DATA = {
   blocks: [
     {
       id: "0",
-      type: "header",
+      type: "paragraph",
       data: {
         level: 1,
         text: "Start adding your content here...",

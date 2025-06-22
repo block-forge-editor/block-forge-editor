@@ -1,10 +1,10 @@
 import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
 import { type Root, createRoot } from "react-dom/client";
-import { exportToSvg } from "@excalidraw/excalidraw";
 
 import { BaseBlockTool } from "../base-block-tool";
 import { ExcalidrawComponent } from "./excalidraw-component";
 import { TExcalidrawData } from "./types";
+import { getExcalidrawPreview } from "./lib";
 
 import { getIcon } from "@/editor/lib/icons";
 import { TOOLBOX_TITLE } from "./constants";
@@ -26,9 +26,10 @@ export class BlockForgeExcalidraw extends BaseBlockTool {
     super(config);
 
     this._data = config.data?.data || {
-      elements: [],
-      appState: {},
-      files: {},
+      sceneId: undefined,
+      title: undefined,
+      description: undefined,
+      imageUrl: undefined,
     };
     this._blockID = config.block.id;
   }
@@ -44,24 +45,22 @@ export class BlockForgeExcalidraw extends BaseBlockTool {
     this.save();
   };
 
-  private async _generateImage(): Promise<void> {
-    if (this._data.elements.length > 0) {
-      const svg = await exportToSvg({
-        elements: this._data.elements,
-        appState: this._data.appState,
-        files: this._data.files,
-        exportPadding: 10,
-      });
-      const svgString = new XMLSerializer().serializeToString(svg);
-      const base64 = btoa(svgString);
-      this._data.imageUrl = `data:image/svg+xml;base64,${base64}`;
-    } else {
-      this._data.imageUrl = undefined;
+  private async _generatePreview(): Promise<void> {
+    if (this._data.sceneId) {
+      try {
+        const previewUrl = await getExcalidrawPreview(this._data.sceneId);
+        if (previewUrl) {
+          this._data.imageUrl = previewUrl;
+        }
+      } catch (error) {
+        console.error("Failed to generate preview:", error);
+      }
     }
   }
 
   private _handleSave = async (): Promise<void> => {
-    await this._generateImage();
+    // Попытка получить превью изображения
+    await this._generatePreview();
     this._rerender();
   };
 
