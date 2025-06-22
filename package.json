@@ -1,10 +1,14 @@
 {
-  "name": "block-forge-editor",
+  "name": "@block-forge/block-forge-editor",
   "version": "0.0.0",
   "description": "A React component library with modern UI blocks",
   "private": false,
   "license": "MIT",
   "author": "alkhipce",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/block-forge-editor/block-forge-editor.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
@@ -132,6 +136,7 @@
   ],
   "publishConfig": {
     "access": "public",
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/",
+    "scope": "@block-forge"
   }
 }
