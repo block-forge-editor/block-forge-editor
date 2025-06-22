@@ -108,12 +108,18 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
   const handleSubmit = useCallback(async () => {
     const content = await ejInstance.current?.save();
 
-    console.log(content);
+    if (!content) {
+      onSave?.({
+        blocks: [],
+        meta,
+      });
+      return;
+    }
 
-    // onSave?.({
-    //   ...content,
-    //   meta,
-    // });
+    onSave?.({
+      ...(content ?? {}),
+      meta,
+    });
   }, [ejInstance, onSave, selectedFont, selectedBg]);
 
   const toggleAbout = useCallback(() => {

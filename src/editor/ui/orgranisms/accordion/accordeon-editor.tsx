@@ -42,7 +42,7 @@ export const AccordionEditor: FC<TAccordionEditorProps> = ({
   return (
     <>
       <div className="bf-flex-1 bf-space-y-4 bf-overflow-auto custom-scroll bf-p-4">
-        <div className="bf-w-[70%] bf-mx-auto bf-space-y-2">
+        <div className="bf-w-full sm:bf-w-[70%] bf-mx-auto bf-space-y-2">
           <Label
             htmlFor="accordion-title"
             className="bf-text-sm bf-font-normal bf-text-neutral-500 bf-dark:bf-text-neutral-400"
@@ -59,12 +59,12 @@ export const AccordionEditor: FC<TAccordionEditorProps> = ({
 
         <div
           id={`accordion-editor-${blockId}`}
-          className="bf-min-h-screen bf-mx-auto bf-w-[70%] bf-bg-white bf-shadow-md bf-rounded-lg"
+          className="bf-min-h-screen bf-mx-auto bf-w-full sm:bf-w-[70%] bf-bg-white bf-shadow-md bf-rounded-lg"
         />
       </div>
 
       <DrawerFooter>
-        <div className="bf-flex bf-mx-auto bf-w-[70%] bf-justify-end bf-gap-2">
+        <div className="bf-flex bf-mx-auto bf-w-full sm:bf-w-[70%] bf-justify-end bf-gap-2">
           <DrawerClose asChild>
             <Button variant="outline">Cancel</Button>
           </DrawerClose>

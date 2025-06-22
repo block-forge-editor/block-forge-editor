@@ -46,6 +46,95 @@ function App() {
 }
 ```
 
+## Data Structure
+
+The editor saves data in EditorJS format. Here's an example of the saved data structure:
+
+```typescript
+type EditorData = {
+  time: number;
+  blocks: Array<{
+    id: string;
+    type: string;
+    data: any;
+  }>;
+  version: string;
+  meta?: {
+    font?: string;
+    background?: string;
+    [key: string]: any;
+  };
+};
+```
+
+### Example Saved Data
+
+```json
+{
+  "time": 1750583863555,
+  "blocks": [
+    {
+      "id": "4k-k_4z4uf",
+      "type": "paragraph",
+      "data": {
+        "text": "<b>Block Forge Editor Demo</b>",
+        "fontSize": 20,
+        "tag": "h1"
+      }
+    },
+    {
+      "id": "P7pzcUmYw1",
+      "type": "list",
+      "data": {
+        "style": "unordered",
+        "items": [
+          { "content": "Item 1", "meta": {}, "items": [] },
+          { "content": "Item 2", "meta": {}, "items": [] }
+        ]
+      }
+    },
+    {
+      "id": "5CxpNLMX0W",
+      "type": "table",
+      "data": {
+        "withHeadings": true,
+        "content": [
+          ["Header 1", "Header 2"],
+          ["Cell 1", "Cell 2"]
+        ]
+      }
+    }
+  ],
+  "version": "2.31.0-rc.7",
+  "meta": {
+    "font": "times",
+    "background": "emerald-50"
+  }
+}
+```
+
+### onChange Handler
+
+```jsx
+const handleChange = (data: EditorData) => {
+  console.log('Editor data changed:', data);
+  // Save to your backend or state management
+};
+```
+
+### onSave Handler
+
+```jsx
+const handleSave = async (data: EditorData) => {
+  try {
+    await saveToBackend(data);
+    console.log('Content saved successfully');
+  } catch (error) {
+    console.error('Failed to save:', error);
+  }
+};
+```
+
 ## Available Blocks
 
 This document provides a comprehensive overview of the saved data structure for each component.
