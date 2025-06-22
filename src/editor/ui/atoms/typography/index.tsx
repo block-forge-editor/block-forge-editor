@@ -1,4 +1,5 @@
 import { cn } from "@/editor/lib/utils";
+import { JSX } from "react";
 
 type TProps = {
   elipsis?: boolean;
