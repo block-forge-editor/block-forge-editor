@@ -16,11 +16,11 @@ A powerful article builder for React based on EditorJS and built with shadcn/ui 
 ## Installation
 
 ```bash
-npm install block-forge-editor
+npm i @block-forge/block-forge-editor
 # or
-yarn add block-forge-editor
+yarn add @block-forge/block-forge-editor
 # or
-pnpm add block-forge-editor
+pnpm add @block-forge/block-forge-editor
 ```
 
 ## Requirements
@@ -30,8 +30,8 @@ pnpm add block-forge-editor
 ## Usage
 
 ```jsx
-import { BlockForgeEditor } from "block-forge-editor";
-import "block-forge-editor/dist/index.css";
+import { BlockForgeEditor } from "@block-forge/block-forge-editor";
+import "@block-forge/block-forge-editor/dist/index.css";
 
 function App() {
   return (
