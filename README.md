@@ -126,14 +126,16 @@ const handleChange = (data: EditorData) => {
 
 ```jsx
 const handleSave = async (data: EditorData) => {
-  try {
-    await saveToBackend(data);
-    console.log('Content saved successfully');
-  } catch (error) {
-    console.error('Failed to save:', error);
-  }
+   console.log('Editor data changed:', data);
 };
 ```
+
+### onCancel Handler
+
+````jsx
+const handleCancel = () => {
+   console.log('Edit cancelled')
+}
 
 ## Available Blocks
 
@@ -146,7 +148,7 @@ type TAccordionData = {
   title: string;
   data: OutputData | null;
 };
-```
+````
 
 ### ColumnEditor
 
