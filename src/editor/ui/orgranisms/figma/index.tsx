@@ -6,13 +6,13 @@ import { FigmaComponent } from "./figma-component";
 import { TFigmaData } from "./types";
 
 import { getIcon } from "@/editor/lib/icons";
+import { TOOLBOX_TITLE } from "./constants";
 
-export const TOOLBOX_TITLE = "Figma Embed";
-
-export class Figma extends BaseBlockTool {
+export class BlockForgeFigma extends BaseBlockTool {
   private _data: TFigmaData;
   private _reactContainer: null | HTMLDivElement = null;
   protected _root: Root | null = null;
+  private _blockID: string = "";
 
   static get toolbox() {
     return {
@@ -27,6 +27,7 @@ export class Figma extends BaseBlockTool {
     this._data = config.data?.data || {
       figmaUrl: "",
     };
+    this._blockID = config.block.id;
   }
 
   private _createReactContainer(): HTMLDivElement {

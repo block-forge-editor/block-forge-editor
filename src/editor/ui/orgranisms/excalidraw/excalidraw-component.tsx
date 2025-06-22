@@ -36,11 +36,11 @@ export const ExcalidrawComponent: FC<TExcalidrawComponentProps> = ({
         tooltipText="Component for creating and editing drawings"
       />
 
-      <div className="bf-border-b bf-min-h-[200px] bf-border-r bf-p-2 bf-flex bf-flex-col bf-gap-4 bf-group/item">
+      <div className="bf-border-b bf-min-h-[200px] bf-p-2 bf-flex bf-flex-col bf-gap-4 bf-group/item">
         <div className="bf-flex bf-items-start bf-justify-between bf-gap-4">
           <div className="bf-flex-1">
             <div className="bf-flex bf-items-center bf-justify-between">
-              <div className="bf-w-full bf-h-[300px] bf-bg-white bf-rounded-lg bf-overflow-hidden">
+              <div className="bf-w-full bf-h-[200px] bf-bg-white bf-rounded-lg bf-overflow-hidden">
                 {data.imageUrl ? (
                   <img
                     src={data.imageUrl}

@@ -1,6 +1,6 @@
 import EditorJsTable from "@editorjs/table";
 
-export class Table extends EditorJsTable {
+export class BlockForgeTable extends EditorJsTable {
   static get sanitize() {
     return {
       br: true,

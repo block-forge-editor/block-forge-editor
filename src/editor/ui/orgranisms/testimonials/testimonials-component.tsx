@@ -14,36 +14,17 @@ import {
   AvatarImage,
   AvatarFallback,
 } from "@/editor/ui/shadcn/ui/avatar";
+import { TTestimonialsData } from "./types";
+import { TOOLBOX_TITLE } from "./constants";
 
 type TTestimonialsComponentProps = {
-  variant: "primary" | "secondary";
-  items: Array<{
-    name: string;
-    role: string;
-    text: string;
-    photo: string;
-  }>;
-  onUpdate: (
-    items: Array<{
-      name: string;
-      role: string;
-      text: string;
-      photo: string;
-    }>,
-  ) => void;
-  onUpdateWithRerender: (
-    items: Array<{
-      name: string;
-      role: string;
-      text: string;
-      photo: string;
-    }>,
-  ) => void;
+  items: TTestimonialsData["items"];
+  onUpdate: (items: TTestimonialsData["items"]) => void;
+  onUpdateWithRerender: (items: TTestimonialsData["items"]) => void;
 };
 
 export const TestimonialsComponent: FC<TTestimonialsComponentProps> = ({
   items,
-  variant,
   onUpdate,
   onUpdateWithRerender,
 }) => {
@@ -99,8 +80,7 @@ export const TestimonialsComponent: FC<TTestimonialsComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        variant={variant}
-        title="Testimonials"
+        title={TOOLBOX_TITLE}
         tooltipText="Display customer testimonials with photos and reviews"
       >
         <EditorButton variant="icon" onClick={handleAddItem}>
@@ -191,7 +171,7 @@ export const TestimonialsComponent: FC<TTestimonialsComponentProps> = ({
           ))}
         </div>
         {localItems.length === 0 && (
-          <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
             <MessageSquare className="bf-size-8 bf-mb-2" />
             <span>No testimonials yet</span>
           </div>

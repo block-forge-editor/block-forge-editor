@@ -115,7 +115,7 @@ export const IconSelect: FC<TIconSelectProps> = ({ value, onChange }) => {
         </button>
       </PopoverTrigger>
       <PopoverContent align="center" className="bf-w-[300px] !bf-p-0">
-        <div className="bf-h-[300px] bf-overflow-y-auto custom-scroll">
+        <div className="bf-h-[200px] bf-overflow-y-auto custom-scroll">
           <div className="bf-grid bf-grid-cols-6 bf-gap-2 bf-p-4">
             {AVAILABLE_ICONS.map((name) => {
               const Icon = ICONS[name];

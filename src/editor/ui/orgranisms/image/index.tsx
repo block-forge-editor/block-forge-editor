@@ -12,15 +12,13 @@ export type TImageData = {
   id: string;
   url: string;
   caption?: string;
-  variant: "primary" | "secondary";
   alt: string;
 };
 
-export class Image extends BaseBlockTool {
+export class BlockForgeImage extends BaseBlockTool {
   private _id: string;
   private _url: string = "";
-  private _caption?: string;
-  private _variant: TImageData["variant"] = "primary";
+  private _caption: string = "";
   private _alt: string = "";
   protected _root: Root | null = null;
 
@@ -28,8 +26,7 @@ export class Image extends BaseBlockTool {
     super(config);
     this._id = config.data?.id || crypto.randomUUID();
     this._url = config.data?.url || "";
-    this._caption = config.data?.caption;
-    this._variant = config.data?.variant || "primary";
+    this._caption = config.data?.caption || "";
     this._alt = config.data?.alt || "";
   }
 
@@ -40,21 +37,23 @@ export class Image extends BaseBlockTool {
     };
   }
 
+  private _updateData(data: Pick<TImageData, "url" | "caption" | "alt">) {
+    this._url = data.url;
+    this._caption = data.caption || "";
+    this._alt = data.alt;
+    this.save();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <ImageComponent
-        id={this._id}
         url={this._url}
         caption={this._caption}
-        variant={this._variant}
         alt={this._alt}
         onUpdate={(data) => {
-          this._url = data.url;
-          this._caption = data.caption;
-          this._alt = data.alt;
-          this.save();
+          this._updateData(data);
         }}
       />,
     );
@@ -77,68 +76,11 @@ export class Image extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Image Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
-  private _rerender(): void {
-    if (!this._node) return;
-
-    const contentWrapper = this._node.querySelector("div");
-
-    if (!contentWrapper) {
-      return;
-    }
-
-    const oldContainer = contentWrapper.firstElementChild;
-
-    if (oldContainer) {
-      contentWrapper.removeChild(oldContainer);
-    }
-
-    contentWrapper.appendChild(this._createReactContainer());
-  }
-
   save(): TImageData {
     return {
       id: this._id,
       url: this._url,
       caption: this._caption,
-      variant: this._variant,
       alt: this._alt,
     };
   }

@@ -10,11 +10,11 @@ import {
   SelectTrigger,
 } from "@/editor/ui/shadcn/ui/select";
 import { Textarea } from "@/editor/ui/shadcn/ui/textarea";
+import { TOOLBOX_TITLE } from "./constants";
 
 type TCodeComponentProps = {
   code: string;
   language: string;
-  variant: "primary" | "secondary";
   onUpdate: (data: { code: string; language: string }) => void;
 };
 
@@ -40,7 +40,6 @@ const SUPPORTED_LANGUAGES = [
 export const CodeComponent: FC<TCodeComponentProps> = ({
   code,
   language,
-  variant,
   onUpdate,
 }) => {
   const [localCode, setLocalCode] = useState(code);
@@ -59,8 +58,7 @@ export const CodeComponent: FC<TCodeComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        variant={variant}
-        title="Code Block"
+        title={TOOLBOX_TITLE}
         tooltipText="Component for displaying code snippets with syntax highlighting"
       />
 
@@ -84,7 +82,7 @@ export const CodeComponent: FC<TCodeComponentProps> = ({
             value={localCode}
             placeholder="Enter your code here..."
             onChange={(e) => handleCodeChange(e.target.value)}
-            className="bf-font-mono bf-text-sm bf-min-h-[200px] bf-resize-none"
+            className="bf-font-mono bf-text-sm bf-min-h-[200px]"
           />
         </div>
       </div>

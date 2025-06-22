@@ -6,46 +6,21 @@ import { cn } from "@/editor/lib/utils";
 import { EditorButton } from "@/editor/ui/molecules";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { EditorInput } from "@/editor/ui/molecules/input/editor-input";
+import { TProgressData } from "./types";
+import { TOOLBOX_TITLE } from "./constants";
 
 type TProgressComponentProps = {
-  variant: "primary" | "secondary";
-  items: Array<{
-    label: string;
-    value: number;
-  }>;
-  onUpdate: (items: Array<{ label: string; value: number }>) => void;
-  onUpdateWithRerender: (
-    items: Array<{ label: string; value: number }>,
-  ) => void;
+  items: TProgressData["items"];
+  onUpdate: (items: TProgressData["items"]) => void;
+  onUpdateWithRerender: (items: TProgressData["items"]) => void;
 };
 
 export const ProgressComponent: FC<TProgressComponentProps> = ({
   items,
-  variant,
   onUpdate,
   onUpdateWithRerender,
 }) => {
   const [localItems, setLocalItems] = useState(items);
-
-  const getVariantStyles = () => {
-    switch (variant) {
-      case "primary":
-        return {
-          container: "bf-bg-blue-50 bf-border-blue-200",
-          progress: "bf-bg-blue-500",
-        };
-      case "secondary":
-        return {
-          container: "bf-bg-gray-50 bf-border-gray-200",
-          progress: "bf-bg-gray-500",
-        };
-      default:
-        return {
-          container: "",
-          progress: "",
-        };
-    }
-  };
 
   const handleAddItem = () => {
     const newItems = [
@@ -79,20 +54,22 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
   };
 
   const handleNumberChange = (index: number, value: string) => {
-    if (!/^\d+$/.test(value.toString())) {
+    if (value === "") {
+      handleItemChange(index, "value", "0");
+      return;
+    }
+
+    if (!/^\d+$/.test(value)) {
       return;
     }
 
     handleItemChange(index, "value", value);
   };
 
-  const styles = getVariantStyles();
-
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        title="Progress"
-        variant={variant}
+        title={TOOLBOX_TITLE}
         tooltipText="Display progress bars with labels and values"
       >
         <EditorButton
@@ -148,7 +125,7 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
                   style={{ width: `${item.value}%` }}
                   className={cn(
                     "bf-h-full bf-transition-all bf-duration-300",
-                    styles.progress,
+                    item.value > 50 ? "bf-bg-blue-500" : "bf-bg-red-500",
                   )}
                 />
               </div>
@@ -156,7 +133,7 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
           ))}
         </div>
         {localItems.length === 0 && (
-          <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
             <BarChart className="bf-size-8 bf-mb-2" />
             <span>No progress bars yet</span>
           </div>

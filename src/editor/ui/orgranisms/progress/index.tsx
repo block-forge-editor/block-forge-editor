@@ -5,26 +5,16 @@ import { BaseBlockTool } from "../base-block-tool";
 import { ProgressComponent } from "./progress-component";
 
 import { getIcon } from "@/editor/lib/icons";
+import { TOOLBOX_TITLE } from "./constants";
+import { TProgressData } from "./types";
 
-const TOOLBOX_TITLE = "Progress";
-
-export type TProgressData = {
-  variant: "primary" | "secondary";
-  items: Array<{
-    label: string;
-    value: number;
-  }>;
-};
-
-export class Progress extends BaseBlockTool {
+export class BlockForgeProgress extends BaseBlockTool {
   private _items: TProgressData["items"] = [];
-  private _variant: TProgressData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._items = config.data?.items || [];
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -34,21 +24,28 @@ export class Progress extends BaseBlockTool {
     };
   }
 
+  private _updateData(items: TProgressData["items"]) {
+    this._items = items;
+    this.save();
+  }
+
+  private _updateDataWithRerender(items: TProgressData["items"]) {
+    this._items = items;
+    this.save();
+    this._rerender();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <ProgressComponent
         items={this._items}
-        variant={this._variant}
         onUpdate={(items) => {
-          this._items = items;
-          this.save();
+          this._updateData(items);
         }}
         onUpdateWithRerender={(items) => {
-          this._items = items;
-          this.save();
-          this._rerender();
+          this._updateDataWithRerender(items);
         }}
       />,
     );
@@ -71,51 +68,12 @@ export class Progress extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Progress Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
   private _rerender(): void {
     if (!this._node || !this._root) return;
 
     this._root.render(
       <ProgressComponent
         items={this._items}
-        variant={this._variant}
         onUpdate={(items) => {
           this._items = items;
           this.save();
@@ -132,7 +90,6 @@ export class Progress extends BaseBlockTool {
   save(): TProgressData {
     return {
       items: this._items,
-      variant: this._variant,
     };
   }
 

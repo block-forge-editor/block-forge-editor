@@ -8,7 +8,7 @@ import { getIcon } from "@/editor/lib/icons";
 
 const TOOLBOX_TITLE = "Divider";
 
-export class Divider extends BaseBlockTool {
+export class BlockForgeDivider extends BaseBlockTool {
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {

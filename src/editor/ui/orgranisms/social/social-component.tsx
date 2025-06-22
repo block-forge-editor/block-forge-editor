@@ -12,17 +12,15 @@ import {
   SelectContent,
   SelectTrigger,
 } from "@/editor/ui/shadcn/ui/select";
+import { TSocialData } from "./types";
 
 type TSocialComponentProps = {
-  variant: "primary" | "secondary";
   links: Array<{
     url: string;
     platform: string;
   }>;
-  onUpdate: (links: Array<{ url: string; platform: string }>) => void;
-  onUpdateWithRerender: (
-    links: Array<{ url: string; platform: string }>,
-  ) => void;
+  onUpdate: (links: TSocialData["links"]) => void;
+  onUpdateWithRerender: (links: TSocialData["links"]) => void;
 };
 
 const PLATFORMS = [
@@ -38,7 +36,6 @@ const PLATFORMS = [
 
 export const SocialComponent: FC<TSocialComponentProps> = ({
   links = [],
-  variant,
   onUpdate,
   onUpdateWithRerender,
 }) => {
@@ -71,7 +68,6 @@ export const SocialComponent: FC<TSocialComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        variant={variant}
         title="Social Links"
         tooltipText="Add your social media profiles and links"
       >
@@ -123,7 +119,7 @@ export const SocialComponent: FC<TSocialComponentProps> = ({
             </div>
           ))}
           {localLinks.length === 0 && (
-            <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
               <Link className="bf-size-8 bf-mb-2" />
               <span>No social links yet</span>
             </div>

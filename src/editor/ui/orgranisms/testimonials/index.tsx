@@ -5,28 +5,16 @@ import { BaseBlockTool } from "../base-block-tool";
 import { TestimonialsComponent } from "./testimonials-component";
 
 import { getIcon } from "@/editor/lib/icons";
+import { TOOLBOX_TITLE } from "./constants";
+import { TTestimonialsData } from "./types";
 
-const TOOLBOX_TITLE = "Testimonials";
-
-export type TTestimonialsData = {
-  variant: "primary" | "secondary";
-  items: Array<{
-    name: string;
-    role: string;
-    text: string;
-    photo: string;
-  }>;
-};
-
-export class Testimonials extends BaseBlockTool {
+export class BlockForgeTestimonials extends BaseBlockTool {
   private _items: TTestimonialsData["items"] = [];
-  private _variant: TTestimonialsData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._items = config.data?.items || [];
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -36,21 +24,28 @@ export class Testimonials extends BaseBlockTool {
     };
   }
 
+  private _updateData(items: TTestimonialsData["items"]) {
+    this._items = items;
+    this.save();
+  }
+
+  private _updateDataWithRerender(items: TTestimonialsData["items"]) {
+    this._items = items;
+    this.save();
+    this._rerender();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <TestimonialsComponent
         items={this._items}
-        variant={this._variant}
         onUpdate={(items) => {
-          this._items = items;
-          this.save();
+          this._updateData(items);
         }}
         onUpdateWithRerender={(items) => {
-          this._items = items;
-          this.save();
-          this._rerender();
+          this._updateDataWithRerender(items);
         }}
       />,
     );
@@ -71,44 +66,6 @@ export class Testimonials extends BaseBlockTool {
 
     this._node = rootDiv;
     return rootDiv;
-  }
-
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Testimonials Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
   }
 
   private _rerender(): void {
@@ -132,7 +89,6 @@ export class Testimonials extends BaseBlockTool {
   save(): TTestimonialsData {
     return {
       items: this._items,
-      variant: this._variant,
     };
   }
 

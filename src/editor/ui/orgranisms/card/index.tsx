@@ -5,20 +5,12 @@ import { BaseBlockTool } from "../base-block-tool";
 import { CardComponent } from "./card-component";
 
 import { getIcon } from "@/editor/lib/icons";
+import { TOOLBOX_TITLE } from "./constants";
+import { TCardData } from "./types";
 
-const TOOLBOX_TITLE = "Card";
-
-export type TCardData = {
-  icon: string;
-  title: string;
-  description: string;
-  variant: "primary" | "secondary";
-};
-
-export class Card extends BaseBlockTool {
+export class BlockForgeCard extends BaseBlockTool {
   private _title: string = "";
   private _description: string = "";
-  private _variant: TCardData["variant"] = "primary";
   private _icon: string = "IdCard";
   protected _root: Root | null = null;
 
@@ -26,7 +18,6 @@ export class Card extends BaseBlockTool {
     super(config);
     this._title = config.data?.title || "";
     this._description = config.data?.description || "";
-    this._variant = config.data?.variant || "primary";
     this._icon = config.data?.icon || "IdCard";
   }
 
@@ -37,6 +28,13 @@ export class Card extends BaseBlockTool {
     };
   }
 
+  private _updateData(data: Partial<TCardData>) {
+    this._title = data.title || this._title;
+    this._description = data.description || this._description;
+    this._icon = data.icon || this._icon;
+    this.save();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
@@ -44,13 +42,9 @@ export class Card extends BaseBlockTool {
       <CardComponent
         icon={this._icon}
         title={this._title}
-        variant={this._variant}
         description={this._description}
         onUpdate={(data) => {
-          this._title = data.title;
-          this._description = data.description;
-          this._icon = data.icon || this._icon;
-          this.save();
+          this._updateData(data);
         }}
       />,
     );
@@ -73,67 +67,10 @@ export class Card extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Card Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
-  private _rerender(): void {
-    if (!this._node) return;
-
-    const contentWrapper = this._node.querySelector("div");
-
-    if (!contentWrapper) {
-      return;
-    }
-
-    const oldContainer = contentWrapper.firstElementChild;
-
-    if (oldContainer) {
-      contentWrapper.removeChild(oldContainer);
-    }
-
-    contentWrapper.appendChild(this._createReactContainer());
-  }
-
   save(): TCardData {
     return {
       title: this._title,
       description: this._description,
-      variant: this._variant,
       icon: this._icon,
     };
   }

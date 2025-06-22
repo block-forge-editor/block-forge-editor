@@ -1,8 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { ImageGallery, TImageGalleryData } from "..";
+import { BlockForgeImageGallery, TImageGalleryData } from "..";
 
 describe("ImageGallery", () => {
-  let imageGallery: ImageGallery;
+  let imageGallery: BlockForgeImageGallery;
 
   const mockApi = {
     i18n: {
@@ -23,7 +23,7 @@ describe("ImageGallery", () => {
   };
 
   const createImageGallery = (options: any) =>
-    new ImageGallery({
+    new BlockForgeImageGallery({
       ...options,
       api: mockApi,
       block: mockBlock,
@@ -31,9 +31,7 @@ describe("ImageGallery", () => {
 
   beforeEach(() => {
     imageGallery = createImageGallery({
-      data: {
-        data: mockInitialData,
-      },
+      data: mockInitialData,
       config: {},
       api: mockApi,
     });
@@ -53,7 +51,14 @@ describe("ImageGallery", () => {
 
     it("should initialize with provided values", () => {
       const customData: TImageGalleryData = {
-        images: [{ id: "test-image-id", url: "test-url", alt: "test-alt" }],
+        images: [
+          {
+            id: "test-image-id",
+            url: "test-url",
+            alt: "test-alt",
+            caption: "test-caption",
+          },
+        ],
         variant: "secondary",
       };
 
@@ -73,7 +78,7 @@ describe("ImageGallery", () => {
   });
 
   describe("render", () => {
-    it("should create a div element with correct classes", () => {
+    it("should create a div element with correct tag", () => {
       const element = imageGallery.render();
       expect(element.tagName).toBe("DIV");
     });

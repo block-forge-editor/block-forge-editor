@@ -5,23 +5,19 @@ import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { IconSelect } from "@/editor/ui/molecules/icon-select";
 import { EditorInput } from "@/editor/ui/molecules/input/editor-input";
 import { EditorTextarea } from "@/editor/ui/molecules";
+import { TCardData } from "./types";
+import { TOOLBOX_TITLE } from "./constants";
 
 type TCardComponentProps = {
   icon: string;
   title: string;
   description: string;
-  variant: "primary" | "secondary";
-  onUpdate: (data: {
-    icon?: string;
-    title: string;
-    description: string;
-  }) => void;
+  onUpdate: (data: Partial<TCardData>) => void;
 };
 
 export const CardComponent: FC<TCardComponentProps> = ({
   title,
   description,
-  variant,
   icon,
   onUpdate,
 }) => {
@@ -51,13 +47,12 @@ export const CardComponent: FC<TCardComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        title="Card"
-        variant={variant}
+        title={TOOLBOX_TITLE}
         tooltipText="Create an information card with title and description"
       />
 
       <div className={cn("bf-min-h-[200px]")}>
-        <div className="bf-flex bf-flex-col bf-gap-4 bf-p-4 bf-border-b bf-border-l bf-border-r">
+        <div className="bf-flex bf-flex-col bf-gap-4 bf-p-4 bf-border-b">
           <div className="bf-flex bf-items-start bf-gap-3">
             <div className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-gray-100">
               <IconSelect

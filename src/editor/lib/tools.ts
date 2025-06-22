@@ -1,25 +1,25 @@
 import List from "@editorjs/list";
 
 import {
-  ImageGallery,
-  VideoEmbed,
-  Social,
-  Card,
-  Timeline,
-  Progress,
-  Testimonials,
-  Accordion,
-  Code,
+  BlockForgeImageGallery,
+  BlockForgeVideoEmbed,
+  BlockForgeSocial,
+  BlockForgeCard,
+  BlockForgeTimeline,
+  BlockForgeProgress,
+  BlockForgeTestimonials,
+  BlockForgeAccordion,
+  BlockForgeCode,
   BlockForgeColumns,
-  Divider,
-  Quote,
-  Stats,
-  Table,
-  Image,
+  BlockForgeDivider,
+  BlockForgeQuote,
+  BlockForgeStats,
+  BlockForgeTable,
+  BlockForgeImage,
   BlockForgeParagraph,
   BlockForgeExcalidraw,
+  BlockForgeFigma,
 } from "../ui/orgranisms";
-import { Figma } from "../ui/orgranisms/figma";
 
 export const CONSTRUCTOR_EDITOR_TOOLS = {
   paragraph: {
@@ -39,7 +39,7 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
     },
   },
   table: {
-    class: Table,
+    class: BlockForgeTable,
     inlineToolbar: true,
     config: {
       rows: 2,
@@ -50,7 +50,7 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
     },
   },
   divider: {
-    class: Divider,
+    class: BlockForgeDivider,
   },
   excalidraw: {
     class: BlockForgeExcalidraw,
@@ -59,43 +59,43 @@ export const CONSTRUCTOR_EDITOR_TOOLS = {
     class: BlockForgeColumns,
   },
   imageGallery: {
-    class: ImageGallery,
+    class: BlockForgeImageGallery,
   },
   imageSingle: {
-    class: Image,
+    class: BlockForgeImage,
   },
   figma: {
-    class: Figma,
+    class: BlockForgeFigma,
   },
   quote: {
-    class: Quote,
+    class: BlockForgeQuote,
   },
   code: {
-    class: Code,
+    class: BlockForgeCode,
   },
   videoEmbed: {
-    class: VideoEmbed,
+    class: BlockForgeVideoEmbed,
   },
   social: {
-    class: Social,
+    class: BlockForgeSocial,
   },
   card: {
-    class: Card,
+    class: BlockForgeCard,
   },
   stats: {
-    class: Stats,
+    class: BlockForgeStats,
   },
   timeline: {
-    class: Timeline,
+    class: BlockForgeTimeline,
   },
   progress: {
-    class: Progress,
+    class: BlockForgeProgress,
   },
   testimonials: {
-    class: Testimonials,
+    class: BlockForgeTestimonials,
   },
   accordion: {
-    class: Accordion,
+    class: BlockForgeAccordion,
   },
 };
 

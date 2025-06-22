@@ -9,21 +9,18 @@ import { TOOLBOX_TITLE } from "./constants";
 
 export type TEmbedData = {
   url: string;
-  variant: "primary" | "secondary";
   platform: "vimeo" | "other" | "youtube";
 };
 
-export class VideoEmbed extends BaseBlockTool {
+export class BlockForgeVideoEmbed extends BaseBlockTool {
   private _url: string = "";
   private _platform: TEmbedData["platform"] = "youtube";
-  private _variant: TEmbedData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._url = config.data?.url || "";
     this._platform = config.data?.platform || "youtube";
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -33,18 +30,21 @@ export class VideoEmbed extends BaseBlockTool {
     };
   }
 
+  private _updateData(data: Pick<TEmbedData, "url" | "platform">) {
+    this._url = data.url;
+    this._platform = data.platform;
+    this.save();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <EmbedComponent
         url={this._url}
-        variant={this._variant}
         platform={this._platform}
         onUpdate={(data) => {
-          this._url = data.url;
-          this._platform = data.platform;
-          this.save();
+          this._updateData(data);
         }}
       />,
     );
@@ -67,67 +67,10 @@ export class VideoEmbed extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Embed Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
-  private _rerender(): void {
-    if (!this._node) return;
-
-    const contentWrapper = this._node.querySelector("div");
-
-    if (!contentWrapper) {
-      return;
-    }
-
-    const oldContainer = contentWrapper.firstElementChild;
-
-    if (oldContainer) {
-      contentWrapper.removeChild(oldContainer);
-    }
-
-    contentWrapper.appendChild(this._createReactContainer());
-  }
-
   save(): TEmbedData {
     return {
       url: this._url,
       platform: this._platform,
-      variant: this._variant,
     };
   }
 

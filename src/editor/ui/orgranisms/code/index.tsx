@@ -5,26 +5,22 @@ import { BaseBlockTool } from "../base-block-tool";
 import { CodeComponent } from "./code-component";
 
 import { getIcon } from "@/editor/lib/icons";
-
-const TOOLBOX_TITLE = "Code Block";
+import { TOOLBOX_TITLE } from "./constants";
 
 export type TCodeData = {
   code: string;
   language: string;
-  variant: "primary" | "secondary";
 };
 
-export class Code extends BaseBlockTool {
+export class BlockForgeCode extends BaseBlockTool {
   private _code: string = "";
   private _language: string = "plaintext";
-  private _variant: TCodeData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._code = config.data?.code || "";
     this._language = config.data?.language || "plaintext";
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -34,18 +30,21 @@ export class Code extends BaseBlockTool {
     };
   }
 
+  private _updateData(data: Pick<TCodeData, "code" | "language">) {
+    this._code = data.code;
+    this._language = data.language;
+    this.save();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <CodeComponent
         code={this._code}
-        variant={this._variant}
         language={this._language}
         onUpdate={(data) => {
-          this._code = data.code;
-          this._language = data.language;
-          this.save();
+          this._updateData(data);
         }}
       />,
     );
@@ -68,67 +67,10 @@ export class Code extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Code Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
-  private _rerender(): void {
-    if (!this._node) return;
-
-    const contentWrapper = this._node.querySelector("div");
-
-    if (!contentWrapper) {
-      return;
-    }
-
-    const oldContainer = contentWrapper.firstElementChild;
-
-    if (oldContainer) {
-      contentWrapper.removeChild(oldContainer);
-    }
-
-    contentWrapper.appendChild(this._createReactContainer());
-  }
-
   save(): TCodeData {
     return {
       code: this._code,
       language: this._language,
-      variant: this._variant,
     };
   }
 

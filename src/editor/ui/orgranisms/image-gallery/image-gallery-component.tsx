@@ -135,7 +135,7 @@ export const ImageGalleryComponent: FC<TImageGalleryComponentProps> = ({
         {!!images?.length ? (
           renderGallery()
         ) : (
-          <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
             <ImageIcon className="bf-size-8 bf-mb-2" />
             <span>No image added</span>
           </div>

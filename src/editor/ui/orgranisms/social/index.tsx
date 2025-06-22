@@ -1,30 +1,20 @@
 import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
-import { type Root, createRoot } from "react-dom/client";
+import { Root, createRoot } from "react-dom/client";
 
 import { BaseBlockTool } from "../base-block-tool";
 import { SocialComponent } from "./social-component";
 
 import { getIcon } from "@/editor/lib/icons";
+import { TOOLBOX_TITLE } from "./constants";
+import { TSocialData } from "./types";
 
-const TOOLBOX_TITLE = "Social Links";
-
-export type TSocialData = {
-  variant: "primary" | "secondary";
-  links: Array<{
-    url: string;
-    platform: string;
-  }>;
-};
-
-export class Social extends BaseBlockTool {
+export class BlockForgeSocial extends BaseBlockTool {
   private _links: TSocialData["links"] = [];
-  private _variant: TSocialData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._links = config.data?.links || [];
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -34,21 +24,28 @@ export class Social extends BaseBlockTool {
     };
   }
 
+  private _updateData(links: TSocialData["links"]) {
+    this._links = links;
+    this.save();
+  }
+
+  private _updateDataWithRerender(links: TSocialData["links"]) {
+    this._links = links;
+    this.save();
+    this._rerender();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <SocialComponent
-        variant={this._variant}
         links={this._links || []}
         onUpdate={(links) => {
-          this._links = links;
-          this.save();
+          this._updateData(links);
         }}
         onUpdateWithRerender={(links) => {
-          this._links = links;
-          this.save();
-          this._rerender();
+          this._updateDataWithRerender(links);
         }}
       />,
     );
@@ -69,44 +66,6 @@ export class Social extends BaseBlockTool {
 
     this._node = rootDiv;
     return rootDiv;
-  }
-
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Social Links Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
   }
 
   private _rerender(): void {
@@ -130,7 +89,6 @@ export class Social extends BaseBlockTool {
   save(): TSocialData {
     return {
       links: this._links || [],
-      variant: this._variant,
     };
   }
 

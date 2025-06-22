@@ -5,27 +5,16 @@ import { BaseBlockTool } from "../base-block-tool";
 import { StatsComponent } from "./stats-component";
 
 import { getIcon } from "@/editor/lib/icons";
+import { TOOLBOX_TITLE } from "./constants";
+import { TStatsData } from "./types";
 
-const TOOLBOX_TITLE = "Stats";
-
-export type TStatsData = {
-  variant: "primary" | "secondary";
-  items: Array<{
-    value: string;
-    label: string;
-    icon?: string;
-  }>;
-};
-
-export class Stats extends BaseBlockTool {
+export class BlockForgeStats extends BaseBlockTool {
   private _items: TStatsData["items"] = [];
-  private _variant: TStatsData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._items = config.data?.items || [];
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -35,12 +24,12 @@ export class Stats extends BaseBlockTool {
     };
   }
 
+  // TODO: move update to methods
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <StatsComponent
-        variant={this._variant}
         onUpdate={(items) => {
           this._items = items;
           this.save();
@@ -75,44 +64,6 @@ export class Stats extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Stats Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
   private _rerender(): void {
     if (!this._node) return;
 
@@ -134,7 +85,6 @@ export class Stats extends BaseBlockTool {
   save(): TStatsData {
     return {
       items: this._items,
-      variant: this._variant,
     };
   }
 

@@ -6,25 +6,17 @@ import { cn } from "@/editor/lib/utils";
 import { EditorButton, EditorTextarea } from "@/editor/ui/molecules";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { EditorInput } from "@/editor/ui/molecules/input/editor-input";
+import { TOOLBOX_TITLE } from "./constants";
+import { TTimelineData } from "./types";
 
 type TTimelineComponentProps = {
-  variant: "primary" | "secondary";
-  events: Array<{
-    date: string;
-    title: string;
-    description: string;
-  }>;
-  onUpdate: (
-    events: Array<{ date: string; title: string; description: string }>,
-  ) => void;
-  onUpdateWithRerender: (
-    events: Array<{ date: string; title: string; description: string }>,
-  ) => void;
+  events: TTimelineData["events"];
+  onUpdate: (events: TTimelineData["events"]) => void;
+  onUpdateWithRerender: (events: TTimelineData["events"]) => void;
 };
 
 export const TimelineComponent: FC<TTimelineComponentProps> = ({
   events,
-  variant,
   onUpdate,
   onUpdateWithRerender,
 }) => {
@@ -64,8 +56,7 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        title="Timeline"
-        variant={variant}
+        title={TOOLBOX_TITLE}
         tooltipText="Create a timeline of events with dates and descriptions"
       >
         <EditorButton
@@ -129,7 +120,7 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
           ))}
         </div>
         {localEvents.length === 0 && (
-          <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
             <Clock className="bf-size-8 bf-mb-2" />
             <span>No events yet</span>
           </div>

@@ -5,27 +5,16 @@ import { TimelineComponent } from "./timeline-component";
 
 import { getIcon } from "@/editor/lib/icons";
 import { BaseBlockTool } from "../base-block-tool";
+import { TOOLBOX_TITLE } from "./constants";
+import { TTimelineData } from "./types";
 
-const TOOLBOX_TITLE = "Timeline";
-
-export type TTimelineData = {
-  variant: "primary" | "secondary";
-  events: Array<{
-    date: string;
-    title: string;
-    description: string;
-  }>;
-};
-
-export class Timeline extends BaseBlockTool {
+export class BlockForgeTimeline extends BaseBlockTool {
   private _events: TTimelineData["events"] = [];
-  private _variant: TTimelineData["variant"] = "primary";
   protected _root: Root | null = null;
 
   constructor(config: BlockToolConstructorOptions) {
     super(config);
     this._events = config.data?.events || [];
-    this._variant = config.data?.variant || "primary";
   }
 
   static get toolbox() {
@@ -35,21 +24,28 @@ export class Timeline extends BaseBlockTool {
     };
   }
 
+  private _updateData(events: TTimelineData["events"]) {
+    this._events = events;
+    this.save();
+  }
+
+  private _updateDataWithRerender(events: TTimelineData["events"]) {
+    this._events = events;
+    this.save();
+    this._rerender();
+  }
+
   private _createReactContainer(): HTMLElement {
     const reactContainer = document.createElement("div");
     this._root = createRoot(reactContainer);
     this._root.render(
       <TimelineComponent
         events={this._events}
-        variant={this._variant}
         onUpdate={(events) => {
-          this._events = events;
-          this.save();
+          this._updateData(events);
         }}
         onUpdateWithRerender={(events) => {
-          this._events = events;
-          this.save();
-          this._rerender();
+          this._updateDataWithRerender(events);
         }}
       />,
     );
@@ -70,44 +66,6 @@ export class Timeline extends BaseBlockTool {
 
     this._node = rootDiv;
     return rootDiv;
-  }
-
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Timeline Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
   }
 
   private _rerender(): void {
@@ -131,7 +89,6 @@ export class Timeline extends BaseBlockTool {
   save(): TTimelineData {
     return {
       events: this._events,
-      variant: this._variant,
     };
   }
 

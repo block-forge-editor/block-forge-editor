@@ -12,54 +12,13 @@ import {
   SelectContent,
   SelectTrigger,
 } from "@/editor/ui/shadcn/ui/select";
-import { TOOLBOX_TITLE } from "./constants";
-
-type TEmbedComponentProps = {
-  url: string;
-  variant: "primary" | "secondary";
-  platform: "vimeo" | "other" | "youtube";
-  onUpdate: (data: {
-    url: string;
-    platform: "vimeo" | "other" | "youtube";
-  }) => void;
-};
-
-const PLATFORMS = [
-  { id: "youtube", name: "YouTube" },
-  { id: "vimeo", name: "Vimeo" },
-  { id: "other", name: "Other" },
-] as const;
-
-const getEmbedUrl = (
-  url: string,
-  platform: TEmbedComponentProps["platform"],
-) => {
-  if (!url) return "";
-
-  try {
-    const urlObj = new URL(url);
-
-    switch (platform) {
-      case "youtube": {
-        const videoId = urlObj.searchParams.get("v");
-        return videoId ? `https://www.youtube.com/embed/${videoId}` : "";
-      }
-      case "vimeo": {
-        const vimeoId = urlObj.pathname.split("/").pop();
-        return vimeoId ? `https://player.vimeo.com/video/${vimeoId}` : "";
-      }
-      default:
-        return url;
-    }
-  } catch {
-    return "";
-  }
-};
+import { PLATFORMS, TOOLBOX_TITLE } from "./constants";
+import { getEmbedUrl } from "./lib";
+import { TEmbedComponentProps } from "./types";
 
 export const EmbedComponent: FC<TEmbedComponentProps> = ({
   url,
   platform,
-  variant,
   onUpdate,
 }) => {
   const [localUrl, setLocalUrl] = useState(url);
@@ -81,7 +40,6 @@ export const EmbedComponent: FC<TEmbedComponentProps> = ({
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
         title={TOOLBOX_TITLE}
-        variant={variant}
         tooltipText="Component for embedding videos from various platforms"
       />
 
@@ -118,7 +76,7 @@ export const EmbedComponent: FC<TEmbedComponentProps> = ({
               />
             </div>
           ) : (
-            <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
               <VideoIcon className="bf-size-8 bf-mb-2" />
               <span>No video URL entered</span>
             </div>

@@ -9,11 +9,10 @@ import { TAccordionData } from "./types";
 import { getIcon } from "@/editor/lib/icons";
 import { TOOLBOX_TITLE } from "./constants";
 
-export class Accordion extends BaseBlockTool {
+export class BlockForgeAccordion extends BaseBlockTool {
   private _item: TAccordionData;
   private _reactContainer: null | HTMLDivElement = null;
   protected _root: Root | null = null;
-  private _variant: "primary" | "secondary" = "primary";
   private _blockID: string = "";
 
   static get toolbox() {
@@ -32,7 +31,6 @@ export class Accordion extends BaseBlockTool {
         time: 0,
       },
     };
-    this._variant = config.data?.variant || "primary";
     this._blockID = config.block.id;
   }
 
@@ -64,7 +62,6 @@ export class Accordion extends BaseBlockTool {
       <AccordionComponent
         item={this._item}
         blockId={this._blockID}
-        variant={this._variant}
         onTitleChange={this._updateTitle}
         onContentChange={this._updateContent}
       />,
@@ -85,48 +82,9 @@ export class Accordion extends BaseBlockTool {
     return rootDiv;
   }
 
-  renderSettings() {
-    return [
-      {
-        type: "separator",
-      },
-      {
-        icon: getIcon("palette"),
-        title: "Accordion Style",
-        children: {
-          items: [
-            {
-              icon: getIcon("palette"),
-              title: "Primary",
-              toggle: "variant",
-              isActive: () => this._variant === "primary",
-              onActivate: () => {
-                this._variant = "primary";
-                this.save();
-                this._rerender();
-              },
-            },
-            {
-              icon: getIcon("palette"),
-              title: "Secondary",
-              toggle: "variant",
-              isActive: () => this._variant === "secondary",
-              onActivate: () => {
-                this._variant = "secondary";
-                this.save();
-                this._rerender();
-              },
-            },
-          ],
-        },
-      },
-    ];
-  }
-
   save() {
     return {
       item: this._item,
-      variant: this._variant,
     };
   }
 

@@ -61,7 +61,7 @@ describe("BlockForgeParagraph", () => {
   });
 
   describe("render", () => {
-    it("should create a div element with correct classes", () => {
+    it("should create a div element with correct tag", () => {
       const element = paragraph.render();
       expect(element.tagName).toBe("DIV");
     });

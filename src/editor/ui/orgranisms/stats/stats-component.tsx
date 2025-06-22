@@ -7,25 +7,17 @@ import { EditorButton } from "@/editor/ui/molecules";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { IconSelect } from "@/editor/ui/molecules/icon-select";
 import { EditorInput } from "@/editor/ui/molecules/input/editor-input";
+import { TStatsData } from "./types";
+import { TOOLBOX_TITLE } from "./constants";
 
 type TStatsComponentProps = {
-  variant: "primary" | "secondary";
-  items: Array<{
-    value: string;
-    label: string;
-    icon?: string;
-  }>;
-  onUpdate: (
-    items: Array<{ value: string; label: string; icon?: string }>,
-  ) => void;
-  onUpdateWithRerender: (
-    items: Array<{ value: string; label: string; icon?: string }>,
-  ) => void;
+  items: TStatsData["items"];
+  onUpdate: (items: TStatsData["items"]) => void;
+  onUpdateWithRerender: (items: TStatsData["items"]) => void;
 };
 
 export const StatsComponent: FC<TStatsComponentProps> = ({
   items,
-  variant,
   onUpdate,
   onUpdateWithRerender,
 }) => {
@@ -58,8 +50,7 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        title="Stats"
-        variant={variant}
+        title={TOOLBOX_TITLE}
         tooltipText="Display statistics and metrics with numbers and labels"
       >
         <EditorButton
@@ -121,7 +112,7 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
           ))}
         </div>
         {localItems.length === 0 && (
-          <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
             <BarChart3 className="bf-size-8 bf-mb-2" />
             <span>No statistics yet</span>
           </div>

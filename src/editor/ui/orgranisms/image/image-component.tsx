@@ -7,19 +7,15 @@ import { Button } from "@/editor/ui/shadcn/ui/button";
 import { Input } from "@/editor/ui/shadcn/ui/input";
 
 type TImageComponentProps = {
-  id: string;
   url: string;
   caption?: string;
-  variant: "primary" | "secondary";
   alt: string;
   onUpdate: (data: { url: string; caption?: string; alt: string }) => void;
 };
 
 export const ImageComponent: FC<TImageComponentProps> = ({
-  id,
   url,
   caption,
-  variant,
   alt,
   onUpdate,
 }) => {
@@ -79,7 +75,6 @@ export const ImageComponent: FC<TImageComponentProps> = ({
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
         title="Image"
-        variant={variant}
         tooltipText="Component for displaying images with captions"
       />
 
@@ -138,7 +133,7 @@ export const ImageComponent: FC<TImageComponentProps> = ({
               />
             </div>
           ) : (
-            <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
               <ImageIcon className="bf-size-8 bf-mb-2" />
               <span>No image added</span>
             </div>

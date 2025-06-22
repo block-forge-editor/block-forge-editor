@@ -1,8 +1,7 @@
 import { FC, useState } from "react";
 
-import { X, Plus, QuoteIcon } from "lucide-react";
+import { X, QuoteIcon } from "lucide-react";
 
-import { cn } from "@/editor/lib/utils";
 import {
   EditorInput,
   EditorButton,
@@ -10,11 +9,12 @@ import {
   ComponentHeader,
 } from "@/editor/ui/molecules";
 
+import { TOOLBOX_TITLE } from "./constants";
+
 type TQuoteComponentProps = {
   text: string;
   author?: string;
   source?: string;
-  variant: "primary" | "secondary";
   onUpdate: (data: { text: string; author?: string; source?: string }) => void;
 };
 
@@ -22,7 +22,6 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
   text,
   author,
   source,
-  variant,
   onUpdate,
 }) => {
   const [localText, setLocalText] = useState(text);
@@ -47,14 +46,13 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
   return (
     <div className="bf-relative bf-group bf-w-full bf-space-y-4">
       <ComponentHeader
-        title="Quote"
-        variant={variant}
+        title={TOOLBOX_TITLE}
         tooltipText="Add a quote with author and source"
       />
 
       <div className="bf-min-h-[200px]">
         <div className="bf-grid bf-grid-cols-1 bf-gap-4">
-          <div className="bf-border-b bf-border-r bf-p-2 bf-flex bf-flex-col bf-gap-4 bf-group/item">
+          <div className="bf-border-b bf-p-2 bf-flex bf-flex-col bf-gap-4 bf-group/item">
             <div className="bf-flex bf-items-start bf-justify-between bf-gap-4">
               <div className="bf-flex bf-items-center bf-gap-3 bf-w-full">
                 <QuoteIcon className="bf-size-12 bf-text-gray-400 bf-flex-shrink-0" />
@@ -64,6 +62,7 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
                     placeholder="Enter author name"
                     onChange={(e) => handleAuthorChange(e.target.value)}
                   />
+
                   <EditorInput
                     variant="secondary"
                     value={localSource}
@@ -72,6 +71,7 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
                   />
                 </div>
               </div>
+
               <EditorButton
                 variant="secondary"
                 onClick={() => {
@@ -84,6 +84,7 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
                 <X className="bf-size-4" />
               </EditorButton>
             </div>
+
             <div className="bf-flex-1">
               <EditorTextarea
                 rows={3}

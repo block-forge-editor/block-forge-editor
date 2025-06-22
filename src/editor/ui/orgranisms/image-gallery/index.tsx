@@ -18,7 +18,7 @@ export type TImageGalleryData = {
   }>;
 };
 
-export class ImageGallery extends BaseBlockTool {
+export class BlockForgeImageGallery extends BaseBlockTool {
   private _images: TImageGalleryData["images"] = [];
   private _variant: "primary" | "secondary" = "primary";
   protected _root: Root | null = null;
