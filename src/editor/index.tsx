@@ -63,9 +63,11 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
 }) => {
   const [showAbout, setShowAbout] = useState(false);
   const [selectedFont, setSelectedFont] = useState<string | undefined>(
-    "opensans",
+    initialData?.meta?.font ?? "opensans",
   );
-  const [selectedBg, setSelectedBg] = useState<string | undefined>("white");
+  const [selectedBg, setSelectedBg] = useState<string | undefined>(
+    initialData?.meta?.background ?? "white",
+  );
 
   const meta = useMemo(() => {
     return {

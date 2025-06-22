@@ -1,8 +1,8 @@
 # Block Forge
 
-[![](https://flat.badgen.net/npm/v/@alkhipce/editorjs-react?icon=npm)](https://www.npmjs.com/package/@alkhipce/editorjs-react)
-[![](https://flat.badgen.net/github/stars/etozhealkhipce/editorjs-react)](https://github.com/etozhealkhipce/editorjs-react)
-[![](https://flat.badgen.net/badge/demo/site/green)](https://editorjs-react.vercel.app/)
+[![](https://flat.badgen.net/npm/v/@alkhipce/editorjs-react?icon=npm)](https://www.npmjs.com/package/@block-forge/block-forge-editor)
+[![](https://flat.badgen.net/github/stars/etozhealkhipce/editorjs-react)](https://github.com/block-forge-editor/block-forge-editor)
+[![](https://flat.badgen.net/badge/demo/site/green)](https://block-forge-editor-demo.vercel.app/)
 
 A powerful article builder for React based on EditorJS and built with shadcn/ui and Tailwind CSS. Create beautiful, structured content with a modern block-based editor.
 
