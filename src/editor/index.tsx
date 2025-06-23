@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useEffect } from "react";
 
 import { EditorConfig, OutputData } from "@editorjs/editorjs";
 import {
@@ -9,9 +9,10 @@ import {
   Type,
   Circle,
   Settings,
+  Loader,
 } from "lucide-react";
 
-import { CONSTRUCTOR_EDITOR_TOOLS, DEFAULT_INITIAL_DATA } from "./lib/tools";
+import { getToolsConfig, DEFAULT_INITIAL_DATA } from "./lib/tools";
 import { useEditor } from "./lib/use-editor";
 
 import {
@@ -36,6 +37,8 @@ import {
 import "../globals.css";
 
 import { PASTEL_COLORS } from "./lib/colors";
+import { TToolsRegistry } from "./types/tools";
+import { TToolPreset } from "./lib/tools-manager";
 
 export type TCustomData = {
   meta?: {
@@ -50,7 +53,11 @@ export type TBlockForgeEditorProps = {
   onSave?: (data?: OutputData & TCustomData) => void;
   onChange?: (data?: OutputData & TCustomData) => void;
   tools?: EditorConfig["tools"];
+  defaultTools?: EditorConfig["tools"];
   id: string;
+  toolPreset?: TToolPreset;
+  enabledTools?: string[];
+  customTools?: TToolsRegistry;
 };
 
 export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
@@ -60,6 +67,9 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
   onChange,
   tools,
   id,
+  toolPreset,
+  enabledTools,
+  customTools,
 }) => {
   const [showAbout, setShowAbout] = useState(false);
   const [selectedFont, setSelectedFont] = useState<string | undefined>(
@@ -68,6 +78,31 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
   const [selectedBg, setSelectedBg] = useState<string | undefined>(
     initialData?.meta?.background ?? "white",
   );
+  const [toolsConfig, setToolsConfig] = useState<EditorConfig["tools"]>({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const loadTools = async () => {
+      setIsLoading(true);
+
+      try {
+        const config = await getToolsConfig(
+          toolPreset,
+          enabledTools,
+          customTools,
+        );
+
+        setToolsConfig(config);
+      } catch (error) {
+        console.error("Failed to load tools:", error);
+        setToolsConfig({});
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadTools();
+  }, [toolPreset, enabledTools, customTools]);
 
   const meta = useMemo(() => {
     return {
@@ -94,7 +129,7 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
 
   const ejInstance = useEditor({
     tools: {
-      ...(CONSTRUCTOR_EDITOR_TOOLS as unknown as EditorConfig["tools"]),
+      ...toolsConfig,
       ...tools,
     },
     id: `editorjs-${id}`,
@@ -239,6 +274,15 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
           </div>
         </DialogContent>
       </Dialog>
+
+      {!isLoading && (
+        <div className="bf-fixed bf-inset-0 bf-flex bf-items-center bf-justify-center bf-bg-white/80 bf-z-50">
+          <div className="bf-text-center">
+            <Loader className="bf-animate-spin bf-mx-auto" />
+            <p className="bf-mt-2 bf-text-gray-600">Loading editor tools...</p>
+          </div>
+        </div>
+      )}
 
       <div
         className={`bf-mx-auto bf-m-8 bf-min-h-screen bf-overflow-auto bf-shadow-md bf-rounded-lg bf-w-full sm:bf-w-[70%] ${editorStyle.bgClass} ${editorStyle.fontClass}`}

@@ -1,126 +1,47 @@
-import List from "@editorjs/list";
+import type { EditorConfig } from "@editorjs/editorjs";
+import { createToolsConfig, TOOL_PRESETS, TToolPreset } from "./tools-manager";
+import { TToolsRegistry } from "../types/tools";
 
-import {
-  BlockForgeImageGallery,
-  BlockForgeVideoEmbed,
-  BlockForgeSocial,
-  BlockForgeCard,
-  BlockForgeTimeline,
-  BlockForgeProgress,
-  BlockForgeTestimonials,
-  BlockForgeAccordion,
-  BlockForgeCode,
-  BlockForgeColumns,
-  BlockForgeDivider,
-  BlockForgeQuote,
-  BlockForgeStats,
-  BlockForgeTable,
-  BlockForgeImage,
-  BlockForgeParagraph,
-  BlockForgeExcalidraw,
-  BlockForgeFigma,
-} from "../ui/orgranisms";
+export { TOOL_PRESETS };
 
-export const CONSTRUCTOR_EDITOR_TOOLS = {
-  paragraph: {
-    class: BlockForgeParagraph,
-    config: {
-      preserveBlank: false,
-    },
-  },
-  list: {
-    class: List,
-    inlineToolbar: true,
-    config: {
-      defaultStyle: "unordered",
-    },
-    toolbox: {
-      title: "List",
-    },
-  },
-  table: {
-    class: BlockForgeTable,
-    inlineToolbar: true,
-    config: {
-      rows: 2,
-      cols: 3,
-    },
-    toolbox: {
-      title: "Table",
-    },
-  },
-  divider: {
-    class: BlockForgeDivider,
-  },
-  excalidraw: {
-    class: BlockForgeExcalidraw,
-  },
-  columns: {
-    class: BlockForgeColumns,
-  },
-  imageGallery: {
-    class: BlockForgeImageGallery,
-  },
-  imageSingle: {
-    class: BlockForgeImage,
-  },
-  figma: {
-    class: BlockForgeFigma,
-  },
-  quote: {
-    class: BlockForgeQuote,
-  },
-  code: {
-    class: BlockForgeCode,
-  },
-  videoEmbed: {
-    class: BlockForgeVideoEmbed,
-  },
-  social: {
-    class: BlockForgeSocial,
-  },
-  card: {
-    class: BlockForgeCard,
-  },
-  stats: {
-    class: BlockForgeStats,
-  },
-  timeline: {
-    class: BlockForgeTimeline,
-  },
-  progress: {
-    class: BlockForgeProgress,
-  },
-  testimonials: {
-    class: BlockForgeTestimonials,
-  },
-  accordion: {
-    class: BlockForgeAccordion,
-  },
-};
+export const CONSTRUCTOR_EDITOR_TOOLS = {} as EditorConfig["tools"];
+export const ACCORDION_EDITOR_TOOLS = {} as EditorConfig["tools"];
+export const COLUMNS_EDITOR_TOOLS = {} as EditorConfig["tools"];
 
-export const ACCORDION_EDITOR_TOOLS = {
-  paragraph: CONSTRUCTOR_EDITOR_TOOLS.paragraph,
-  list: CONSTRUCTOR_EDITOR_TOOLS.list,
-  divider: CONSTRUCTOR_EDITOR_TOOLS.divider,
-  table: CONSTRUCTOR_EDITOR_TOOLS.table,
-};
+export async function getToolsConfig(
+  preset?: TToolPreset,
+  enabledTools?: string[],
+  customTools?: TToolsRegistry,
+): Promise<EditorConfig["tools"]> {
+  let toolsToEnable: readonly string[];
 
-export const COLUMNS_EDITOR_TOOLS = {
-  paragraph: CONSTRUCTOR_EDITOR_TOOLS.paragraph,
-  list: CONSTRUCTOR_EDITOR_TOOLS.list,
-  divider: CONSTRUCTOR_EDITOR_TOOLS.divider,
-  table: CONSTRUCTOR_EDITOR_TOOLS.table,
-};
+  if (preset && TOOL_PRESETS[preset]) {
+    toolsToEnable = TOOL_PRESETS[preset];
+  } else if (enabledTools) {
+    toolsToEnable = enabledTools;
+  } else {
+    toolsToEnable = TOOL_PRESETS.full;
+  }
+
+  return createToolsConfig([...toolsToEnable], customTools);
+}
+
+export function getToolPreset(presetName: TToolPreset): string[] {
+  const preset = TOOL_PRESETS[presetName];
+  return preset ? [...preset] : [];
+}
+
+export function getAllAvailableTools(): string[] {
+  return [...TOOL_PRESETS.full];
+}
 
 export const DEFAULT_INITIAL_DATA = {
   time: new Date().getTime(),
   blocks: [
     {
       id: "0",
-      type: "header",
+      type: "paragraph",
       data: {
-        level: 1,
         text: "Start adding your content here...",
       },
     },
