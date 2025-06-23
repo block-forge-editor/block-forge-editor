@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/block-forge-editor/block-forge-editor/compare/v1.0.1...v1.0.2) (2025-06-23)
+
+
+### Bug Fixes
+
+* workflow fixed ([4591219](https://github.com/block-forge-editor/block-forge-editor/commit/4591219bacf66ae0ae01b3149f009f48cba98067))
+
 ## [1.0.1](https://github.com/block-forge-editor/block-forge-editor/compare/v1.0.0...v1.0.1) (2025-06-22)
 
 
