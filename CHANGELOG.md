@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/block-forge-editor/block-forge-editor/compare/v1.0.0...v1.0.1) (2025-06-22)
+
+
+### Bug Fixes
+
+* jsx import added ([c9caa01](https://github.com/block-forge-editor/block-forge-editor/commit/c9caa01b1f024d8e81d2d52ed97c7082fe401390))
+
 # 1.0.0 (2025-06-22)
 
 
