@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/block-forge-editor/block-forge-editor/compare/v1.0.2...v1.1.0) (2025-06-28)
+
+
+### Features
+
+* configuration for control enabled components ([64af12a](https://github.com/block-forge-editor/block-forge-editor/commit/64af12a3653e1d79e8a42c67052ac9026fe65d02))
+* lazy loading implemented ([1d542b9](https://github.com/block-forge-editor/block-forge-editor/commit/1d542b92774f0686f0c55b075c98386c1921ec25))
+
 ## [1.0.2](https://github.com/block-forge-editor/block-forge-editor/compare/v1.0.1...v1.0.2) (2025-06-23)
 
 
