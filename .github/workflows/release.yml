@@ -9,6 +9,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Setup Node.js with Cache
         uses: ./.github/actions/setup-node
 
@@ -19,6 +22,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Setup Node.js with Cache
         uses: ./.github/actions/setup-node
 
@@ -36,6 +42,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Setup Node.js with Cache
         uses: ./.github/actions/setup-node
 
