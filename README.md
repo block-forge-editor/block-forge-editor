@@ -1,8 +1,9 @@
 # Block Forge
 
-[![](https://flat.badgen.net/npm/v/@block-forge/block-forge-editor?icon=npm)](https://www.npmjs.com/package/@block-forge/block-forge-editor)
-[![](https://flat.badgen.net/github/stars/block-forge-editor/block-forge-editor)](https://github.com/block-forge-editor/block-forge-editor)
-[![](https://flat.badgen.net/badge/demo/site/green)](https://block-forge-editor-demo.vercel.app/)
+[![](https://img.shields.io/npm/v/%40block-forge%2Fblock-forge-editor)](https://www.npmjs.com/package/@block-forge/block-forge-editor)
+[![](https://img.shields.io/github/stars/block-forge-editor)](https://github.com/block-forge-editor/block-forge-editor)
+[![](https://img.shields.io/badge/demo-site-blue)](https://block-forge-editor-demo.vercel.app/)
+[![](https://img.shields.io/npm/dw/%40block-forge%2Fblock-forge-editor)](https://www.npmjs.com/package/@block-forge/block-forge-editor)
 
 A powerful article builder for React based on EditorJS and built with shadcn/ui and Tailwind CSS. Create beautiful, structured content with a modern block-based editor.
 
@@ -41,6 +42,112 @@ function App() {
       onSave={handleSave}
       onCancel={handleCancel}
       tools={[...array of your editor js tools]}
+    />
+  );
+}
+```
+
+## Component Control (components will load async)
+
+### Using Tool Presets
+
+The easiest way to control components is using predefined tool presets:
+
+```jsx
+import {
+  BlockForgeEditor,
+  TOOL_PRESETS,
+} from "@block-forge/block-forge-editor";
+
+function App() {
+  return (
+    <BlockForgeEditor
+      id="my-editor"
+      toolPreset="basic" // Use a predefined preset
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
+}
+```
+
+#### Available Tool Presets
+
+- **`full`** - All available components (default)
+- **`minimal`** - Basic text editing: paragraph, list, divider
+- **`basic`** - Common components: paragraph, list, table, divider, quote, code
+- **`media`** - Media-focused: paragraph, list, imageSingle, imageGallery, videoEmbed, figma
+- **`accordion`** - For accordion content: paragraph, list, divider, table
+- **`columns`** - For column layouts: paragraph, list, divider, table
+
+### Using Enabled Tools
+
+For more granular control, you can specify exactly which tools to enable:
+
+```jsx
+import { BlockForgeEditor } from "@block-forge/block-forge-editor";
+
+function App() {
+  return (
+    <BlockForgeEditor
+      id="my-editor"
+      enabledTools={["paragraph", "list", "imageSingle", "quote", "timeline"]}
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
+}
+```
+
+### Available Components
+
+The following components can be enabled via `enabledTools`:
+
+- **`paragraph`** - Text paragraphs with formatting
+- **`list`** - Ordered and unordered lists
+- **`table`** - Data tables with headers
+- **`divider`** - Visual separators
+- **`excalidraw`** - Drawing and diagrams
+- **`columns`** - Multi-column layouts
+- **`imageGallery`** - Image galleries
+- **`imageSingle`** - Single image blocks
+- **`figma`** - Figma embed blocks
+- **`quote`** - Quote blocks with attribution
+- **`code`** - Code blocks with syntax highlighting
+- **`videoEmbed`** - Video embeds (YouTube, Vimeo, etc.)
+- **`social`** - Social media links
+- **`card`** - Card components
+- **`stats`** - Statistics/metrics displays
+- **`timeline`** - Timeline components
+- **`progress`** - Progress bars and indicators
+- **`testimonials`** - Testimonial blocks
+- **`accordion`** - Collapsible accordion sections
+
+### Tools configuration
+
+You can provide tools using tools prop which will override any default tool with same name:
+
+```jsx
+import { BlockForgeEditor } from "@block-forge/block-forge-editor";
+
+function App() {
+  const tools = [
+    {
+      paragraph: {
+        class: MyCustomParagraphTool,
+        config: {
+          preserveBlank: true,
+        },
+      },
+    },
+  ];
+
+  return (
+    <BlockForgeEditor
+      id="my-editor"
+      tools={tools}
+      onChange={handleChange}
+      onSave={handleSave}
     />
   );
 }

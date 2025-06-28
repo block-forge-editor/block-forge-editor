@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import { Video as VideoIcon } from "lucide-react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { Input } from "@/editor/ui/shadcn/ui/input";
 import {

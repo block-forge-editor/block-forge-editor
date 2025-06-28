@@ -6,7 +6,7 @@ import { Label } from "../../atoms/form";
 import { Input as ShaInput } from "../../shadcn";
 import { TProps } from "./types";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 export const BaseInput: FC<TProps> = ({
   label,

@@ -3,7 +3,7 @@ import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 const labelVariants = cva(
   "bf-inline-block bf-text-gray-600 bf-text-sm bf-font-medium bf-leading-none bf-peer-disabled:bf-cursor-not-allowed bf-peer-disabled:bf-opacity-70",

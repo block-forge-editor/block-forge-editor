@@ -1,5 +1,5 @@
 import type { BlockToolConstructorOptions } from "@editorjs/editorjs";
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import Paragraph from "@editorjs/paragraph";
 import { API } from "@editorjs/editorjs";
 import {

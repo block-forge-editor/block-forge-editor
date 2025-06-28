@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { Label } from "../../atoms/form";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import {
   SelectItem,
   SelectGroup,

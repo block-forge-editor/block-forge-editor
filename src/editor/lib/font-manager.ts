@@ -5,22 +5,6 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export enum EColors {
-  DEFAULT = "transparent",
-  BLUE = "blue",
-  YELLOW = "yellow",
-  RED = "red",
-  GREEN = "green",
-  PURPLE = "purple",
-  PINK = "pink",
-  ORANGE = "orange",
-  TEAL = "teal",
-  INDIGO = "indigo",
-  GRAY = "gray",
-  BLACK = "black",
-  WHITE = "white",
-}
-
 export const getFontSizeClassTSX = ({
   level,
   fontSize,

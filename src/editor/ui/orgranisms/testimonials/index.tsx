@@ -4,7 +4,7 @@ import { type Root, createRoot } from "react-dom/client";
 import { BaseBlockTool } from "../base-block-tool";
 import { TestimonialsComponent } from "./testimonials-component";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import { TOOLBOX_TITLE } from "./constants";
 import { TTestimonialsData } from "./types";
 

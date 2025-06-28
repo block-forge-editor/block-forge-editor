@@ -2,7 +2,7 @@ import { FC, useRef, useState } from "react";
 
 import { X, Plus, Upload, MessageSquare } from "lucide-react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import {
   EditorInput,
   EditorButton,

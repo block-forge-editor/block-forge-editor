@@ -1,6 +1,6 @@
 import { FC, TextareaHTMLAttributes } from "react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 type EditorTextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement>;
 

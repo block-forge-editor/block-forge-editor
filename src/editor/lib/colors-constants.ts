@@ -42,3 +42,19 @@ export const PASTEL_COLORS = [
     strokeClass: "bf-stroke-gray-500",
   },
 ];
+
+export enum EColors {
+  DEFAULT = "transparent",
+  BLUE = "blue",
+  YELLOW = "yellow",
+  RED = "red",
+  GREEN = "green",
+  PURPLE = "purple",
+  PINK = "pink",
+  ORANGE = "orange",
+  TEAL = "teal",
+  INDIGO = "indigo",
+  GRAY = "gray",
+  BLACK = "black",
+  WHITE = "white",
+}

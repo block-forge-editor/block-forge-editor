@@ -4,7 +4,7 @@ import { type Root, createRoot } from "react-dom/client";
 import { BaseBlockTool } from "../base-block-tool";
 import { ProgressComponent } from "./progress-component";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import { TOOLBOX_TITLE } from "./constants";
 import { TProgressData } from "./types";
 

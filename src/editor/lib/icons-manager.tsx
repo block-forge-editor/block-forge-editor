@@ -45,10 +45,11 @@ import {
   Heading6,
 } from "lucide-react";
 import { renderToString } from "react-dom/server";
-import { EColors } from "./utils";
+import { EColors } from "./colors-constants";
 
 const ICON_CLASSES = "!size-4";
 
+// TODO: refactor
 export type TIconName =
   | "x"
   | "link"
