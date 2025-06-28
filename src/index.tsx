@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === "development") {
 
   root.render(
     <React.StrictMode>
-      <BlockForgeEditor id="block-forge-editor" />
+      <BlockForgeEditor id="block-forge-editor" toolPreset="full" />
     </React.StrictMode>,
   );
 }

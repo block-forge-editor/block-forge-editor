@@ -5,7 +5,7 @@ import { BaseBlockTool } from "../base-block-tool";
 import { QuoteComponent } from "./quote-component";
 import { TOOLBOX_TITLE } from "./constants";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 
 export type TQuoteData = {
   text: string;

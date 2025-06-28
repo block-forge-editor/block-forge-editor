@@ -2,7 +2,7 @@ import { FC, JSX } from "react";
 
 import { Typography } from "../typography";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 type TProps = {
   className?: string;

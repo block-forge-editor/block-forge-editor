@@ -6,7 +6,7 @@ import { BaseBlockTool } from "../base-block-tool";
 import { ColumnsComponent } from "./columns-component";
 import { TColumnData } from "./types";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 
 const TOOLBOX_TITLE = "Columns";
 

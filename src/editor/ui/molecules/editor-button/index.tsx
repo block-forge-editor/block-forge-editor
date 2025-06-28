@@ -1,6 +1,6 @@
 import { FC, ButtonHTMLAttributes } from "react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 type EditorButtonProps = {
   size?: "sm" | "md" | "lg";

@@ -47,6 +47,112 @@ function App() {
 }
 ```
 
+## Component Control (components will load async)
+
+### Using Tool Presets
+
+The easiest way to control components is using predefined tool presets:
+
+```jsx
+import {
+  BlockForgeEditor,
+  TOOL_PRESETS,
+} from "@block-forge/block-forge-editor";
+
+function App() {
+  return (
+    <BlockForgeEditor
+      id="my-editor"
+      toolPreset="basic" // Use a predefined preset
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
+}
+```
+
+#### Available Tool Presets
+
+- **`full`** - All available components (default)
+- **`minimal`** - Basic text editing: paragraph, list, divider
+- **`basic`** - Common components: paragraph, list, table, divider, quote, code
+- **`media`** - Media-focused: paragraph, list, imageSingle, imageGallery, videoEmbed, figma
+- **`accordion`** - For accordion content: paragraph, list, divider, table
+- **`columns`** - For column layouts: paragraph, list, divider, table
+
+### Using Enabled Tools
+
+For more granular control, you can specify exactly which tools to enable:
+
+```jsx
+import { BlockForgeEditor } from "@block-forge/block-forge-editor";
+
+function App() {
+  return (
+    <BlockForgeEditor
+      id="my-editor"
+      enabledTools={["paragraph", "list", "imageSingle", "quote", "timeline"]}
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
+}
+```
+
+### Available Components
+
+The following components can be enabled via `enabledTools`:
+
+- **`paragraph`** - Text paragraphs with formatting
+- **`list`** - Ordered and unordered lists
+- **`table`** - Data tables with headers
+- **`divider`** - Visual separators
+- **`excalidraw`** - Drawing and diagrams
+- **`columns`** - Multi-column layouts
+- **`imageGallery`** - Image galleries
+- **`imageSingle`** - Single image blocks
+- **`figma`** - Figma embed blocks
+- **`quote`** - Quote blocks with attribution
+- **`code`** - Code blocks with syntax highlighting
+- **`videoEmbed`** - Video embeds (YouTube, Vimeo, etc.)
+- **`social`** - Social media links
+- **`card`** - Card components
+- **`stats`** - Statistics/metrics displays
+- **`timeline`** - Timeline components
+- **`progress`** - Progress bars and indicators
+- **`testimonials`** - Testimonial blocks
+- **`accordion`** - Collapsible accordion sections
+
+### Tools configuration
+
+You can provide tools using tools prop which will override any default tool with same name:
+
+```jsx
+import { BlockForgeEditor } from "@block-forge/block-forge-editor";
+
+function App() {
+  const tools = [
+    {
+      paragraph: {
+        class: MyCustomParagraphTool,
+        config: {
+          preserveBlank: true,
+        },
+      },
+    },
+  ];
+
+  return (
+    <BlockForgeEditor
+      id="my-editor"
+      tools={tools}
+      onChange={handleChange}
+      onSave={handleSave}
+    />
+  );
+}
+```
+
 ## Data Structure
 
 The editor saves data in EditorJS format. Here's an example of the saved data structure:

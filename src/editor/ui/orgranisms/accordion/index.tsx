@@ -6,7 +6,7 @@ import { BaseBlockTool } from "../base-block-tool";
 import { AccordionComponent } from "./accordion-component";
 import { TAccordionData } from "./types";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import { TOOLBOX_TITLE } from "./constants";
 
 export class BlockForgeAccordion extends BaseBlockTool {

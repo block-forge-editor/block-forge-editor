@@ -1,7 +1,6 @@
 import type { FC } from "react";
 import { useCallback, useMemo, useState } from "react";
 
-import { EditorConfig, OutputData } from "@editorjs/editorjs";
 import {
   Save,
   HelpCircle,
@@ -9,9 +8,10 @@ import {
   Type,
   Circle,
   Settings,
+  Loader,
 } from "lucide-react";
 
-import { CONSTRUCTOR_EDITOR_TOOLS, DEFAULT_INITIAL_DATA } from "./lib/tools";
+import { DEFAULT_INITIAL_DATA, TToolPreset } from "./lib/tools-constants";
 import { useEditor } from "./lib/use-editor";
 
 import {
@@ -35,39 +35,40 @@ import {
 } from "@/editor/ui/shadcn/ui/dialog";
 import "../globals.css";
 
-import { PASTEL_COLORS } from "./lib/colors";
+import { PASTEL_COLORS } from "./lib/colors-constants";
+import { TBlockForgeEditorProps } from "./types/common";
 
-export type TCustomData = {
-  meta?: {
-    font?: string;
-    background?: string;
-  };
-};
-
-export type TBlockForgeEditorProps = {
-  onCancel?: VoidFunction;
-  initialData?: null | (OutputData & TCustomData);
-  onSave?: (data?: OutputData & TCustomData) => void;
-  onChange?: (data?: OutputData & TCustomData) => void;
-  tools?: EditorConfig["tools"];
-  id: string;
-};
-
-export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
+export const BlockForgeEditor: FC<TBlockForgeEditorProps<TToolPreset>> = ({
   initialData,
   onCancel,
   onSave,
   onChange,
   tools,
   id,
+  toolPreset,
+  enabledTools,
 }) => {
-  const [showAbout, setShowAbout] = useState(false);
   const [selectedFont, setSelectedFont] = useState<string | undefined>(
     initialData?.meta?.font ?? "opensans",
   );
   const [selectedBg, setSelectedBg] = useState<string | undefined>(
     initialData?.meta?.background ?? "white",
   );
+  const [showAbout, setShowAbout] = useState(false);
+
+  const { ejInstance, isLoading } = useEditor({
+    tools,
+    id: `editorjs-${id}`,
+    initialData: initialData ?? DEFAULT_INITIAL_DATA,
+    toolPreset,
+    enabledTools,
+    onChange: (data) => {
+      onChange?.({
+        ...data,
+        meta,
+      });
+    },
+  });
 
   const meta = useMemo(() => {
     return {
@@ -75,7 +76,6 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
       background: selectedBg,
     };
   }, [selectedFont, selectedBg]);
-
   const editorStyle = useMemo(() => {
     let fontClass: string | undefined;
     if (selectedFont === "arial") fontClass = "bf-font-arial";
@@ -91,21 +91,6 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
       bgClass: selectedColor?.bgClass || "bf-bg-white",
     };
   }, [selectedFont, selectedBg]);
-
-  const ejInstance = useEditor({
-    tools: {
-      ...(CONSTRUCTOR_EDITOR_TOOLS as unknown as EditorConfig["tools"]),
-      ...tools,
-    },
-    id: `editorjs-${id}`,
-    initialData: initialData ?? DEFAULT_INITIAL_DATA,
-    onChange: (data) => {
-      onChange?.({
-        ...data,
-        meta,
-      });
-    },
-  });
 
   const handleSubmit = useCallback(async () => {
     const content = await ejInstance.current?.save();
@@ -239,6 +224,15 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
           </div>
         </DialogContent>
       </Dialog>
+
+      {isLoading && (
+        <div className="bf-fixed bf-inset-0 bf-flex bf-items-center bf-justify-center bf-bg-white/80 bf-z-50">
+          <div className="bf-text-center">
+            <Loader className="bf-animate-spin bf-mx-auto" />
+            <p className="bf-mt-2 bf-text-gray-600">Loading editor tools...</p>
+          </div>
+        </div>
+      )}
 
       <div
         className={`bf-mx-auto bf-m-8 bf-min-h-screen bf-overflow-auto bf-shadow-md bf-rounded-lg bf-w-full sm:bf-w-[70%] ${editorStyle.bgClass} ${editorStyle.fontClass}`}

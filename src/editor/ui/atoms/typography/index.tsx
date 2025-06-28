@@ -1,4 +1,4 @@
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import { JSX } from "react";
 
 type TProps = {

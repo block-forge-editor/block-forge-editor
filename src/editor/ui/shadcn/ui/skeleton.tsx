@@ -1,4 +1,4 @@
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 function Skeleton({
   className,

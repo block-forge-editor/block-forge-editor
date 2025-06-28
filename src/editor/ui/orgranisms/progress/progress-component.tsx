@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import { X, Plus, BarChart } from "lucide-react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import { EditorButton } from "@/editor/ui/molecules";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { EditorInput } from "@/editor/ui/molecules/input/editor-input";

@@ -6,7 +6,7 @@ import { BaseBlockTool } from "../base-block-tool";
 import { ExcalidrawComponent } from "./excalidraw-component";
 import { TExcalidrawData } from "./types";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import { TOOLBOX_TITLE } from "./constants";
 
 export class BlockForgeExcalidraw extends BaseBlockTool {
