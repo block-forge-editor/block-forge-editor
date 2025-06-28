@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import { IconSelect } from "@/editor/ui/molecules/icon-select";
 import { EditorInput } from "@/editor/ui/molecules/input/editor-input";

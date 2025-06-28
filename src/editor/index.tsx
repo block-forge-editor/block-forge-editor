@@ -1,7 +1,6 @@
 import type { FC } from "react";
-import { useCallback, useMemo, useState, useEffect } from "react";
+import { useCallback, useMemo, useState } from "react";
 
-import { EditorConfig, OutputData } from "@editorjs/editorjs";
 import {
   Save,
   HelpCircle,
@@ -12,7 +11,7 @@ import {
   Loader,
 } from "lucide-react";
 
-import { getToolsConfig, DEFAULT_INITIAL_DATA } from "./lib/tools";
+import { DEFAULT_INITIAL_DATA, TToolPreset } from "./lib/tools-constants";
 import { useEditor } from "./lib/use-editor";
 
 import {
@@ -36,31 +35,10 @@ import {
 } from "@/editor/ui/shadcn/ui/dialog";
 import "../globals.css";
 
-import { PASTEL_COLORS } from "./lib/colors";
-import { TToolsRegistry } from "./types/tools";
-import { TToolPreset } from "./lib/tools-manager";
+import { PASTEL_COLORS } from "./lib/colors-constants";
+import { TBlockForgeEditorProps } from "./types/common";
 
-export type TCustomData = {
-  meta?: {
-    font?: string;
-    background?: string;
-  };
-};
-
-export type TBlockForgeEditorProps = {
-  onCancel?: VoidFunction;
-  initialData?: null | (OutputData & TCustomData);
-  onSave?: (data?: OutputData & TCustomData) => void;
-  onChange?: (data?: OutputData & TCustomData) => void;
-  tools?: EditorConfig["tools"];
-  defaultTools?: EditorConfig["tools"];
-  id: string;
-  toolPreset?: TToolPreset;
-  enabledTools?: string[];
-  customTools?: TToolsRegistry;
-};
-
-export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
+export const BlockForgeEditor: FC<TBlockForgeEditorProps<TToolPreset>> = ({
   initialData,
   onCancel,
   onSave,
@@ -69,40 +47,28 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
   id,
   toolPreset,
   enabledTools,
-  customTools,
 }) => {
-  const [showAbout, setShowAbout] = useState(false);
   const [selectedFont, setSelectedFont] = useState<string | undefined>(
     initialData?.meta?.font ?? "opensans",
   );
   const [selectedBg, setSelectedBg] = useState<string | undefined>(
     initialData?.meta?.background ?? "white",
   );
-  const [toolsConfig, setToolsConfig] = useState<EditorConfig["tools"]>({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [showAbout, setShowAbout] = useState(false);
 
-  useEffect(() => {
-    const loadTools = async () => {
-      setIsLoading(true);
-
-      try {
-        const config = await getToolsConfig(
-          toolPreset,
-          enabledTools,
-          customTools,
-        );
-
-        setToolsConfig(config);
-      } catch (error) {
-        console.error("Failed to load tools:", error);
-        setToolsConfig({});
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    loadTools();
-  }, [toolPreset, enabledTools, customTools]);
+  const { ejInstance, isLoading } = useEditor({
+    tools,
+    id: `editorjs-${id}`,
+    initialData: initialData ?? DEFAULT_INITIAL_DATA,
+    toolPreset,
+    enabledTools,
+    onChange: (data) => {
+      onChange?.({
+        ...data,
+        meta,
+      });
+    },
+  });
 
   const meta = useMemo(() => {
     return {
@@ -110,7 +76,6 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
       background: selectedBg,
     };
   }, [selectedFont, selectedBg]);
-
   const editorStyle = useMemo(() => {
     let fontClass: string | undefined;
     if (selectedFont === "arial") fontClass = "bf-font-arial";
@@ -126,21 +91,6 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
       bgClass: selectedColor?.bgClass || "bf-bg-white",
     };
   }, [selectedFont, selectedBg]);
-
-  const ejInstance = useEditor({
-    tools: {
-      ...toolsConfig,
-      ...tools,
-    },
-    id: `editorjs-${id}`,
-    initialData: initialData ?? DEFAULT_INITIAL_DATA,
-    onChange: (data) => {
-      onChange?.({
-        ...data,
-        meta,
-      });
-    },
-  });
 
   const handleSubmit = useCallback(async () => {
     const content = await ejInstance.current?.save();
@@ -275,7 +225,7 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps> = ({
         </DialogContent>
       </Dialog>
 
-      {!isLoading && (
+      {isLoading && (
         <div className="bf-fixed bf-inset-0 bf-flex bf-items-center bf-justify-center bf-bg-white/80 bf-z-50">
           <div className="bf-text-center">
             <Loader className="bf-animate-spin bf-mx-auto" />

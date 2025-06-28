@@ -1,7 +1,7 @@
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 const alertVariants = cva(
   "bf-relative bf-w-full bf-rounded-lg bf-border bf-border-neutral-200 bf-px-4 bf-py-3 bf-text-sm [&>svg+div]:bf-translate-y-[-3px] [&>svg]:bf-absolute [&>svg]:bf-left-4 [&>svg]:bf-top-4 [&>svg]:bf-text-neutral-950 [&>svg~*]:bf-pl-7 dark:bf-border-neutral-800 dark:[&>svg]:bf-text-neutral-50",

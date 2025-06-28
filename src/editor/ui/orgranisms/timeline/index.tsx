@@ -3,7 +3,7 @@ import { type Root, createRoot } from "react-dom/client";
 
 import { TimelineComponent } from "./timeline-component";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import { BaseBlockTool } from "../base-block-tool";
 import { TOOLBOX_TITLE } from "./constants";
 import { TTimelineData } from "./types";

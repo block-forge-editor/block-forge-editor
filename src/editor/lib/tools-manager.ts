@@ -1,7 +1,29 @@
 import type { EditorConfig } from "@editorjs/editorjs";
-import { TToolsRegistry } from "../types/tools";
+import {
+  TOOL_PRESETS,
+  TToolPreset,
+  defaultToolConfigs,
+} from "./tools-constants";
 
-export const lazyTools = {
+export async function getToolsConfig(
+  preset?: TToolPreset,
+  enabledTools?: string[],
+  customTools?: EditorConfig["tools"],
+): Promise<EditorConfig["tools"]> {
+  let toolsToEnable: readonly string[];
+
+  if (preset && TOOL_PRESETS[preset]) {
+    toolsToEnable = TOOL_PRESETS[preset];
+  } else if (enabledTools) {
+    toolsToEnable = enabledTools;
+  } else {
+    toolsToEnable = TOOL_PRESETS.full;
+  }
+
+  return createToolsConfig([...toolsToEnable], customTools);
+}
+
+const lazyTools = {
   list: () => import("@editorjs/list").then((module) => module.default),
 
   paragraph: () =>
@@ -62,110 +84,37 @@ export const lazyTools = {
     ),
 };
 
-export const defaultToolConfigs: TToolsRegistry = {
-  paragraph: {
-    class: null,
-    config: {
-      preserveBlank: false,
-    },
-  },
-  list: {
-    class: null,
-    inlineToolbar: true,
-    config: {
-      defaultStyle: "unordered",
-    },
-    toolbox: {
-      title: "List",
-    },
-  },
-  table: {
-    class: null,
-    inlineToolbar: true,
-    config: {
-      rows: 2,
-      cols: 3,
-    },
-    toolbox: {
-      title: "Table",
-    },
-  },
-  divider: {
-    class: null,
-  },
-  excalidraw: {
-    class: null,
-  },
-  columns: {
-    class: null,
-  },
-  imageGallery: {
-    class: null,
-  },
-  imageSingle: {
-    class: null,
-  },
-  figma: {
-    class: null,
-  },
-  quote: {
-    class: null,
-  },
-  code: {
-    class: null,
-  },
-  videoEmbed: {
-    class: null,
-  },
-  social: {
-    class: null,
-  },
-  card: {
-    class: null,
-  },
-  stats: {
-    class: null,
-  },
-  timeline: {
-    class: null,
-  },
-  progress: {
-    class: null,
-  },
-  testimonials: {
-    class: null,
-  },
-  accordion: {
-    class: null,
-  },
-};
+function createToolLoader() {
+  const loadedTools = new Map<string, any>();
 
-const loadedTools = new Map<string, any>();
+  return async function loadTool(toolName: string): Promise<any> {
+    if (loadedTools.has(toolName)) {
+      return loadedTools.get(toolName);
+    }
 
-export async function loadTool(toolName: string): Promise<any> {
-  if (loadedTools.has(toolName)) {
-    return loadedTools.get(toolName);
-  }
+    const lazyLoader = lazyTools[toolName as keyof typeof lazyTools];
+    if (!lazyLoader) {
+      throw new Error(
+        `Tool "${toolName}" not found in lazy tools registry in Block Forge`,
+      );
+    }
 
-  const lazyLoader = lazyTools[toolName as keyof typeof lazyTools];
-  if (!lazyLoader) {
-    throw new Error(`Tool "${toolName}" not found in lazy tools registry`);
-  }
-
-  try {
-    const toolClass = await lazyLoader();
-    loadedTools.set(toolName, toolClass);
-    return toolClass;
-  } catch (error) {
-    console.error(`Failed to load tool "${toolName}":`, error);
-    throw error;
-  }
+    try {
+      const toolClass = await lazyLoader();
+      loadedTools.set(toolName, toolClass);
+      return toolClass;
+    } catch (error) {
+      console.error(`Failed to load tool "${toolName}" in Block Forge:`, error);
+      throw error;
+    }
+  };
 }
 
-export async function createToolsConfig(
-  enabledTools: string[] = Object.keys(defaultToolConfigs),
-  customTools: TToolsRegistry = {},
+async function createToolsConfig(
+  enabledTools: string[] = Object.keys(defaultToolConfigs || {}),
+  customTools: EditorConfig["tools"] = {},
 ): Promise<EditorConfig["tools"]> {
+  const loadTool = createToolLoader();
   const toolsConfig: EditorConfig["tools"] = {};
 
   for (const [toolName, toolConfig] of Object.entries(customTools)) {
@@ -177,9 +126,11 @@ export async function createToolsConfig(
       continue;
     }
 
-    const defaultConfig = defaultToolConfigs[toolName];
+    const defaultConfig = defaultToolConfigs?.[toolName];
     if (!defaultConfig) {
-      console.warn(`Tool "${toolName}" not found in default configs`);
+      console.warn(
+        `Tool "${toolName}" not found in default configs in Block Forge`,
+      );
       continue;
     }
 
@@ -190,32 +141,9 @@ export async function createToolsConfig(
         class: toolClass,
       };
     } catch (error) {
-      console.error(`Failed to load tool "${toolName}":`, error);
+      console.error(`Failed to load tool "${toolName}" in Block Forge:`, error);
     }
   }
 
   return toolsConfig;
 }
-
-export const TOOL_PRESETS = {
-  minimal: ["paragraph", "list", "divider"],
-
-  basic: ["paragraph", "list", "table", "divider", "quote", "code"],
-
-  media: [
-    "paragraph",
-    "list",
-    "imageSingle",
-    "imageGallery",
-    "videoEmbed",
-    "figma",
-  ],
-
-  full: Object.keys(defaultToolConfigs),
-
-  accordion: ["paragraph", "list", "divider", "table"],
-
-  columns: ["paragraph", "list", "divider", "table"],
-} as const;
-
-export type TToolPreset = keyof typeof TOOL_PRESETS;

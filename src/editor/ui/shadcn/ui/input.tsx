@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {

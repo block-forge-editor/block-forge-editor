@@ -5,7 +5,7 @@ import { BaseBlockTool } from "../base-block-tool";
 import { FigmaComponent } from "./figma-component";
 import { TFigmaData } from "./types";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 import { TOOLBOX_TITLE } from "./constants";
 
 export class BlockForgeFigma extends BaseBlockTool {

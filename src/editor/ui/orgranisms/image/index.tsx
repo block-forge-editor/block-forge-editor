@@ -4,7 +4,7 @@ import { type Root, createRoot } from "react-dom/client";
 import { BaseBlockTool } from "../base-block-tool";
 import { ImageComponent } from "./image-component";
 
-import { getIcon } from "@/editor/lib/icons";
+import { getIcon } from "@/editor/lib/icons-manager";
 
 const TOOLBOX_TITLE = "Image";
 

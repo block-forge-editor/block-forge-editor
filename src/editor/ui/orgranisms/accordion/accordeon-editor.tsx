@@ -1,8 +1,7 @@
 import { FC, useState, useCallback } from "react";
 
-import { EditorConfig, OutputData } from "@editorjs/editorjs";
+import { OutputData } from "@editorjs/editorjs";
 
-import { ACCORDION_EDITOR_TOOLS } from "@/editor/lib/tools";
 import { useEditor } from "@/editor/lib/use-editor";
 
 import { Label } from "@/editor/ui/atoms";
@@ -28,13 +27,13 @@ export const AccordionEditor: FC<TAccordionEditorProps> = ({
   const editorInstance = useEditor({
     id: `accordion-editor-${blockId}`,
     initialData,
-    tools: ACCORDION_EDITOR_TOOLS as unknown as EditorConfig["tools"],
+    toolPreset: "accordion",
   });
 
   const handleSave = useCallback(async () => {
-    if (!editorInstance.current) return;
+    if (!editorInstance.ejInstance.current) return;
 
-    const data = await editorInstance.current.save();
+    const data = await editorInstance.ejInstance.current.save();
     onSave(data, title);
     onClose();
   }, [editorInstance, onSave, onClose, title]);

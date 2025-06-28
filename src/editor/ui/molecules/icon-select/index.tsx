@@ -43,7 +43,7 @@ import {
   MoreHorizontal,
 } from "lucide-react";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import {
   Popover,
   PopoverContent,

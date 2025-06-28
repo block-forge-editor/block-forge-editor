@@ -1,8 +1,7 @@
 import { FC, useCallback } from "react";
 
-import { EditorConfig, OutputData } from "@editorjs/editorjs";
+import { OutputData } from "@editorjs/editorjs";
 
-import { COLUMNS_EDITOR_TOOLS } from "@/editor/lib/tools";
 import { useEditor } from "@/editor/lib/use-editor";
 
 import { Button, DrawerClose, DrawerFooter } from "@/editor/ui/shadcn";
@@ -21,15 +20,15 @@ export const ColumnEditor: FC<TColumnEditorProps> = ({
   blockId,
 }) => {
   const editorInstance = useEditor({
-    tools: COLUMNS_EDITOR_TOOLS as unknown as EditorConfig["tools"],
+    toolPreset: "columns",
     id: `column-editor-${blockId}`,
     initialData,
   });
 
   const handleSave = useCallback(async () => {
-    if (!editorInstance.current) return;
+    if (!editorInstance.ejInstance.current) return;
 
-    const data = await editorInstance.current.save();
+    const data = await editorInstance.ejInstance.current.save();
     onSave(data);
     onClose();
   }, [editorInstance, onSave, onClose]);

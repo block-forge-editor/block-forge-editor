@@ -8,7 +8,7 @@ import { ColumnContent } from "./column-content";
 import { ColumnEditorDrawer } from "./column-editor-drawer";
 import { TColumnData } from "./types";
 
-import { cn } from "@/editor/lib/utils";
+import { cn } from "@/editor/lib/font-manager";
 import { EditorButton } from "@/editor/ui/molecules";
 import { ComponentHeader } from "@/editor/ui/molecules/component-header";
 import {
