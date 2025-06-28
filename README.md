@@ -123,29 +123,29 @@ The following components can be enabled via `enabledTools`:
 - **`testimonials`** - Testimonial blocks
 - **`accordion`** - Collapsible accordion sections
 
-### Custom Tool Configuration
+### Tools configuration
 
-For advanced use cases, you can provide custom EditorJS tool configurations:
+You can provide tools using tools prop which will override any default tool with same name:
 
 ```jsx
 import { BlockForgeEditor } from "@block-forge/block-forge-editor";
 
 function App() {
-  const customTools = {
-    paragraph: {
-      class: MyCustomParagraphTool,
-      config: {
-        preserveBlank: true,
-        // Your custom configuration
+  const tools = [
+    {
+      paragraph: {
+        class: MyCustomParagraphTool,
+        config: {
+          preserveBlank: true,
+        },
       },
     },
-    // Override or add custom tools
-  };
+  ];
 
   return (
     <BlockForgeEditor
       id="my-editor"
-      tools={customTools}
+      tools={tools}
       onChange={handleChange}
       onSave={handleSave}
     />

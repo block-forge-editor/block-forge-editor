@@ -8,7 +8,6 @@ import {
 export async function getToolsConfig(
   preset?: TToolPreset,
   enabledTools?: string[],
-  customTools?: EditorConfig["tools"],
 ): Promise<EditorConfig["tools"]> {
   let toolsToEnable: readonly string[];
 
@@ -20,7 +19,7 @@ export async function getToolsConfig(
     toolsToEnable = TOOL_PRESETS.full;
   }
 
-  return createToolsConfig([...toolsToEnable], customTools);
+  return createToolsConfig([...toolsToEnable]);
 }
 
 const lazyTools = {
@@ -112,14 +111,9 @@ function createToolLoader() {
 
 async function createToolsConfig(
   enabledTools: string[] = Object.keys(defaultToolConfigs || {}),
-  customTools: EditorConfig["tools"] = {},
 ): Promise<EditorConfig["tools"]> {
   const loadTool = createToolLoader();
   const toolsConfig: EditorConfig["tools"] = {};
-
-  for (const [toolName, toolConfig] of Object.entries(customTools)) {
-    toolsConfig[toolName] = toolConfig;
-  }
 
   for (const toolName of enabledTools) {
     if (toolsConfig[toolName]) {

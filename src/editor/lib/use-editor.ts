@@ -15,7 +15,6 @@ type TUseEditor = {
   tools?: EditorConfig["tools"];
   toolPreset?: TToolPreset;
   enabledTools?: string[];
-  customTools?: EditorConfig["tools"];
   onChange?: (data: OutputData) => void;
 };
 
@@ -26,7 +25,6 @@ export const useEditor = ({
   onChange,
   toolPreset,
   enabledTools,
-  customTools,
 }: TUseEditor) => {
   const ejInstance = useRef<null | EditorJS>(null);
   const isReady = useRef(false);
@@ -43,15 +41,11 @@ export const useEditor = ({
       setIsLoading(true);
 
       try {
-        const config = await getToolsConfig(
-          toolPreset,
-          enabledTools,
-          customTools,
-        );
+        const config = await getToolsConfig(toolPreset, enabledTools);
 
         setToolsConfig(config);
       } catch (error) {
-        console.error("Failed to load tools:", error);
+        console.error("Failed to load tools in Block Forge:", error);
         setToolsConfig({});
       } finally {
         setIsLoading(false);
@@ -59,7 +53,7 @@ export const useEditor = ({
     };
 
     loadTools();
-  }, [toolPreset, enabledTools, customTools]);
+  }, [toolPreset, enabledTools]);
 
   useEffect(() => {
     if (ejInstance.current === null && !isReady.current && !isLoading) {
