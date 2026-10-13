@@ -62,7 +62,9 @@ export const Select: FC<TProps> = ({
         <SelectTrigger className={cn(isError && "bf-border-red-400")}>
           <SelectValue
             onClick={(e) => e.stopPropagation()}
-            placeholder={<p className="bf-text-gray-400">{placeholder}</p>}
+            placeholder={
+              <p className="bf-text-muted-foreground">{placeholder}</p>
+            }
           />
         </SelectTrigger>
         <SelectContent>

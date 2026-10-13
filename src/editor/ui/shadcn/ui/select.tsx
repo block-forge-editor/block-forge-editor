@@ -3,6 +3,7 @@ import * as SelectPrimitive from "@radix-ui/react-select";
 import { Check, ChevronDown, ChevronUp } from "lucide-react";
 
 import { cn } from "@/editor/lib/font-manager";
+import { useThemeClass } from "@/editor/lib/theme";
 
 const Select = SelectPrimitive.Root;
 
@@ -17,7 +18,7 @@ const SelectTrigger = React.forwardRef<
   <SelectPrimitive.Trigger
     ref={ref}
     className={cn(
-      "bf-flex bf-h-9 bf-w-full bf-items-center bf-justify-between bf-whitespace-nowrap bf-rounded-md bf-border bf-border-neutral-200 bf-bg-transparent bf-px-3 bf-py-2 bf-text-sm bf-shadow-sm bf-ring-offset-white data-[placeholder]:bf-text-neutral-500 focus:bf-outline-none focus:bf-ring-1 focus:bf-ring-neutral-950 disabled:bf-cursor-not-allowed disabled:bf-opacity-50 [&>span]:bf-line-clamp-1 dark:bf-border-neutral-800 dark:bf-ring-offset-neutral-950 dark:data-[placeholder]:bf-text-neutral-400 dark:focus:bf-ring-neutral-300",
+      "bf-flex bf-h-9 bf-w-full bf-items-center bf-justify-between bf-whitespace-nowrap bf-rounded-md bf-border bf-border-input bf-bg-transparent bf-px-3 bf-py-2 bf-text-sm bf-shadow-sm bf-ring-offset-background data-[placeholder]:bf-text-muted-foreground focus:bf-outline-none focus:bf-ring-1 focus:bf-ring-ring disabled:bf-cursor-not-allowed disabled:bf-opacity-50 [&>span]:bf-line-clamp-1",
       className,
     )}
     {...props}
@@ -68,33 +69,37 @@ SelectScrollDownButton.displayName =
 const SelectContent = React.forwardRef<
   React.ElementRef<typeof SelectPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        "bf-relative bf-z-50 bf-max-h-[--radix-select-content-available-height] bf-min-w-[8rem] bf-overflow-y-auto bf-overflow-x-hidden bf-rounded-md bf-border bf-border-neutral-200 bf-bg-white bf-text-neutral-950 bf-shadow-md data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out data-[state=closed]:bf-fade-out-0 data-[state=open]:bf-fade-in-0 data-[state=closed]:bf-zoom-out-95 data-[state=open]:bf-zoom-in-95 data-[side=bottom]:bf-slide-in-from-top-2 data-[side=left]:bf-slide-in-from-right-2 data-[side=right]:bf-slide-in-from-left-2 data-[side=top]:bf-slide-in-from-bottom-2 bf-origin-[--radix-select-content-transform-origin] dark:bf-border-neutral-800 dark:bf-bg-neutral-950 dark:bf-text-neutral-50",
-        position === "popper" &&
-          "data-[side=bottom]:bf-translate-y-1 data-[side=left]:bf--translate-x-1 data-[side=right]:bf-translate-x-1 data-[side=top]:bf--translate-y-1",
-        className,
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
+>(({ className, children, position = "popper", ...props }, ref) => {
+  const themeClass = useThemeClass();
+  return (
+    <SelectPrimitive.Portal>
+      <SelectPrimitive.Content
+        ref={ref}
         className={cn(
-          "bf-p-1",
+          themeClass,
+          "bf-relative bf-z-50 bf-max-h-[--radix-select-content-available-height] bf-min-w-[8rem] bf-overflow-y-auto bf-overflow-x-hidden bf-rounded-md bf-border bf-border-input bf-bg-popover bf-text-popover-foreground bf-shadow-md data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out data-[state=closed]:bf-fade-out-0 data-[state=open]:bf-fade-in-0 data-[state=closed]:bf-zoom-out-95 data-[state=open]:bf-zoom-in-95 data-[side=bottom]:bf-slide-in-from-top-2 data-[side=left]:bf-slide-in-from-right-2 data-[side=right]:bf-slide-in-from-left-2 data-[side=top]:bf-slide-in-from-bottom-2 bf-origin-[--radix-select-content-transform-origin]",
           position === "popper" &&
-            "bf-h-[var(--radix-select-trigger-height)] bf-w-full bf-min-w-[var(--radix-select-trigger-width)]",
+            "data-[side=bottom]:bf-translate-y-1 data-[side=left]:bf--translate-x-1 data-[side=right]:bf-translate-x-1 data-[side=top]:bf--translate-y-1",
+          className,
         )}
+        position={position}
+        {...props}
       >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-));
+        <SelectScrollUpButton />
+        <SelectPrimitive.Viewport
+          className={cn(
+            "bf-p-1",
+            position === "popper" &&
+              "bf-h-[var(--radix-select-trigger-height)] bf-w-full bf-min-w-[var(--radix-select-trigger-width)]",
+          )}
+        >
+          {children}
+        </SelectPrimitive.Viewport>
+        <SelectScrollDownButton />
+      </SelectPrimitive.Content>
+    </SelectPrimitive.Portal>
+  );
+});
 SelectContent.displayName = SelectPrimitive.Content.displayName;
 
 const SelectLabel = React.forwardRef<
@@ -116,7 +121,7 @@ const SelectItem = React.forwardRef<
   <SelectPrimitive.Item
     ref={ref}
     className={cn(
-      "bf-relative bf-flex bf-w-full bf-cursor-default bf-select-none bf-items-center bf-rounded-sm bf-py-1.5 bf-pl-2 bf-pr-8 bf-text-sm bf-outline-none focus:bf-bg-neutral-100 focus:bf-text-neutral-900 data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50 dark:focus:bf-bg-neutral-800 dark:focus:bf-text-neutral-50",
+      "bf-relative bf-flex bf-w-full bf-cursor-default bf-select-none bf-items-center bf-rounded-sm bf-py-1.5 bf-pl-2 bf-pr-8 bf-text-sm bf-outline-none focus:bf-bg-accent focus:bf-text-accent-foreground data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50",
       className,
     )}
     {...props}
@@ -137,10 +142,7 @@ const SelectSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SelectPrimitive.Separator
     ref={ref}
-    className={cn(
-      "bf--mx-1 bf-my-1 bf-h-px bf-bg-neutral-100 dark:bf-bg-neutral-800",
-      className,
-    )}
+    className={cn("bf--mx-1 bf-my-1 bf-h-px bf-bg-muted", className)}
     {...props}
   />
 ));

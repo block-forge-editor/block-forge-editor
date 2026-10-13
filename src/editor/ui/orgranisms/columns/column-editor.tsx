@@ -38,7 +38,7 @@ export const ColumnEditor: FC<TColumnEditorProps> = ({
       <div className="bf-flex-1 bf-overflow-auto custom-scroll bf-p-4">
         <div
           id={`column-editor-${blockId}`}
-          className="bf-min-h-screen bf-mx-auto bf-w-full sm:bf-w-[70%] bf-bg-white bf-shadow-md bf-rounded-lg"
+          className="bf-min-h-screen bf-mx-auto bf-w-full sm:bf-w-[70%] bf-bg-background bf-shadow-md bf-rounded-lg"
         />
       </div>
 

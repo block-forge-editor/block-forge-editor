@@ -74,9 +74,9 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
       >
         <EditorButton
           onClick={handleAddItem}
-          className="bf-rounded-xl bf-p-1 bf-hover:bf-bg-gray-100 bf-transition-colors"
+          className="bf-rounded-xl bf-p-1 bf-hover:bf-bg-accent bf-transition-colors"
         >
-          <Plus className="bf-size-4 bf-text-gray-600" />
+          <Plus className="bf-size-4 bf-text-muted-foreground" />
         </EditorButton>
       </ComponentHeader>
 
@@ -91,7 +91,7 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
             >
               <div className="bf-flex bf-items-start bf-justify-between bf-gap-4">
                 <div className="bf-flex bf-items-center bf-gap-3">
-                  <BarChart className="bf-size-6 bf-text-gray-500" />
+                  <BarChart className="bf-size-6 bf-text-muted-foreground" />
                   <div className="bf-flex-1">
                     <EditorInput
                       type="text"
@@ -100,7 +100,7 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
                       onChange={(e) =>
                         handleItemChange(index, "label", e.target.value)
                       }
-                      className="bf-text-sm bf-custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 bf-hover:bf-bg-gray-50 bf-transition-colors"
+                      className="bf-text-sm bf-custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 bf-hover:bf-bg-accent bf-transition-colors"
                     />
                   </div>
                 </div>
@@ -108,19 +108,19 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
                   <EditorInput
                     value={item.value}
                     onChange={(e) => handleNumberChange(index, e.target.value)}
-                    className="bf-w-10 bf-text-sm bf-text-right bf-bg-transparent bf-border-none bf-outline-none bf-rounded-md bf-px-2 bf-py-1 bf-hover:bf-bg-gray-50 bf-transition-colors"
+                    className="bf-w-10 bf-text-sm bf-text-right bf-bg-transparent bf-border-none bf-outline-none bf-rounded-md bf-px-2 bf-py-1 bf-hover:bf-bg-accent bf-transition-colors"
                   />
-                  <span className="bf-text-sm bf-text-gray-500">%</span>
+                  <span className="bf-text-sm bf-text-muted-foreground">%</span>
                   <EditorButton
                     variant="secondary"
                     onClick={() => handleRemoveItem(index)}
-                    className="bf-p-1 bf-text-gray-500 bf-rounded-md bf-hover:bf-bg-gray-50 bf-opacity-0 bf-group-hover/item:bf-opacity-100 bf-transition-opacity"
+                    className="bf-p-1 bf-text-muted-foreground bf-rounded-md bf-hover:bf-bg-accent bf-opacity-0 bf-group-hover/item:bf-opacity-100 bf-transition-opacity"
                   >
                     <X className="bf-size-4" />
                   </EditorButton>
                 </div>
               </div>
-              <div className="bf-h-1 bf-bg-gray-200 bf-rounded-full bf-overflow-hidden">
+              <div className="bf-h-1 bf-bg-muted bf-rounded-full bf-overflow-hidden">
                 <div
                   style={{ width: `${item.value}%` }}
                   className={cn(
@@ -133,7 +133,7 @@ export const ProgressComponent: FC<TProgressComponentProps> = ({
           ))}
         </div>
         {localItems.length === 0 && (
-          <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
             <BarChart className="bf-size-8 bf-mb-2" />
             <span>No progress bars yet</span>
           </div>

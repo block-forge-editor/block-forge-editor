@@ -30,7 +30,7 @@ export const Popconfirm: FC<TProps> = ({
   <Popover>
     <PopoverTrigger asChild>{children}</PopoverTrigger>
     <PopoverContent side={side}>
-      <div className="bf-border bf-p-2 bf-rounded-md bf-bg-white bf-ml-2 bf-shadow-md">
+      <div className="bf-border bf-p-2 bf-rounded-md bf-bg-popover bf-ml-2 bf-shadow-md">
         <div className="bf-flex bf-items-center bf-mb-2 bf-gap-x-2">
           <AlertCircle className="bf-size-4 bf-text-yellow-500" />
           <p className="bf-text-sm">{title}</p>

@@ -34,10 +34,10 @@ function Calendar({
         table: "bf-w-full bf-border-collapse bf-space-y-1",
         head_row: "bf-flex",
         head_cell:
-          "bf-text-neutral-500 bf-rounded-md bf-w-8 bf-font-normal bf-text-[0.8rem] dark:bf-text-neutral-400",
+          "bf-text-muted-foreground bf-rounded-md bf-w-8 bf-font-normal bf-text-[0.8rem]",
         row: "bf-flex bf-w-full bf-mt-2",
         cell: cn(
-          "bf-relative bf-p-0 bf-text-center bf-text-sm focus-within:bf-relative focus-within:bf-z-20 [&:has([aria-selected])]:bf-bg-neutral-100 [&:has([aria-selected].day-outside)]:bf-bg-neutral-100/50 [&:has([aria-selected].day-range-end)]:bf-rounded-r-md dark:[&:has([aria-selected])]:bf-bg-neutral-800 dark:[&:has([aria-selected].day-outside)]:bf-bg-neutral-800/50",
+          "bf-relative bf-p-0 bf-text-center bf-text-sm focus-within:bf-relative focus-within:bf-z-20 [&:has([aria-selected])]:bf-bg-accent [&:has([aria-selected].day-outside)]:bf-bg-accent/50 [&:has([aria-selected].day-range-end)]:bf-rounded-r-md",
           props.mode === "range"
             ? "[&:has(>.day-range-end)]:bf-rounded-r-md [&:has(>.day-range-start)]:bf-rounded-l-md first:[&:has([aria-selected])]:bf-rounded-l-md last:[&:has([aria-selected])]:bf-rounded-r-md"
             : "[&:has([aria-selected])]:bf-rounded-md",
@@ -49,15 +49,13 @@ function Calendar({
         day_range_start: "bf-day-range-start",
         day_range_end: "bf-day-range-end",
         day_selected:
-          "bf-bg-neutral-900 bf-text-neutral-50 hover:bf-bg-neutral-900 hover:bf-text-neutral-50 focus:bf-bg-neutral-900 focus:bf-text-neutral-50 dark:bf-bg-neutral-50 dark:bf-text-neutral-900 dark:hover:bf-bg-neutral-50 dark:hover:bf-text-neutral-900 dark:focus:bf-bg-neutral-50 dark:focus:bf-text-neutral-900",
-        day_today:
-          "bf-bg-neutral-100 bf-text-neutral-900 dark:bf-bg-neutral-800 dark:bf-text-neutral-50",
+          "bf-bg-primary bf-text-primary-foreground hover:bf-bg-primary hover:bf-text-primary-foreground focus:bf-bg-primary focus:bf-text-primary-foreground",
+        day_today: "bf-bg-secondary bf-text-secondary-foreground",
         day_outside:
-          "bf-day-outside bf-text-neutral-500 aria-selected:bf-bg-neutral-100/50 aria-selected:bf-text-neutral-500 dark:bf-text-neutral-400 dark:aria-selected:bf-bg-neutral-800/50 dark:aria-selected:bf-text-neutral-400",
-        day_disabled:
-          "bf-text-neutral-500 bf-opacity-50 dark:bf-text-neutral-400",
+          "bf-day-outside bf-text-muted-foreground aria-selected:bf-bg-accent/50 aria-selected:bf-text-muted-foreground",
+        day_disabled: "bf-text-muted-foreground bf-opacity-50",
         day_range_middle:
-          "aria-selected:bf-bg-neutral-100 aria-selected:bf-text-neutral-900 dark:aria-selected:bf-bg-neutral-800 dark:aria-selected:bf-text-neutral-50",
+          "aria-selected:bf-bg-accent aria-selected:bf-text-accent-foreground",
         day_hidden: "bf-invisible",
         ...classNames,
       }}

@@ -6,6 +6,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { X } from "lucide-react";
 
 import { cn } from "@/editor/lib/font-manager";
+import { useThemeClass } from "@/editor/lib/theme";
 
 const Sheet = SheetPrimitive.Root;
 
@@ -31,7 +32,7 @@ const SheetOverlay = React.forwardRef<
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
 const sheetVariants = cva(
-  "bf-fixed bf-z-50 bf-gap-4 bf-bg-white bf-p-6 bf-shadow-lg bf-transition bf-ease-in-out data-[state=closed]:bf-duration-300 data-[state=open]:bf-duration-500 data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out dark:bf-bg-neutral-950",
+  "bf-fixed bf-z-50 bf-gap-4 bf-bg-background bf-text-foreground bf-p-6 bf-shadow-lg bf-transition bf-ease-in-out data-[state=closed]:bf-duration-300 data-[state=open]:bf-duration-500 data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out",
   {
     variants: {
       side: {
@@ -56,22 +57,25 @@ interface SheetContentProps
 const SheetContent = React.forwardRef<
   React.ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(({ side = "right", className, children, ...props }, ref) => (
-  <SheetPortal>
-    <SheetOverlay />
-    <SheetPrimitive.Content
-      ref={ref}
-      className={cn(sheetVariants({ side }), className)}
-      {...props}
-    >
-      <SheetPrimitive.Close className="bf-absolute bf-right-4 bf-top-4 bf-rounded-sm bf-opacity-70 bf-ring-offset-white bf-transition-opacity hover:bf-opacity-100 focus:bf-outline-none focus:bf-ring-2 focus:bf-ring-neutral-950 focus:bf-ring-offset-2 disabled:bf-pointer-events-none data-[state=open]:bf-bg-neutral-100 dark:bf-ring-offset-neutral-950 dark:focus:bf-ring-neutral-300 dark:data-[state=open]:bf-bg-neutral-800">
-        <X className="bf-h-4 bf-w-4" />
-        <span className="bf-sr-only">Close</span>
-      </SheetPrimitive.Close>
-      {children}
-    </SheetPrimitive.Content>
-  </SheetPortal>
-));
+>(({ side = "right", className, children, ...props }, ref) => {
+  const themeClass = useThemeClass();
+  return (
+    <SheetPortal>
+      <SheetOverlay />
+      <SheetPrimitive.Content
+        ref={ref}
+        className={cn(themeClass, sheetVariants({ side }), className)}
+        {...props}
+      >
+        <SheetPrimitive.Close className="bf-absolute bf-right-4 bf-top-4 bf-rounded-sm bf-opacity-70 bf-ring-offset-background bf-transition-opacity hover:bf-opacity-100 focus:bf-outline-none focus:bf-ring-2 focus:bf-ring-ring focus:bf-ring-offset-2 disabled:bf-pointer-events-none data-[state=open]:bf-bg-accent">
+          <X className="bf-h-4 bf-w-4" />
+          <span className="bf-sr-only">Close</span>
+        </SheetPrimitive.Close>
+        {children}
+      </SheetPrimitive.Content>
+    </SheetPortal>
+  );
+});
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({
@@ -108,10 +112,7 @@ const SheetTitle = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Title
     ref={ref}
-    className={cn(
-      "bf-text-lg bf-font-semibold bf-text-neutral-950 dark:bf-text-neutral-50",
-      className,
-    )}
+    className={cn("bf-text-lg bf-font-semibold bf-text-foreground", className)}
     {...props}
   />
 ));
@@ -123,10 +124,7 @@ const SheetDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <SheetPrimitive.Description
     ref={ref}
-    className={cn(
-      "bf-text-sm bf-text-neutral-500 dark:bf-text-neutral-400",
-      className,
-    )}
+    className={cn("bf-text-sm bf-text-muted-foreground", className)}
     {...props}
   />
 ));

@@ -44,7 +44,7 @@ export const AccordionEditor: FC<TAccordionEditorProps> = ({
         <div className="bf-w-full sm:bf-w-[70%] bf-mx-auto bf-space-y-2">
           <Label
             htmlFor="accordion-title"
-            className="bf-text-sm bf-font-normal bf-text-neutral-500 bf-dark:bf-text-neutral-400"
+            className="bf-text-sm bf-font-normal bf-text-muted-foreground"
           >
             Accordion Title
           </Label>
@@ -58,7 +58,7 @@ export const AccordionEditor: FC<TAccordionEditorProps> = ({
 
         <div
           id={`accordion-editor-${blockId}`}
-          className="bf-min-h-screen bf-mx-auto bf-w-full sm:bf-w-[70%] bf-bg-white bf-shadow-md bf-rounded-lg"
+          className="bf-min-h-screen bf-mx-auto bf-w-full sm:bf-w-[70%] bf-bg-background bf-shadow-md bf-rounded-lg"
         />
       </div>
 

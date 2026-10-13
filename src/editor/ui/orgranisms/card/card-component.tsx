@@ -54,7 +54,7 @@ export const CardComponent: FC<TCardComponentProps> = ({
       <div className={cn("bf-min-h-[200px]")}>
         <div className="bf-flex bf-flex-col bf-gap-4 bf-p-4 bf-border-b">
           <div className="bf-flex bf-items-start bf-gap-3">
-            <div className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-gray-100">
+            <div className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-muted">
               <IconSelect
                 value={localIcon || "BarChart3"}
                 onChange={(value) => handleIconChange(value)}
@@ -66,14 +66,14 @@ export const CardComponent: FC<TCardComponentProps> = ({
                 value={localTitle}
                 placeholder="Enter title"
                 onChange={(e) => handleTitleChange(e.target.value)}
-                className="bf-text-lg custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                className="bf-text-lg custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
               />
               <EditorTextarea
                 rows={3}
                 value={localDescription}
                 placeholder="Enter description"
                 onChange={(e) => handleDescriptionChange(e.target.value)}
-                className="bf-text-sm custom-scroll bf-text-gray-600 bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-2 bf-resize-none bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                className="bf-text-sm custom-scroll bf-text-muted-foreground bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-2 bf-resize-none bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
               />
             </div>
           </div>

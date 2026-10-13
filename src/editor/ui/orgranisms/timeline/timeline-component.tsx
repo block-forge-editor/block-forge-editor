@@ -61,9 +61,9 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
       >
         <EditorButton
           onClick={handleAddEvent}
-          className="bf-rounded-xl bf-p-1 hover:bf-bg-gray-100 bf-transition-colors"
+          className="bf-rounded-xl bf-p-1 hover:bf-bg-accent bf-transition-colors"
         >
-          <Plus className="bf-size-4 bf-text-gray-600" />
+          <Plus className="bf-size-4 bf-text-muted-foreground" />
         </EditorButton>
       </ComponentHeader>
 
@@ -72,9 +72,9 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
           {localEvents.map((event, index) => (
             <div key={index} className="bf-flex bf-gap-4 bf-group/item">
               <div className="bf-flex bf-flex-col bf-items-center">
-                <div className="bf-size-3 bf-rounded-full bf-bg-gray-400" />
+                <div className="bf-size-3 bf-rounded-full bf-bg-muted-foreground" />
                 {index !== localEvents.length - 1 && (
-                  <div className="bf-w-0.5 bf-h-full bf-bg-gray-200" />
+                  <div className="bf-w-0.5 bf-h-full bf-bg-muted" />
                 )}
               </div>
               <div className="bf-flex-1">
@@ -87,7 +87,7 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
                       onChange={(e) =>
                         handleEventChange(index, "date", e.target.value)
                       }
-                      className="bf-text-sm custom-scroll bf-font-medium bf-text-gray-600 bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                      className="bf-text-sm custom-scroll bf-font-medium bf-text-muted-foreground bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
                     />
                     <EditorInput
                       type="text"
@@ -96,7 +96,7 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
                       onChange={(e) =>
                         handleEventChange(index, "title", e.target.value)
                       }
-                      className="bf-text-lg custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-1 bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                      className="bf-text-lg custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-1 bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
                     />
                     <EditorTextarea
                       rows={2}
@@ -105,12 +105,12 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
                       onChange={(e) =>
                         handleEventChange(index, "description", e.target.value)
                       }
-                      className="bf-text-sm custom-scroll bf-text-gray-600 bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-2 bf-resize-none bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                      className="bf-text-sm custom-scroll bf-text-muted-foreground bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-2 bf-resize-none bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
                     />
                   </div>
                   <EditorButton
                     onClick={() => handleRemoveEvent(index)}
-                    className="bf-p-1 bf-text-gray-500 bf-rounded-md hover:bf-bg-gray-50 bf-opacity-0 group-hover/item:bf-opacity-100 bf-transition-opacity"
+                    className="bf-p-1 bf-text-muted-foreground bf-rounded-md hover:bf-bg-accent bf-opacity-0 group-hover/item:bf-opacity-100 bf-transition-opacity"
                   >
                     <X className="bf-size-4" />
                   </EditorButton>
@@ -120,7 +120,7 @@ export const TimelineComponent: FC<TTimelineComponentProps> = ({
           ))}
         </div>
         {localEvents.length === 0 && (
-          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
             <Clock className="bf-size-8 bf-mb-2" />
             <span>No events yet</span>
           </div>

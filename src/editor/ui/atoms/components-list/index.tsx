@@ -44,18 +44,20 @@ export const ComponentsList: FC<TComponentsListProps> = ({ blocks }) => {
           return (
             <div
               key={index}
-              className="bf-flex bf-items-center bf-gap-1.5 bf-px-2 bf-py-1.5 bf-bg-gray-50/50 bf-border bf-border-gray-100 bf-rounded-md bf-text-xs"
+              className="bf-flex bf-items-center bf-gap-1.5 bf-px-2 bf-py-1.5 bf-bg-muted/50 bf-border bf-border-border bf-rounded-md bf-text-xs"
             >
-              <span className="bf-text-gray-400">{icon}</span>
-              <span className="bf-text-gray-600 bf-truncate">{label}</span>
+              <span className="bf-text-muted-foreground">{icon}</span>
+              <span className="bf-text-muted-foreground bf-truncate">
+                {label}
+              </span>
             </div>
           );
         })}
       </div>
 
       {totalItems > maxVisibleItems && (
-        <div className="bf-flex bf-items-center bf-gap-1.5 bf-px-2 bf-py-1.5 bf-bg-orange-50/50 bf-border bf-border-orange-100 bf-rounded-md bf-text-xs">
-          <span className="bf-text-gray-600 bf-truncate">
+        <div className="bf-flex bf-items-center bf-gap-1.5 bf-px-2 bf-py-1.5 bf-bg-orange-50/50 bf-border bf-border-orange-100 dark:bf-bg-orange-950/40 dark:bf-border-orange-900/40 bf-rounded-md bf-text-xs">
+          <span className="bf-text-muted-foreground bf-truncate">
             +{totalItems - maxVisibleItems} more
           </span>
         </div>

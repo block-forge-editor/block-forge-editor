@@ -16,7 +16,7 @@ export const ColumnContent: FC<TColumnContentProps> = ({ column }) => {
   }
 
   return (
-    <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-full bf-text-gray-400">
+    <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-h-full bf-text-muted-foreground">
       <LayoutGrid className="bf-size-8 bf-mb-2" />
       <span className="bf-text-center">Empty Column</span>
     </div>

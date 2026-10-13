@@ -26,7 +26,7 @@ export const BaseInput: FC<TProps> = ({
         <div className="bf-text-xs bf-text-red-400 bf-mt-1">{errorMessage}</div>
       )}
       {isLoading && (
-        <div className="bf-w-full bf-h-full bf-absolute bf-flex bf-items-center bf-justify-center bf-bg-white/20 bf-inset-0 bf-px-4">
+        <div className="bf-w-full bf-h-full bf-absolute bf-flex bf-items-center bf-justify-center bf-bg-background/20 bf-inset-0 bf-px-4">
           <Loader className="bf-size-4 bf-animate-spin bf-text-brand bf-mt-3 bf-ml-auto" />
         </div>
       )}

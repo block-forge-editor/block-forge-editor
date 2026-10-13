@@ -12,7 +12,7 @@ export const Divider: FC<TProps> = ({ className, dashed }) => {
     <hr
       className={cn(
         className,
-        "bf-w-full bf-bg-gray-100",
+        "bf-w-full bf-bg-muted",
         dashed && "bf-border-dashed",
       )}
     />

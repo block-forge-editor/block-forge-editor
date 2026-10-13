@@ -133,7 +133,7 @@ export const ImageComponent: FC<TImageComponentProps> = ({
               />
             </div>
           ) : (
-            <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
               <ImageIcon className="bf-size-8 bf-mb-2" />
               <span>No image added</span>
             </div>

@@ -4,14 +4,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/editor/lib/font-manager";
 
 const alertVariants = cva(
-  "bf-relative bf-w-full bf-rounded-lg bf-border bf-border-neutral-200 bf-px-4 bf-py-3 bf-text-sm [&>svg+div]:bf-translate-y-[-3px] [&>svg]:bf-absolute [&>svg]:bf-left-4 [&>svg]:bf-top-4 [&>svg]:bf-text-neutral-950 [&>svg~*]:bf-pl-7 dark:bf-border-neutral-800 dark:[&>svg]:bf-text-neutral-50",
+  "bf-relative bf-w-full bf-rounded-lg bf-border bf-border-border bf-px-4 bf-py-3 bf-text-sm [&>svg+div]:bf-translate-y-[-3px] [&>svg]:bf-absolute [&>svg]:bf-left-4 [&>svg]:bf-top-4 [&>svg]:bf-text-foreground [&>svg~*]:bf-pl-7",
   {
     variants: {
       variant: {
-        default:
-          "bf-bg-white bf-text-neutral-950 dark:bf-bg-neutral-950 dark:bf-text-neutral-50",
+        default: "bf-bg-background bf-text-foreground",
         destructive:
-          "bf-border-red-500/50 bf-text-red-500 dark:bf-border-red-500 [&>svg]:bf-text-red-500 dark:bf-border-red-900/50 dark:bf-text-red-900 dark:dark:bf-border-red-900 dark:[&>svg]:bf-text-red-900",
+          "bf-border-destructive/50 bf-text-destructive [&>svg]:bf-text-destructive",
       },
     },
     defaultVariants: {

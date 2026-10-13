@@ -1,5 +1,11 @@
 import { OutputData, EditorConfig } from "@editorjs/editorjs";
 
+import type { TTheme } from "../lib/theme";
+
+// page: a centred sheet with a shadow, for a full page editor (default).
+// embedded: fills its container, no margins, shadow or background of its own.
+export type TEditorLayout = "page" | "embedded";
+
 export type TCustomData = {
   meta?: {
     font?: string;
@@ -19,4 +25,8 @@ export type TBlockForgeEditorProps<T> = {
   id: string;
   toolPreset?: T;
   enabledTools?: string[];
+  theme?: TTheme;
+  layout?: TEditorLayout;
+  showMenubar?: boolean;
+  className?: string;
 };

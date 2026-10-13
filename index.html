@@ -4,6 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Block Forge Editor - Development</title>
+    <style>
+      body {
+        margin: 0;
+        background: #f8f8f8;
+      }
+      body[data-theme="dark"] {
+        background: #171717;
+      }
+      @media (prefers-color-scheme: dark) {
+        body[data-theme="system"] {
+          background: #171717;
+        }
+      }
+      .dev-embedded {
+        max-width: 720px;
+        margin: 48px auto;
+        padding: 16px;
+        border: 1px solid #8884;
+        border-radius: 8px;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>

@@ -73,9 +73,9 @@ export const SocialComponent: FC<TSocialComponentProps> = ({
       >
         <EditorButton
           onClick={handleAddLink}
-          className="bf-rounded-xl bf-p-1 hover:bf-bg-gray-100 bf-transition-colors"
+          className="bf-rounded-xl bf-p-1 hover:bf-bg-accent bf-transition-colors"
         >
-          <Plus className="bf-size-4 bf-text-gray-600" />
+          <Plus className="bf-size-4 bf-text-muted-foreground" />
         </EditorButton>
       </ComponentHeader>
 
@@ -112,14 +112,14 @@ export const SocialComponent: FC<TSocialComponentProps> = ({
               />
               <EditorButton
                 onClick={() => handleRemoveLink(index)}
-                className="bf-p-1 bf-text-gray-500 bf-rounded-md hover:bf-bg-gray-50 bf-opacity-0 group-hover/item:bf-opacity-100 bf-transition-opacity"
+                className="bf-p-1 bf-text-muted-foreground bf-rounded-md hover:bf-bg-accent bf-opacity-0 group-hover/item:bf-opacity-100 bf-transition-opacity"
               >
                 <X className="bf-size-4" />
               </EditorButton>
             </div>
           ))}
           {localLinks.length === 0 && (
-            <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
               <Link className="bf-size-8 bf-mb-2" />
               <span>No social links yet</span>
             </div>

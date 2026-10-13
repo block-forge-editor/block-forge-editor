@@ -4,17 +4,17 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/editor/lib/font-manager";
 
 const badgeVariants = cva(
-  "bf-inline-flex bf-items-center bf-rounded-md bf-border bf-border-neutral-200 bf-px-2.5 bf-py-0.5 bf-text-xs bf-font-semibold bf-transition-colors focus:bf-outline-none focus:bf-ring-2 focus:bf-ring-neutral-950 focus:bf-ring-offset-2 dark:bf-border-neutral-800 dark:focus:bf-ring-neutral-300",
+  "bf-inline-flex bf-items-center bf-rounded-md bf-border bf-border-border bf-px-2.5 bf-py-0.5 bf-text-xs bf-font-semibold bf-transition-colors focus:bf-outline-none focus:bf-ring-2 focus:bf-ring-ring focus:bf-ring-offset-2",
   {
     variants: {
       variant: {
         default:
-          "bf-border-transparent bf-bg-neutral-900 bf-text-neutral-50 bf-shadow hover:bf-bg-neutral-900/80 dark:bf-bg-neutral-50 dark:bf-text-neutral-900 dark:hover:bf-bg-neutral-50/80",
+          "bf-border-transparent bf-bg-primary bf-text-primary-foreground bf-shadow hover:bf-bg-primary/80",
         secondary:
-          "bf-border-transparent bf-bg-neutral-100 bf-text-neutral-900 hover:bf-bg-neutral-100/80 dark:bf-bg-neutral-800 dark:bf-text-neutral-50 dark:hover:bf-bg-neutral-800/80",
+          "bf-border-transparent bf-bg-secondary bf-text-secondary-foreground hover:bf-bg-secondary/80",
         destructive:
-          "bf-border-transparent bf-bg-red-500 bf-text-neutral-50 bf-shadow hover:bf-bg-red-500/80 dark:bf-bg-red-900 dark:bf-text-neutral-50 dark:hover:bf-bg-red-900/80",
-        outline: "bf-text-neutral-950 dark:bf-text-neutral-50",
+          "bf-border-transparent bf-bg-destructive bf-text-destructive-foreground bf-shadow hover:bf-bg-destructive/80",
+        outline: "bf-text-foreground",
       },
     },
     defaultVariants: {

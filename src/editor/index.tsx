@@ -1,5 +1,5 @@
 import type { FC } from "react";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useLayoutEffect, useMemo, useState } from "react";
 
 import {
   Save,
@@ -13,6 +13,8 @@ import {
 
 import { DEFAULT_INITIAL_DATA, TToolPreset } from "./lib/tools-constants";
 import { useEditor } from "./lib/use-editor";
+import { DARK_CLASS, setResolvedTheme, useSystemTheme } from "./lib/theme";
+import { cn } from "./lib/font-manager";
 
 import {
   Menubar,
@@ -47,9 +49,23 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps<TToolPreset>> = ({
   id,
   toolPreset,
   enabledTools,
+  theme = "light",
+  layout = "page",
+  showMenubar = true,
+  className,
 }) => {
+  const isEmbedded = layout === "embedded";
+  const systemTheme = useSystemTheme(theme === "system");
+  const resolvedTheme = theme === "system" ? systemTheme : theme;
+
+  // Before paint, so portaled menus and block tools never flash the old theme.
+  useLayoutEffect(() => {
+    setResolvedTheme(resolvedTheme);
+  }, [resolvedTheme]);
+
+  // An embedded editor inherits the host's font unless the data picked one.
   const [selectedFont, setSelectedFont] = useState<string | undefined>(
-    initialData?.meta?.font ?? "opensans",
+    initialData?.meta?.font ?? (isEmbedded ? undefined : "opensans"),
   );
   const [selectedBg, setSelectedBg] = useState<string | undefined>(
     initialData?.meta?.background ?? "white",
@@ -86,11 +102,16 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps<TToolPreset>> = ({
     const selectedColor = PASTEL_COLORS.find(
       (color) => color.value === selectedBg,
     );
+    // Embedded on the default background: stay transparent, the host shows through.
+    const isDefaultBg = !selectedColor || selectedColor.value === "white";
     return {
       fontClass,
-      bgClass: selectedColor?.bgClass || "bf-bg-white",
+      bgClass:
+        isEmbedded && isDefaultBg
+          ? undefined
+          : selectedColor?.bgClass || "bf-bg-background",
     };
-  }, [selectedFont, selectedBg]);
+  }, [selectedFont, selectedBg, isEmbedded]);
 
   const handleSubmit = useCallback(async () => {
     const content = await ejInstance.current?.save();
@@ -118,94 +139,116 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps<TToolPreset>> = ({
   }, [onCancel]);
 
   return (
-    <div className="bf-flex bf-flex-col bf-space-y-4 bf-my-6 bf-px-1">
-      <Menubar className="bf-rounded-lg bf-border-none bf-mx-auto bf-shadow-sm bf-w-full sm:bf-w-[70%]">
-        <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem onClick={handleSubmit}>
-              <Save className="bf-mr-2 bf-h-4 bf-w-4" />
-              Save
-              {/* <MenubarShortcut>⌘S</MenubarShortcut> */}
-            </MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem onClick={handleCancel}>Exit</MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
+    <div
+      data-bf-layout={layout}
+      data-bf-theme={resolvedTheme}
+      className={cn(
+        "bf-editor bf-flex bf-flex-col bf-text-foreground",
+        isEmbedded
+          ? "bf-editor--embedded bf-gap-3"
+          : "bf-editor--page bf-space-y-4 bf-my-6 bf-px-1",
+        resolvedTheme === "dark" && DARK_CLASS,
+        className,
+      )}
+    >
+      {showMenubar && (
+        <Menubar
+          className={cn(
+            "bf-rounded-lg bf-border-none bf-shadow-sm bf-w-full",
+            !isEmbedded && "bf-mx-auto sm:bf-w-[70%]",
+          )}
+        >
+          <MenubarMenu>
+            <MenubarTrigger>File</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem onClick={handleSubmit}>
+                <Save className="bf-mr-2 bf-h-4 bf-w-4" />
+                Save
+                {/* <MenubarShortcut>⌘S</MenubarShortcut> */}
+              </MenubarItem>
+              <MenubarSeparator />
+              <MenubarItem onClick={handleCancel}>Exit</MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
 
-        <MenubarMenu>
-          <MenubarTrigger>
-            <Settings className="bf-mr-2 bf-h-4 bf-w-4" /> Settings
-          </MenubarTrigger>
-          <MenubarContent className="bf-w-56">
-            <MenubarSub>
-              <MenubarSubTrigger>
-                <Type className="bf-mr-2 bf-h-4 bf-w-4" />
-                Font
-              </MenubarSubTrigger>
-              <MenubarSubContent>
-                <MenubarItem
-                  onClick={() => setSelectedFont("arial")}
-                  className={selectedFont === "arial" ? "bf-bg-accent" : ""}
-                >
-                  Arial
-                </MenubarItem>
-                <MenubarItem
-                  onClick={() => setSelectedFont("times")}
-                  className={selectedFont === "times" ? "bf-bg-accent" : ""}
-                >
-                  Times New Roman
-                </MenubarItem>
-                <MenubarItem
-                  onClick={() => setSelectedFont("roboto")}
-                  className={selectedFont === "roboto" ? "bf-bg-accent" : ""}
-                >
-                  Roboto
-                </MenubarItem>
-                <MenubarItem
-                  onClick={() => setSelectedFont("opensans")}
-                  className={selectedFont === "opensans" ? "bf-bg-accent" : ""}
-                >
-                  Open Sans
-                </MenubarItem>
-              </MenubarSubContent>
-            </MenubarSub>
-
-            <MenubarSeparator />
-
-            <MenubarSub>
-              <MenubarSubTrigger>
-                <Palette className="bf-mr-2 bf-h-4 bf-w-4" />
-                Background
-              </MenubarSubTrigger>
-              <MenubarSubContent>
-                {PASTEL_COLORS.map((color) => (
+          <MenubarMenu>
+            <MenubarTrigger>
+              <Settings className="bf-mr-2 bf-h-4 bf-w-4" /> Settings
+            </MenubarTrigger>
+            <MenubarContent className="bf-w-56">
+              <MenubarSub>
+                <MenubarSubTrigger>
+                  <Type className="bf-mr-2 bf-h-4 bf-w-4" />
+                  Font
+                </MenubarSubTrigger>
+                <MenubarSubContent>
                   <MenubarItem
-                    key={color.value}
-                    onClick={() => setSelectedBg(color.value)}
-                    className={`bf-flex bf-items-center bf-gap-2 ${
-                      selectedBg === color.value ? "bf-bg-accent" : ""
-                    }`}
+                    onClick={() => setSelectedFont("arial")}
+                    className={selectedFont === "arial" ? "bf-bg-accent" : ""}
                   >
-                    <Circle className={`bf-w-4 bf-h-4 ${color.strokeClass}`} />
-                    {color.label}
+                    Arial
                   </MenubarItem>
-                ))}
-              </MenubarSubContent>
-            </MenubarSub>
-          </MenubarContent>
-        </MenubarMenu>
+                  <MenubarItem
+                    onClick={() => setSelectedFont("times")}
+                    className={selectedFont === "times" ? "bf-bg-accent" : ""}
+                  >
+                    Times New Roman
+                  </MenubarItem>
+                  <MenubarItem
+                    onClick={() => setSelectedFont("roboto")}
+                    className={selectedFont === "roboto" ? "bf-bg-accent" : ""}
+                  >
+                    Roboto
+                  </MenubarItem>
+                  <MenubarItem
+                    onClick={() => setSelectedFont("opensans")}
+                    className={
+                      selectedFont === "opensans" ? "bf-bg-accent" : ""
+                    }
+                  >
+                    Open Sans
+                  </MenubarItem>
+                </MenubarSubContent>
+              </MenubarSub>
 
-        <MenubarMenu>
-          <MenubarTrigger>Help</MenubarTrigger>
-          <MenubarContent>
-            <MenubarItem onClick={toggleAbout}>
-              <HelpCircle className="bf-mr-2 bf-h-4 bf-w-4" />
-              About Editor
-            </MenubarItem>
-          </MenubarContent>
-        </MenubarMenu>
-      </Menubar>
+              <MenubarSeparator />
+
+              <MenubarSub>
+                <MenubarSubTrigger>
+                  <Palette className="bf-mr-2 bf-h-4 bf-w-4" />
+                  Background
+                </MenubarSubTrigger>
+                <MenubarSubContent>
+                  {PASTEL_COLORS.map((color) => (
+                    <MenubarItem
+                      key={color.value}
+                      onClick={() => setSelectedBg(color.value)}
+                      className={`bf-flex bf-items-center bf-gap-2 ${
+                        selectedBg === color.value ? "bf-bg-accent" : ""
+                      }`}
+                    >
+                      <Circle
+                        className={`bf-w-4 bf-h-4 ${color.strokeClass}`}
+                      />
+                      {color.label}
+                    </MenubarItem>
+                  ))}
+                </MenubarSubContent>
+              </MenubarSub>
+            </MenubarContent>
+          </MenubarMenu>
+
+          <MenubarMenu>
+            <MenubarTrigger>Help</MenubarTrigger>
+            <MenubarContent>
+              <MenubarItem onClick={toggleAbout}>
+                <HelpCircle className="bf-mr-2 bf-h-4 bf-w-4" />
+                About Editor
+              </MenubarItem>
+            </MenubarContent>
+          </MenubarMenu>
+        </Menubar>
+      )}
 
       <Dialog open={showAbout} onOpenChange={setShowAbout}>
         <DialogContent className="bf-fixed bf-top-[50%] bf-left-[50%] bf-translate-x-[-50%] bf-translate-y-[-50%]">
@@ -215,28 +258,35 @@ export const BlockForgeEditor: FC<TBlockForgeEditorProps<TToolPreset>> = ({
             </DialogTitle>
           </DialogHeader>
           <div className="bf-text-center bf-py-4">
-            <p className="bf-text-gray-600 bf-mb-2">
+            <p className="bf-text-muted-foreground bf-mb-2">
               A powerful article builder based on EditorJS
             </p>
-            <p className="bf-text-sm bf-text-gray-500">
+            <p className="bf-text-sm bf-text-muted-foreground">
               Built with React, Tailwind CSS, and shadcn/ui
             </p>
           </div>
         </DialogContent>
       </Dialog>
 
-      {isLoading && (
-        <div className="bf-fixed bf-inset-0 bf-flex bf-items-center bf-justify-center bf-bg-white/80 bf-z-50">
-          <div className="bf-text-center">
-            <Loader className="bf-animate-spin bf-mx-auto" />
-            <p className="bf-mt-2 bf-text-gray-600">Loading editor tools...</p>
-          </div>
-        </div>
-      )}
-
       <div
-        className={`bf-mx-auto bf-m-8 bf-min-h-screen bf-overflow-auto bf-shadow-md bf-rounded-lg bf-w-full sm:bf-w-[70%] ${editorStyle.bgClass} ${editorStyle.fontClass}`}
+        className={cn(
+          "bf-editor__sheet bf-relative bf-w-full",
+          !isEmbedded &&
+            "bf-mx-auto bf-m-8 bf-min-h-screen bf-overflow-auto bf-shadow-md bf-rounded-lg sm:bf-w-[70%]",
+          editorStyle.bgClass,
+          editorStyle.fontClass,
+        )}
       >
+        {isLoading && (
+          <div className="bf-absolute bf-inset-0 bf-z-10 bf-flex bf-items-center bf-justify-center bf-bg-background/80">
+            <div className="bf-text-center">
+              <Loader className="bf-animate-spin bf-mx-auto" />
+              <p className="bf-mt-2 bf-text-muted-foreground">
+                Loading editor tools...
+              </p>
+            </div>
+          </div>
+        )}
         <div id={`editorjs-${id}`} />
       </div>
     </div>

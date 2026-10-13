@@ -40,7 +40,7 @@ export const ExcalidrawComponent: FC<TExcalidrawComponentProps> = ({
         <div className="bf-flex bf-items-start bf-justify-between bf-gap-4">
           <div className="bf-flex-1">
             <div className="bf-flex bf-items-center bf-justify-between">
-              <div className="bf-w-full bf-h-[200px] bf-bg-white bf-rounded-lg bf-overflow-hidden">
+              <div className="bf-w-full bf-h-[200px] bf-bg-background bf-rounded-lg bf-overflow-hidden">
                 {data.imageUrl ? (
                   <img
                     src={data.imageUrl}
@@ -48,7 +48,7 @@ export const ExcalidrawComponent: FC<TExcalidrawComponentProps> = ({
                     className="bf-w-full bf-h-full bf-object-contain"
                   />
                 ) : (
-                  <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-text-gray-400">
+                  <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-text-muted-foreground">
                     No drawing yet
                   </div>
                 )}

@@ -55,9 +55,9 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
       >
         <EditorButton
           onClick={handleAddItem}
-          className="bf-rounded-xl bf-p-1 hover:bf-bg-gray-100 bf-transition-colors"
+          className="bf-rounded-xl bf-p-1 hover:bf-bg-accent bf-transition-colors"
         >
-          <Plus className="bf-size-4 bf-text-gray-600" />
+          <Plus className="bf-size-4 bf-text-muted-foreground" />
         </EditorButton>
       </ComponentHeader>
 
@@ -72,7 +72,7 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
             >
               <div className="bf-flex bf-items-start bf-justify-between bf-gap-4">
                 <div className="bf-flex bf-items-center bf-gap-3">
-                  <div className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-gray-100">
+                  <div className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-muted">
                     <IconSelect
                       value={item.icon || "BarChart3"}
                       onChange={(value) =>
@@ -88,7 +88,7 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
                       onChange={(e) =>
                         handleItemChange(index, "value", e.target.value)
                       }
-                      className="bf-text-sm custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                      className="bf-text-sm custom-scroll bf-font-medium bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
                     />
                     <EditorInput
                       type="text"
@@ -97,13 +97,13 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
                       onChange={(e) =>
                         handleItemChange(index, "label", e.target.value)
                       }
-                      className="bf-text-xs custom-scroll bf-text-gray-500 bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-1 bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors"
+                      className="bf-text-xs custom-scroll bf-text-muted-foreground bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-mt-1 bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors"
                     />
                   </div>
                 </div>
                 <EditorButton
                   onClick={() => handleRemoveItem(index)}
-                  className="bf-p-1 bf-text-gray-500 bf-rounded-md hover:bf-bg-gray-50 bf-opacity-0 group-hover/item:bf-opacity-100 bf-transition-opacity"
+                  className="bf-p-1 bf-text-muted-foreground bf-rounded-md hover:bf-bg-accent bf-opacity-0 group-hover/item:bf-opacity-100 bf-transition-opacity"
                 >
                   <X className="bf-size-4" />
                 </EditorButton>
@@ -112,7 +112,7 @@ export const StatsComponent: FC<TStatsComponentProps> = ({
           ))}
         </div>
         {localItems.length === 0 && (
-          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
             <BarChart3 className="bf-size-8 bf-mb-2" />
             <span>No statistics yet</span>
           </div>

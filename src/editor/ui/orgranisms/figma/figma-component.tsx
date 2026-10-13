@@ -49,7 +49,7 @@ export const FigmaComponent: FC<TFigmaComponentProps> = ({
         </div>
 
         <div className="bf-relative bf-group/item">
-          <div className="bf-h-[200px] bf-border-b bf-bg-white bf-rounded-lg bf-overflow-hidden bf-flex bf-items-center bf-justify-center">
+          <div className="bf-h-[200px] bf-border-b bf-bg-background bf-rounded-lg bf-overflow-hidden bf-flex bf-items-center bf-justify-center">
             {embedUrl ? (
               <iframe
                 src={embedUrl}
@@ -57,7 +57,7 @@ export const FigmaComponent: FC<TFigmaComponentProps> = ({
                 allowFullScreen
               />
             ) : (
-              <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-text-gray-400">
+              <div className="bf-flex bf-flex-col bf-items-center bf-justify-center bf-text-muted-foreground">
                 <ImageIcon className="bf-size-8 bf-mb-2" />
                 No Figma document embedded yet
               </div>

@@ -5,21 +5,20 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/editor/lib/font-manager";
 
 const buttonVariants = cva(
-  "bf-inline-flex bf-items-center bf-justify-center bf-gap-2 bf-whitespace-nowrap bf-rounded-md bf-text-sm bf-font-medium bf-transition-colors focus-visible:bf-outline-none focus-visible:bf-ring-1 focus-visible:bf-ring-neutral-950 disabled:bf-pointer-events-none disabled:bf-opacity-50 [&_svg]:bf-pointer-events-none [&_svg]:bf-size-4 [&_svg]:bf-shrink-0 dark:focus-visible:bf-ring-neutral-300",
+  "bf-inline-flex bf-items-center bf-justify-center bf-gap-2 bf-whitespace-nowrap bf-rounded-md bf-text-sm bf-font-medium bf-transition-colors focus-visible:bf-outline-none focus-visible:bf-ring-1 focus-visible:bf-ring-ring disabled:bf-pointer-events-none disabled:bf-opacity-50 [&_svg]:bf-pointer-events-none [&_svg]:bf-size-4 [&_svg]:bf-shrink-0",
   {
     variants: {
       variant: {
         default:
-          "bf-bg-neutral-900 bf-text-neutral-50 bf-shadow hover:bf-bg-neutral-900/90 dark:bf-bg-neutral-50 dark:bf-text-neutral-900 dark:hover:bf-bg-neutral-50/90",
+          "bf-bg-primary bf-text-primary-foreground bf-shadow hover:bf-bg-primary/90",
         destructive:
-          "bf-bg-red-500 bf-text-neutral-50 bf-shadow-sm hover:bf-bg-red-500/90 dark:bf-bg-red-900 dark:bf-text-neutral-50 dark:hover:bf-bg-red-900/90",
+          "bf-bg-destructive bf-text-destructive-foreground bf-shadow-sm hover:bf-bg-destructive/90",
         outline:
-          "bf-border bf-border-neutral-200 bf-bg-white bf-shadow-sm hover:bf-bg-neutral-100 hover:bf-text-neutral-900 dark:bf-border-neutral-800 dark:bf-bg-neutral-950 dark:hover:bf-bg-neutral-800 dark:hover:bf-text-neutral-50",
+          "bf-border bf-border-border bf-bg-background bf-shadow-sm hover:bf-bg-accent hover:bf-text-accent-foreground",
         secondary:
-          "bf-bg-neutral-100 bf-text-neutral-900 bf-shadow-sm hover:bf-bg-neutral-100/80 dark:bf-bg-neutral-800 dark:bf-text-neutral-50 dark:hover:bf-bg-neutral-800/80",
-        ghost:
-          "hover:bf-bg-neutral-100 hover:bf-text-neutral-900 dark:hover:bf-bg-neutral-800 dark:hover:bf-text-neutral-50",
-        link: "bf-text-neutral-900 bf-underline-offset-4 hover:bf-underline dark:bf-text-neutral-50",
+          "bf-bg-secondary bf-text-secondary-foreground bf-shadow-sm hover:bf-bg-secondary/80",
+        ghost: "hover:bf-bg-accent hover:bf-text-accent-foreground",
+        link: "bf-text-foreground bf-underline-offset-4 hover:bf-underline",
       },
       size: {
         default: "bf-h-9 bf-px-4 bf-py-2",

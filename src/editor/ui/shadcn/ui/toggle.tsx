@@ -5,13 +5,13 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/editor/lib/font-manager";
 
 const toggleVariants = cva(
-  "bf-inline-flex bf-items-center bf-justify-center bf-gap-2 bf-rounded-md bf-text-sm bf-font-medium bf-transition-colors hover:bf-bg-neutral-100 hover:bf-text-neutral-500 focus-visible:bf-outline-none focus-visible:bf-ring-1 focus-visible:bf-ring-neutral-950 disabled:bf-pointer-events-none disabled:bf-opacity-50 data-[state=on]:bf-bg-neutral-100 data-[state=on]:bf-text-neutral-900 [&_svg]:bf-pointer-events-none [&_svg]:bf-size-4 [&_svg]:bf-shrink-0 dark:hover:bf-bg-neutral-800 dark:hover:bf-text-neutral-400 dark:focus-visible:bf-ring-neutral-300 dark:data-[state=on]:bf-bg-neutral-800 dark:data-[state=on]:bf-text-neutral-50",
+  "bf-inline-flex bf-items-center bf-justify-center bf-gap-2 bf-rounded-md bf-text-sm bf-font-medium bf-transition-colors hover:bf-bg-accent hover:bf-text-muted-foreground focus-visible:bf-outline-none focus-visible:bf-ring-1 focus-visible:bf-ring-ring disabled:bf-pointer-events-none disabled:bf-opacity-50 data-[state=on]:bf-bg-accent data-[state=on]:bf-text-accent-foreground [&_svg]:bf-pointer-events-none [&_svg]:bf-size-4 [&_svg]:bf-shrink-0",
   {
     variants: {
       variant: {
         default: "bf-bg-transparent",
         outline:
-          "bf-border bf-border-neutral-200 bf-bg-transparent bf-shadow-sm hover:bf-bg-neutral-100 hover:bf-text-neutral-900 dark:bf-border-neutral-800 dark:hover:bf-bg-neutral-800 dark:hover:bf-text-neutral-50",
+          "bf-border bf-border-border bf-bg-transparent bf-shadow-sm hover:bf-bg-accent hover:bf-text-accent-foreground",
       },
       size: {
         default: "bf-h-9 bf-px-2 bf-min-w-9",

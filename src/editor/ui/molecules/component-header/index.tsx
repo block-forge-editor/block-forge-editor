@@ -31,7 +31,7 @@ export const ComponentHeader: FC<TComponentHeaderProps> = ({
               <TooltipTrigger>
                 <Badge
                   variant="outline"
-                  className="bf-bg-slate-100 bf-text-slate-700 bf-border bf-border-slate-200 bf-cursor-help"
+                  className="bf-bg-muted bf-text-foreground bf-border bf-border-border bf-cursor-help"
                 >
                   {title}
                 </Badge>
@@ -48,7 +48,7 @@ export const ComponentHeader: FC<TComponentHeaderProps> = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <div className="bf-cursor-help">
-                  <AlertCircle className="bf-h-4 bf-w-4 bf-text-slate-400" />
+                  <AlertCircle className="bf-h-4 bf-w-4 bf-text-muted-foreground" />
                 </div>
               </TooltipTrigger>
               <TooltipContent>

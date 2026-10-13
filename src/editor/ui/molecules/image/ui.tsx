@@ -40,8 +40,8 @@ export const Image: FC<TProps> = ({
         className={`bf-overflow-hidden ${className}`}
         style={{ width: imageWidth, height: imageHeight }}
       >
-        <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-bg-gray-100">
-          <LucideImage className="bf-size-8 bf-text-gray-400" />
+        <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-bg-muted">
+          <LucideImage className="bf-size-8 bf-text-muted-foreground" />
         </div>
       </div>
     );

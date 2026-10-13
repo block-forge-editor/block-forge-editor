@@ -42,10 +42,74 @@ function App() {
       onSave={handleSave}
       onCancel={handleCancel}
       tools={[...array of your editor js tools]}
+      theme="light" // "light" | "dark" | "system"
+      layout="page" // "page" | "embedded"
+      showMenubar // false hides File / Settings / Help
     />
   );
 }
 ```
+
+## Theme
+
+`theme` switches the editor between `"light"` (default), `"dark"` and `"system"` (follows `prefers-color-scheme` and its changes):
+
+```jsx
+<BlockForgeEditor id="my-editor" theme="dark" />
+```
+
+Dark styles are scoped to the `.bf-dark` class the editor sets on its own root, so the host page's `.dark` class or
+styles are never affected. Menus, dialogs and drawers rendered in portals get the same theme automatically.
+
+Every colour comes from CSS variables (shadcn/ui tokens, HSL channels without `hsl()`), including EditorJS's own toolbar
+and popovers. Override them to match your app:
+
+```css
+.bf-dark {
+  --background: 0 0% 15%;
+  --foreground: 0 0% 100%;
+  --popover: 0 0% 11%;
+  --popover-foreground: 0 0% 100%;
+  --muted: 0 0% 20%;
+  --muted-foreground: 0 0% 64%;
+  --accent: 0 0% 22%;
+  --accent-foreground: 0 0% 100%;
+  --border: 0 0% 25%;
+  --input: 0 0% 32%;
+  --primary: 49 100% 80%;
+  --primary-foreground: 0 0% 15%;
+  --ring: 49 100% 80%;
+}
+```
+
+Light values live on `:root`, dark values on `.bf-dark`; see `src/globals.css` for the full list.
+
+## Embedding into an app
+
+By default (`layout="page"`) the editor renders a centred sheet with a shadow and a menubar, which suits a full-page
+editor. Inside an existing form use `layout="embedded"`: the editor fills its container, has no margins, shadow,
+background or font of its own (it inherits the host's), and a compact top padding. Hide the menubar with
+`showMenubar={false}` when your app has its own Save / Cancel buttons:
+
+```jsx
+<BlockForgeEditor
+  id="post-body"
+  layout="embedded"
+  showMenubar={false}
+  theme="dark"
+  className="my-editor"
+  onChange={handleChange}
+/>
+```
+
+Fine-tune the embedded layout with CSS variables on the editor or any parent:
+
+| Variable                     | Default | Purpose                                                           |
+| ---------------------------- | ------- | ----------------------------------------------------------------- |
+| `--bf-editor-gutter`         | `56px`  | Room left of the blocks for the + and drag buttons (desktop only) |
+| `--bf-editor-padding-top`    | `8px`   | Space above the first block                                       |
+| `--bf-editor-padding-bottom` | `48px`  | Clickable space below the last block                              |
+| `--bf-editor-min-height`     | `12rem` | Minimum height of the editing area                                |
 
 ## Component Control (components will load async)
 

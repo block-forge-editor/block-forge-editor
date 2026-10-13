@@ -15,13 +15,13 @@ export const Capacity: FC<TProps> = ({ adults, kids = 0 }) => {
           Array.from({ length: adults }).map((_, index) => (
             <User
               key={index}
-              fill="#04172C"
+              fill="currentColor"
               strokeWidth={0}
-              className="bf-size-5"
+              className="bf-size-5 bf-text-foreground"
             />
           ))
         ) : (
-          <p className="bf-text-black bf-font-medium">{adults} взр.</p>
+          <p className="bf-text-foreground bf-font-medium">{adults} взр.</p>
         )}
       </div>
       {kids > 0 && (
@@ -31,7 +31,7 @@ export const Capacity: FC<TProps> = ({ adults, kids = 0 }) => {
             {Array.from({ length: kids }).map((_, index) => (
               <User
                 key={index}
-                fill="#04172C"
+                fill="currentColor"
                 strokeWidth={0}
                 className="bf-size-4"
               />

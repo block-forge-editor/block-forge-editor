@@ -9,16 +9,16 @@
 }
 
 .custom-scroll::-webkit-scrollbar-track {
-  background: #f8f8f8;
+  background: hsl(var(--muted));
 }
 
 .custom-scroll::-webkit-scrollbar-thumb {
-  background: #e0e0e0;
+  background: hsl(var(--border));
   border-radius: 4px;
 }
 
 .custom-scroll::-webkit-scrollbar-thumb:hover {
-  background: #c0c0c0;
+  background: hsl(var(--muted-foreground));
 }
 
 @layer components {
@@ -43,62 +43,61 @@
   }
 }
 
-html body {
-  background-color: #f8f8f8;
-}
-
 .lucide {
   width: 16px;
   height: 16px;
 }
 
+/*
+  Everything below overrides EditorJS's own classes. EditorJS (and its table and
+  list plugins) inject their CSS at runtime without a cascade layer, and
+  unlayered styles beat layered ones, so a host that imports this file into a
+  layer (`@import "…/index.css" layer(vendor)`) would lose to them. !important
+  keeps these overrides winning however the file is imported.
+*/
 .ce-block__content,
 .ce-toolbar__content {
-  max-width: none;
-  width: 85%;
+  max-width: none !important;
+  width: 85% !important;
 }
 
-/* .ce-toolbar {
-  margin-top: 16px;
-} */
-
 .ce-block__content {
-  padding: 16px 28px;
+  padding: 16px 28px !important;
 }
 
 @media (max-width: 768px) {
   .ce-block__content {
-    padding: 12px 16px;
+    padding: 12px 16px !important;
   }
 }
 
 .ce-block--selected .ce-block__content {
-  background-color: #f8f8f8;
-  border-radius: 16px;
+  background-color: hsl(var(--muted)) !important;
+  border-radius: 16px !important;
 }
 
 .ce-block {
   &:first-child {
     .ce-block__content {
-      border-top-right-radius: 12px;
-      border-top-left-radius: 12px;
+      border-top-right-radius: 12px !important;
+      border-top-left-radius: 12px !important;
     }
   }
 
   &:last-child {
     .ce-block__content {
-      border-bottom-right-radius: 12px;
-      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px !important;
+      border-bottom-left-radius: 12px !important;
     }
   }
 }
 
 .ce-popover {
-  max-height: 355px;
+  max-height: 355px !important;
 }
 
 .cdxcarousel-wrapper {
-  margin-top: 0;
+  margin-top: 0 !important;
 }
 
 .codex-editor__redactor {
@@ -106,11 +105,170 @@ html body {
 }
 
 .ce-stub {
-  margin: 0;
+  margin: 0 !important;
 }
 
 .ce-paragraph {
-  position: relative;
+  position: relative !important;
+}
+
+/*
+  Embedded layout: the editor fills its container. Tune it from the host with
+  --bf-editor-gutter (room for the + / drag buttons left of the blocks),
+  --bf-editor-padding-top, --bf-editor-padding-bottom and --bf-editor-min-height.
+*/
+.bf-editor--embedded .bf-editor__sheet {
+  min-height: var(--bf-editor-min-height, 12rem) !important;
+}
+
+.bf-editor--embedded .codex-editor__redactor {
+  padding: var(--bf-editor-padding-top, 8px) 0
+    var(--bf-editor-padding-bottom, 48px) !important;
+}
+
+.bf-editor--embedded .ce-block__content,
+.bf-editor--embedded .ce-toolbar__content {
+  width: auto !important;
+  max-width: none !important;
+  margin: 0 0 0 var(--bf-editor-gutter, 56px) !important;
+}
+
+.bf-editor--embedded .ce-block__content {
+  padding: 6px 12px !important;
+}
+
+@media (max-width: 650px) {
+  .bf-editor--embedded .ce-block__content,
+  .bf-editor--embedded .ce-toolbar__content {
+    margin-left: 0 !important;
+  }
+
+  .bf-editor--embedded .ce-block__content {
+    padding: 6px 4px !important;
+  }
+}
+
+/*
+  Dark theme for EditorJS's own UI (toolbar, popovers, inline toolbar, table,
+  list). It reads the same tokens as the components, so a host that overrides
+  the variables under .bf-dark recolours everything at once.
+*/
+.bf-dark .codex-editor ::selection {
+  background-color: hsl(var(--ring) / 0.3) !important;
+}
+
+.bf-dark .codex-editor [data-placeholder]:empty:before,
+.bf-dark .codex-editor [data-placeholder][data-empty="true"]:before,
+.bf-dark .codex-editor [data-placeholder-active]:empty:before,
+.bf-dark .codex-editor [data-placeholder-active][data-empty="true"]:before {
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.bf-dark .ce-toolbar__plus,
+.bf-dark .ce-toolbar__settings-btn {
+  color: hsl(var(--foreground)) !important;
+}
+
+.bf-dark .ce-toolbar__plus--active,
+.bf-dark .ce-toolbar__settings-btn--active {
+  background-color: hsl(var(--accent)) !important;
+}
+
+@media (hover: hover) {
+  .bf-dark .ce-toolbar__plus:hover,
+  .bf-dark .ce-toolbar__settings-btn:hover,
+  .bf-dark .ce-inline-tool:hover,
+  .bf-dark .ce-inline-toolbar__dropdown:hover,
+  .bf-dark .cdx-settings-button:hover {
+    background-color: hsl(var(--accent)) !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .bf-dark .ce-toolbar__plus,
+  .bf-dark .ce-toolbar__settings-btn {
+    background-color: hsl(var(--popover)) !important;
+    border-color: hsl(var(--border)) !important;
+    box-shadow: none !important;
+  }
+}
+
+.bf-dark .ce-popover,
+.bf-dark .ce-inline-toolbar {
+  --color-background: hsl(var(--popover)) !important;
+  --color-text-primary: hsl(var(--popover-foreground)) !important;
+  --color-text-secondary: hsl(var(--muted-foreground)) !important;
+  --color-border: hsl(var(--border)) !important;
+  --color-shadow: rgb(0 0 0 / 0.5) !important;
+  --color-background-item-hover: hsl(var(--accent)) !important;
+  --color-background-item-focus: hsl(var(--accent)) !important;
+  --color-shadow-item-focus: transparent !important;
+  --color-background-icon-active: hsl(var(--accent)) !important;
+  --color-text-icon-active: hsl(var(--accent-foreground)) !important;
+}
+
+.bf-dark .ce-inline-toolbar__dropdown {
+  border-color: hsl(var(--border)) !important;
+}
+
+.bf-dark .ce-inline-tool-input,
+.bf-dark .cdx-search-field,
+.bf-dark .cdx-list-start-with-field {
+  background: hsl(var(--muted)) !important;
+  border-color: hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+}
+
+.bf-dark .cdx-input {
+  border-color: hsl(var(--input)) !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.bf-dark .cdx-button {
+  background: hsl(var(--popover)) !important;
+  border-color: hsl(var(--border)) !important;
+  color: hsl(var(--muted-foreground)) !important;
+  box-shadow: none !important;
+}
+
+.bf-dark .ce-stub {
+  background: hsl(var(--muted)) !important;
+  border-color: hsl(var(--border)) !important;
+  color: hsl(var(--muted-foreground)) !important;
+}
+
+.bf-dark .ce-block--drop-target .ce-block__content:after {
+  background: repeating-linear-gradient(
+    90deg,
+    #388ae5,
+    #388ae5 1px,
+    transparent 1px,
+    transparent 6px
+  ) !important;
+}
+
+.bf-dark .tc-wrap {
+  --color-background: hsl(var(--muted)) !important;
+  --color-text-secondary: hsl(var(--muted-foreground)) !important;
+  --color-border: hsl(var(--border)) !important;
+}
+
+.bf-dark .tc-toolbox {
+  --toggler-dots-color: hsl(var(--muted-foreground)) !important;
+  --toggler-dots-color-hovered: hsl(var(--foreground)) !important;
+}
+
+.bf-dark .tc-popover {
+  --color-border: hsl(var(--border)) !important;
+  --color-background: hsl(var(--popover)) !important;
+  --color-background-hover: hsl(var(--accent)) !important;
+  color: hsl(var(--popover-foreground)) !important;
+}
+
+.bf-dark .cdx-list {
+  --checkbox-background: transparent !important;
+  --color-border: hsl(var(--border)) !important;
 }
 
 @layer base {
@@ -141,7 +299,7 @@ html body {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
-  .dark {
+  .bf-dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
     --card: 0 0% 3.9%;
@@ -166,6 +324,7 @@ html body {
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+    color-scheme: dark;
   }
 }
 
@@ -176,9 +335,6 @@ html body {
 @layer base {
   * {
     @apply bf-border-border;
-  }
-  body {
-    @apply bf-bg-background bf-text-foreground;
   }
 }
 

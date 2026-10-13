@@ -20,8 +20,9 @@ export const Tag: FC<TProps> = ({
       className={cn(
         "bf-py-0.5 bf-px-1.5 bf-rounded",
         {
-          "bf-bg-gray-200": variant === "default",
-          "bf-bg-green-100 bf-text-brand": variant === "success",
+          "bf-bg-muted": variant === "default",
+          "bf-bg-green-100 bf-text-brand dark:bf-bg-green-950/40 dark:bf-text-green-300":
+            variant === "success",
         },
         className,
       )}

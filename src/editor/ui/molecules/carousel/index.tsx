@@ -57,8 +57,8 @@ export const Carousel: FC<TProps> = ({
   if (!images.length || !images) {
     return (
       <div className={wrapperClasses}>
-        <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-bg-gray-100">
-          <LucideImage className="bf-size-8 bf-text-gray-400" />
+        <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-bg-muted">
+          <LucideImage className="bf-size-8 bf-text-muted-foreground" />
         </div>{" "}
       </div>
     );
@@ -84,11 +84,11 @@ export const Carousel: FC<TProps> = ({
         <div
           className={`bf-flex bf-items-center bf-justify-between ${counterClasses}`}
         >
-          <CarouselPrevious className="!bf-text-black" />
+          <CarouselPrevious className="!bf-text-foreground" />
           <p>
             {current} / {count}
           </p>
-          <CarouselNext className="!bf-text-black" />
+          <CarouselNext className="!bf-text-foreground" />
         </div>
       )}
 

@@ -5,6 +5,7 @@ import * as DropdownMenuPrimitive from "@radix-ui/react-dropdown-menu";
 import { Check, ChevronRight, Circle } from "lucide-react";
 
 import { cn } from "@/editor/lib/font-manager";
+import { useThemeClass } from "@/editor/lib/theme";
 
 const DropdownMenu = DropdownMenuPrimitive.Root;
 
@@ -27,7 +28,7 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <DropdownMenuPrimitive.SubTrigger
     ref={ref}
     className={cn(
-      "bf-flex bf-cursor-default bf-select-none bf-items-center bf-gap-2 bf-rounded-sm bf-px-2 bf-py-1.5 bf-text-sm bf-outline-none focus:bf-bg-neutral-100 data-[state=open]:bf-bg-neutral-100 [&_svg]:bf-pointer-events-none [&_svg]:bf-size-4 [&_svg]:bf-shrink-0 dark:focus:bf-bg-neutral-800 dark:data-[state=open]:bf-bg-neutral-800",
+      "bf-flex bf-cursor-default bf-select-none bf-items-center bf-gap-2 bf-rounded-sm bf-px-2 bf-py-1.5 bf-text-sm bf-outline-none focus:bf-bg-accent data-[state=open]:bf-bg-accent [&_svg]:bf-pointer-events-none [&_svg]:bf-size-4 [&_svg]:bf-shrink-0",
       inset && "bf-pl-8",
       className,
     )}
@@ -43,36 +44,44 @@ DropdownMenuSubTrigger.displayName =
 const DropdownMenuSubContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.SubContent>
->(({ className, ...props }, ref) => (
-  <DropdownMenuPrimitive.SubContent
-    ref={ref}
-    className={cn(
-      "bf-z-50 bf-min-w-[8rem] bf-overflow-hidden bf-rounded-md bf-border bf-border-neutral-200 bf-bg-white bf-p-1 bf-text-neutral-950 bf-shadow-lg data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out data-[state=closed]:bf-fade-out-0 data-[state=open]:bf-fade-in-0 data-[state=closed]:bf-zoom-out-95 data-[state=open]:bf-zoom-in-95 data-[side=bottom]:bf-slide-in-from-top-2 data-[side=left]:bf-slide-in-from-right-2 data-[side=right]:bf-slide-in-from-left-2 data-[side=top]:bf-slide-in-from-bottom-2 bf-origin-[--radix-dropdown-menu-content-transform-origin] dark:bf-border-neutral-800 dark:bf-bg-neutral-950 dark:bf-text-neutral-50",
-      className,
-    )}
-    {...props}
-  />
-));
+>(({ className, ...props }, ref) => {
+  const themeClass = useThemeClass();
+  return (
+    <DropdownMenuPrimitive.SubContent
+      ref={ref}
+      className={cn(
+        themeClass,
+        "bf-z-50 bf-min-w-[8rem] bf-overflow-hidden bf-rounded-md bf-border bf-border-border bf-bg-popover bf-p-1 bf-text-popover-foreground bf-shadow-lg data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out data-[state=closed]:bf-fade-out-0 data-[state=open]:bf-fade-in-0 data-[state=closed]:bf-zoom-out-95 data-[state=open]:bf-zoom-in-95 data-[side=bottom]:bf-slide-in-from-top-2 data-[side=left]:bf-slide-in-from-right-2 data-[side=right]:bf-slide-in-from-left-2 data-[side=top]:bf-slide-in-from-bottom-2 bf-origin-[--radix-dropdown-menu-content-transform-origin]",
+        className,
+      )}
+      {...props}
+    />
+  );
+});
 DropdownMenuSubContent.displayName =
   DropdownMenuPrimitive.SubContent.displayName;
 
 const DropdownMenuContent = React.forwardRef<
   React.ElementRef<typeof DropdownMenuPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DropdownMenuPrimitive.Content>
->(({ className, sideOffset = 4, ...props }, ref) => (
-  <DropdownMenuPrimitive.Portal>
-    <DropdownMenuPrimitive.Content
-      ref={ref}
-      sideOffset={sideOffset}
-      className={cn(
-        "bf-z-50 bf-max-h-[var(--radix-dropdown-menu-content-available-height)] bf-min-w-[8rem] bf-overflow-y-auto bf-overflow-x-hidden bf-rounded-md bf-border bf-border-neutral-200 bf-bg-white bf-p-1 bf-text-neutral-950 bf-shadow-md dark:bf-border-neutral-800 dark:bf-bg-neutral-950 dark:bf-text-neutral-50",
-        "data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out data-[state=closed]:bf-fade-out-0 data-[state=open]:bf-fade-in-0 data-[state=closed]:bf-zoom-out-95 data-[state=open]:bf-zoom-in-95 data-[side=bottom]:bf-slide-in-from-top-2 data-[side=left]:bf-slide-in-from-right-2 data-[side=right]:bf-slide-in-from-left-2 data-[side=top]:bf-slide-in-from-bottom-2 bf-origin-[--radix-dropdown-menu-content-transform-origin]",
-        className,
-      )}
-      {...props}
-    />
-  </DropdownMenuPrimitive.Portal>
-));
+>(({ className, sideOffset = 4, ...props }, ref) => {
+  const themeClass = useThemeClass();
+  return (
+    <DropdownMenuPrimitive.Portal>
+      <DropdownMenuPrimitive.Content
+        ref={ref}
+        sideOffset={sideOffset}
+        className={cn(
+          themeClass,
+          "bf-z-50 bf-max-h-[var(--radix-dropdown-menu-content-available-height)] bf-min-w-[8rem] bf-overflow-y-auto bf-overflow-x-hidden bf-rounded-md bf-border bf-border-border bf-bg-popover bf-p-1 bf-text-popover-foreground bf-shadow-md",
+          "data-[state=open]:bf-animate-in data-[state=closed]:bf-animate-out data-[state=closed]:bf-fade-out-0 data-[state=open]:bf-fade-in-0 data-[state=closed]:bf-zoom-out-95 data-[state=open]:bf-zoom-in-95 data-[side=bottom]:bf-slide-in-from-top-2 data-[side=left]:bf-slide-in-from-right-2 data-[side=right]:bf-slide-in-from-left-2 data-[side=top]:bf-slide-in-from-bottom-2 bf-origin-[--radix-dropdown-menu-content-transform-origin]",
+          className,
+        )}
+        {...props}
+      />
+    </DropdownMenuPrimitive.Portal>
+  );
+});
 DropdownMenuContent.displayName = DropdownMenuPrimitive.Content.displayName;
 
 const DropdownMenuItem = React.forwardRef<
@@ -84,7 +93,7 @@ const DropdownMenuItem = React.forwardRef<
   <DropdownMenuPrimitive.Item
     ref={ref}
     className={cn(
-      "bf-relative bf-flex bf-cursor-default bf-select-none bf-items-center bf-gap-2 bf-rounded-sm bf-px-2 bf-py-1.5 bf-text-sm bf-outline-none bf-transition-colors focus:bf-bg-neutral-100 focus:bf-text-neutral-900 data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50 [&>svg]:bf-size-4 [&>svg]:bf-shrink-0 dark:focus:bf-bg-neutral-800 dark:focus:bf-text-neutral-50",
+      "bf-relative bf-flex bf-cursor-default bf-select-none bf-items-center bf-gap-2 bf-rounded-sm bf-px-2 bf-py-1.5 bf-text-sm bf-outline-none bf-transition-colors focus:bf-bg-accent focus:bf-text-accent-foreground data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50 [&>svg]:bf-size-4 [&>svg]:bf-shrink-0",
       inset && "bf-pl-8",
       className,
     )}
@@ -100,7 +109,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
   <DropdownMenuPrimitive.CheckboxItem
     ref={ref}
     className={cn(
-      "bf-relative bf-flex bf-cursor-default bf-select-none bf-items-center bf-rounded-sm bf-py-1.5 bf-pl-8 bf-pr-2 bf-text-sm bf-outline-none bf-transition-colors focus:bf-bg-neutral-100 focus:bf-text-neutral-900 data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50 dark:focus:bf-bg-neutral-800 dark:focus:bf-text-neutral-50",
+      "bf-relative bf-flex bf-cursor-default bf-select-none bf-items-center bf-rounded-sm bf-py-1.5 bf-pl-8 bf-pr-2 bf-text-sm bf-outline-none bf-transition-colors focus:bf-bg-accent focus:bf-text-accent-foreground data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50",
       className,
     )}
     checked={checked}
@@ -124,7 +133,7 @@ const DropdownMenuRadioItem = React.forwardRef<
   <DropdownMenuPrimitive.RadioItem
     ref={ref}
     className={cn(
-      "bf-relative bf-flex bf-cursor-default bf-select-none bf-items-center bf-rounded-sm bf-py-1.5 bf-pl-8 bf-pr-2 bf-text-sm bf-outline-none bf-transition-colors focus:bf-bg-neutral-100 focus:bf-text-neutral-900 data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50 dark:focus:bf-bg-neutral-800 dark:focus:bf-text-neutral-50",
+      "bf-relative bf-flex bf-cursor-default bf-select-none bf-items-center bf-rounded-sm bf-py-1.5 bf-pl-8 bf-pr-2 bf-text-sm bf-outline-none bf-transition-colors focus:bf-bg-accent focus:bf-text-accent-foreground data-[disabled]:bf-pointer-events-none data-[disabled]:bf-opacity-50",
       className,
     )}
     {...props}
@@ -163,10 +172,7 @@ const DropdownMenuSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <DropdownMenuPrimitive.Separator
     ref={ref}
-    className={cn(
-      "bf--mx-1 bf-my-1 bf-h-px bf-bg-neutral-100 dark:bf-bg-neutral-800",
-      className,
-    )}
+    className={cn("bf--mx-1 bf-my-1 bf-h-px bf-bg-muted", className)}
     {...props}
   />
 ));

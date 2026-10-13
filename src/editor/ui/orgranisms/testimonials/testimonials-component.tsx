@@ -84,7 +84,7 @@ export const TestimonialsComponent: FC<TTestimonialsComponentProps> = ({
         tooltipText="Display customer testimonials with photos and reviews"
       >
         <EditorButton variant="icon" onClick={handleAddItem}>
-          <Plus className="bf-size-4 bf-text-gray-600" />
+          <Plus className="bf-size-4 bf-text-muted-foreground" />
         </EditorButton>
       </ComponentHeader>
 
@@ -109,7 +109,7 @@ export const TestimonialsComponent: FC<TTestimonialsComponentProps> = ({
                         {item.name ? (
                           item.name.slice(0, 2).toUpperCase()
                         ) : (
-                          <Upload className="bf-size-4 bf-text-gray-600" />
+                          <Upload className="bf-size-4 bf-text-muted-foreground" />
                         )}
                       </AvatarFallback>
                     </Avatar>
@@ -171,7 +171,7 @@ export const TestimonialsComponent: FC<TTestimonialsComponentProps> = ({
           ))}
         </div>
         {localItems.length === 0 && (
-          <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+          <div className="bf-flex bf-border-b bf-flex-col bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
             <MessageSquare className="bf-size-8 bf-mb-2" />
             <span>No testimonials yet</span>
           </div>

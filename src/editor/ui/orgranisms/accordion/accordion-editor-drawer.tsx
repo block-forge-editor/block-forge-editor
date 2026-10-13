@@ -25,7 +25,7 @@ export const AccordionEditorDrawer: FC<TAccordionEditorDrawerProps> = ({
 }) => {
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
-      <DrawerContent className="!bf-h-[90vh] !bf-bg-[#f8f8f8]">
+      <DrawerContent className="!bf-h-[90vh] !bf-bg-muted">
         <DrawerHeader>
           <div className="bf-w-[70%] bf-mx-auto bf-space-y-2">
             <DrawerTitle>Edit Accordion Content</DrawerTitle>

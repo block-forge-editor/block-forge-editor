@@ -6,6 +6,8 @@ import { TExcalidrawData } from "./types";
 import { ExcalidrawElement } from "@excalidraw/excalidraw/element/types";
 import { AppState } from "@excalidraw/excalidraw/types";
 
+import { useResolvedTheme } from "@/editor/lib/theme";
+
 type TExcalidrawEditorProps = {
   blockId: string;
   initialData?: TExcalidrawData;
@@ -19,6 +21,7 @@ export const ExcalidrawEditor: FC<TExcalidrawEditorProps> = ({
   onUpdate,
   isOpen = false,
 }) => {
+  const theme = useResolvedTheme();
   const containerRef = useRef<HTMLDivElement>(null);
   const [shouldRender, setShouldRender] = useState(false);
 
@@ -79,12 +82,12 @@ export const ExcalidrawEditor: FC<TExcalidrawEditorProps> = ({
             onChange={(elements, appState, files) => {
               handleUpdate(elements, appState, files);
             }}
-            theme="light"
+            theme={theme}
             name={`excalidraw-${blockId}`}
           />
         ) : (
-          <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-bg-gray-100 bf-rounded-lg">
-            <div className="bf-text-gray-500">Loading editor...</div>
+          <div className="bf-w-full bf-h-full bf-flex bf-items-center bf-justify-center bf-bg-muted bf-rounded-lg">
+            <div className="bf-text-muted-foreground">Loading editor...</div>
           </div>
         )}
       </div>

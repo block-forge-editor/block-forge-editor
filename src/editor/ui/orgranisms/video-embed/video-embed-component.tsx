@@ -76,7 +76,7 @@ export const EmbedComponent: FC<TEmbedComponentProps> = ({
               />
             </div>
           ) : (
-            <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-gray-400">
+            <div className="bf-flex bf-flex-col bf-border-b bf-items-center bf-justify-center bf-h-[200px] bf-text-muted-foreground">
               <VideoIcon className="bf-size-8 bf-mb-2" />
               <span>No video URL entered</span>
             </div>

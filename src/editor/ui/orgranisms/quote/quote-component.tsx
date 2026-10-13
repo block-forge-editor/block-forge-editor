@@ -55,7 +55,7 @@ export const QuoteComponent: FC<TQuoteComponentProps> = ({
           <div className="bf-border-b bf-p-2 bf-flex bf-flex-col bf-gap-4 bf-group/item">
             <div className="bf-flex bf-items-start bf-justify-between bf-gap-4">
               <div className="bf-flex bf-items-center bf-gap-3 bf-w-full">
-                <QuoteIcon className="bf-size-12 bf-text-gray-400 bf-flex-shrink-0" />
+                <QuoteIcon className="bf-size-12 bf-text-muted-foreground bf-flex-shrink-0" />
                 <div className="bf-flex-1">
                   <EditorInput
                     value={localAuthor}

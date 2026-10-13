@@ -106,11 +106,11 @@ export const IconSelect: FC<TIconSelectProps> = ({ value, onChange }) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        <button className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-gray-100 hover:bf-bg-gray-200 bf-transition-colors">
+        <button className="bf-flex bf-items-center bf-justify-center bf-size-12 bf-rounded-full bf-bg-muted hover:bf-bg-accent bf-transition-colors">
           {IconComponent ? (
-            <IconComponent className="bf-size-6 bf-text-gray-500" />
+            <IconComponent className="bf-size-6 bf-text-muted-foreground" />
           ) : (
-            <Plus className="bf-size-6 bf-text-gray-500" />
+            <Plus className="bf-size-6 bf-text-muted-foreground" />
           )}
         </button>
       </PopoverTrigger>
@@ -124,11 +124,11 @@ export const IconSelect: FC<TIconSelectProps> = ({ value, onChange }) => {
                   key={name}
                   onClick={() => onChange(name)}
                   className={cn(
-                    "bf-flex bf-items-center bf-justify-center bf-size-10 bf-rounded-lg hover:bf-bg-gray-100 bf-transition-colors",
-                    value === name && "bf-bg-gray-100",
+                    "bf-flex bf-items-center bf-justify-center bf-size-10 bf-rounded-lg hover:bf-bg-accent bf-transition-colors",
+                    value === name && "bf-bg-muted",
                   )}
                 >
-                  <Icon className="bf-size-5 bf-text-gray-500" />
+                  <Icon className="bf-size-5 bf-text-muted-foreground" />
                 </button>
               );
             })}

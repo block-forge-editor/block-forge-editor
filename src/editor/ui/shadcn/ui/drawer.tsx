@@ -2,6 +2,7 @@ import * as React from "react";
 import { Drawer as DrawerPrimitive } from "vaul";
 
 import { cn } from "@/editor/lib/font-manager";
+import { useThemeClass } from "@/editor/lib/theme";
 
 const Drawer = ({
   shouldScaleBackground = true,
@@ -47,22 +48,26 @@ const DrawerContent: React.ForwardRefExoticComponent<
 > = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DrawerPrimitive.Content
-      ref={ref}
-      className={cn(
-        "bf-fixed bf-inset-x-0 bf-bottom-0 bf-z-50 bf-mt-24 bf-flex bf-h-auto bf-flex-col bf-rounded-t-[10px] bf-border bf-border-neutral-200 bf-bg-white dark:bf-border-neutral-800 dark:bf-bg-neutral-950",
-        className,
-      )}
-      {...props}
-    >
-      <div className="bf-mx-auto bf-mt-4 bf-h-2 bf-w-[100px] bf-rounded-full bf-bg-neutral-100 dark:bf-bg-neutral-800" />
-      {children}
-    </DrawerPrimitive.Content>
-  </DrawerPortal>
-));
+>(({ className, children, ...props }, ref) => {
+  const themeClass = useThemeClass();
+  return (
+    <DrawerPortal>
+      <DrawerOverlay />
+      <DrawerPrimitive.Content
+        ref={ref}
+        className={cn(
+          themeClass,
+          "bf-fixed bf-inset-x-0 bf-bottom-0 bf-z-50 bf-mt-24 bf-flex bf-h-auto bf-flex-col bf-rounded-t-[10px] bf-border bf-border-border bf-bg-background bf-text-foreground",
+          className,
+        )}
+        {...props}
+      >
+        <div className="bf-mx-auto bf-mt-4 bf-h-2 bf-w-[100px] bf-rounded-full bf-bg-muted" />
+        {children}
+      </DrawerPrimitive.Content>
+    </DrawerPortal>
+  );
+});
 DrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({
@@ -117,10 +122,7 @@ const DrawerDescription: React.ForwardRefExoticComponent<
 >(({ className, ...props }, ref) => (
   <DrawerPrimitive.Description
     ref={ref}
-    className={cn(
-      "bf-text-sm bf-text-neutral-500 dark:bf-text-neutral-400",
-      className,
-    )}
+    className={cn("bf-text-sm bf-text-muted-foreground", className)}
     {...props}
   />
 ));

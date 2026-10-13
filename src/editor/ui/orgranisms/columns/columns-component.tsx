@@ -53,7 +53,7 @@ export const ColumnsComponent: FC<TColumnsComponentProps> = ({
       {rowColumns.map((column, index) => (
         <React.Fragment key={column.id}>
           <ResizablePanel defaultSize={column.size || 100 / rowColumns.length}>
-            <div className="bf-relative bf-h-full bf-group/item bf-p-2 bf-flex bf-flex-col bf-items-center bf-border-b bf-border-gray-200">
+            <div className="bf-relative bf-h-full bf-group/item bf-p-2 bf-flex bf-flex-col bf-items-center bf-border-b bf-border-border">
               <div className="bf-self-end bf-flex bf-gap-4">
                 <div className="bf-flex bf-gap-2">
                   <EditorButton
@@ -98,7 +98,7 @@ export const ColumnsComponent: FC<TColumnsComponentProps> = ({
         tooltipText="Component for creating columns with content"
       >
         <button onClick={onColumnAdd}>
-          <Plus className="bf-size-4 bf-text-gray-600" />
+          <Plus className="bf-size-4 bf-text-muted-foreground" />
         </button>
       </ComponentHeader>
 

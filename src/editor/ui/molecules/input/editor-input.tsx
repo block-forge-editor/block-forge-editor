@@ -14,8 +14,8 @@ export const EditorInput: FC<EditorInputProps> = ({
   return (
     <input
       className={cn(
-        "bf-text-sm custom-scroll bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-gray-50 bf-transition-colors bf-placeholder:bf-text-gray-400",
-        variant === "secondary" && "bf-text-xs bf-text-gray-500",
+        "bf-text-sm custom-scroll bf-bg-transparent bf-border-none bf-outline-none bf-w-full bf-rounded-md bf-px-2 bf-py-1 hover:bf-bg-accent bf-transition-colors bf-placeholder:bf-text-muted-foreground",
+        variant === "secondary" && "bf-text-xs bf-text-muted-foreground",
         className,
       )}
       {...props}
